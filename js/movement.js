@@ -6,57 +6,6 @@
 
 
 // ==========================================
-// MULTI-SÉLECTION
-// ==========================================
-
-let selectedSoldiers = [];
-
-
-// Retourne tous les soldats actuellement
-// concernés par un ordre de déplacement.
-//
-// Si aucune multi-sélection n'existe,
-// on utilise selectedSoldier comme avant.
-// ==========================================
-
-function getSelectedSoldiers() {
-
-    const validSelectedSoldiers =
-        selectedSoldiers.filter(
-            function (soldier) {
-
-                return (
-                    soldier &&
-                    soldier.alive !== false
-                );
-            }
-        );
-
-
-    if (
-        validSelectedSoldiers.length > 0
-    ) {
-
-        return validSelectedSoldiers;
-    }
-
-
-    if (
-        selectedSoldier &&
-        selectedSoldier.alive !== false
-    ) {
-
-        return [
-            selectedSoldier
-        ];
-    }
-
-
-    return [];
-}
-
-
-// ==========================================
 // ORIENTATION D'UNE UNITÉ
 // ==========================================
 
@@ -118,6 +67,45 @@ function rotateUnitTowards(
 
 
 // ==========================================
+// DÉSÉLECTION DU SOLDAT
+// ==========================================
+
+function clearSoldierSelection() {
+
+    if (!selectedSoldier) {
+        return;
+    }
+
+
+    // Retire l'effet visuel de sélection
+    if (selectedSoldier.element) {
+
+        selectedSoldier.element.classList.remove(
+            "selected"
+        );
+    }
+
+
+    // Ferme la fiche du soldat
+    const unitPanel =
+        document.querySelector(
+            "#unit-panel"
+        );
+
+    if (unitPanel) {
+
+        unitPanel.classList.add(
+            "hidden"
+        );
+    }
+
+
+    // Plus aucun soldat sélectionné
+    selectedSoldier = null;
+}
+
+
+// ==========================================
 // ORDRE DE DÉPLACEMENT
 // ==========================================
 
@@ -126,15 +114,35 @@ battlefield.addEventListener(
 
     function (event) {
 
-        const units =
-            getSelectedSoldiers();
-
 
         // ==================================
         // AUCUN SOLDAT SÉLECTIONNÉ
         // ==================================
 
-        if (units.length === 0) {
+        if (
+            !selectedSoldier ||
+            selectedSoldier.alive === false
+        ) {
+
+            return;
+        }
+
+
+        // On garde temporairement le soldat
+        // avant de supprimer la sélection.
+
+        const soldier =
+            selectedSoldier;
+
+
+        // ==================================
+        // ORDRES BLOQUANTS
+        // ==================================
+
+        if (
+            soldier.order === "hold" ||
+            soldier.order === "retreat"
+        ) {
 
             return;
         }
@@ -180,134 +188,59 @@ battlefield.addEventListener(
 
 
         // ==================================
-        // DÉPLACE LES UNITÉS SÉLECTIONNÉES
+        // TRANCHÉE
         // ==================================
 
-        units.forEach(
-            function (
-                soldier,
-                index
-            ) {
+        if (
+            typeof getTrenchSlotAt ===
+            "function"
+        ) {
 
-                // ==========================
-                // ORDRES BLOQUANTS
-                // ==========================
+            const trenchSlot =
+                getTrenchSlotAt(
+                    x,
+                    y
+                );
 
-                if (
-                    soldier.order === "hold" ||
-                    soldier.order === "retreat"
-                ) {
-
-                    return;
-                }
-
-
-                // ==========================
-                // TRANCHÉE
-                // ==========================
-
-                if (
-                    typeof getTrenchSlotAt ===
-                    "function"
-                ) {
-
-                    const trenchSlot =
-                        getTrenchSlotAt(
-                            x,
-                            y
-                        );
-
-                    if (trenchSlot) {
-
-                        soldier.targetX =
-                            trenchSlot.x;
-
-                        soldier.targetY =
-                            trenchSlot.y;
-
-                        return;
-                    }
-                }
-
-
-                // ==========================
-                // FORMATION DE GROUPE
-                // ==========================
-
-                let offsetX = 0;
-                let offsetY = 0;
-
-
-                if (units.length > 1) {
-
-                    const spacing = 26;
-
-                    const columns =
-                        Math.ceil(
-                            Math.sqrt(
-                                units.length
-                            )
-                        );
-
-                    const column =
-                        index %
-                        columns;
-
-                    const row =
-                        Math.floor(
-                            index /
-                            columns
-                        );
-
-
-                    offsetX =
-                        (
-                            column -
-                            (columns - 1) / 2
-                        ) *
-                        spacing;
-
-                    offsetY =
-                        (
-                            row -
-                            (
-                                Math.ceil(
-                                    units.length /
-                                    columns
-                                ) -
-                                1
-                            ) /
-                            2
-                        ) *
-                        spacing;
-                }
-
-
-                // ==========================
-                // DESTINATION
-                // ==========================
+            if (trenchSlot) {
 
                 soldier.targetX =
-                    Math.max(
-                        17,
-                        Math.min(
-                            rect.width - 17,
-                            targetX +
-                            offsetX
-                        )
-                    );
+                    trenchSlot.x;
 
                 soldier.targetY =
-                    Math.max(
-                        17,
-                        Math.min(
-                            rect.height - 17,
-                            targetY +
-                            offsetY
-                        )
-                    );
+                    trenchSlot.y;
+
+
+                // Ordre donné :
+                // désélection immédiate.
+
+                clearSoldierSelection();
+
+                return;
             }
-        );
+        }
+
+
+        // ==================================
+        // DESTINATION NORMALE
+        // ==================================
+
+        soldier.targetX =
+            targetX;
+
+        soldier.targetY =
+            targetY;
+
+
+        // ==================================
+        // ORDRE TERMINÉ
+        // ==================================
+
+        // Le soldat continue son déplacement,
+        // mais le joueur doit le sélectionner
+        // à nouveau pour donner un autre ordre.
+
+        clearSoldierSelection();
     }
 );
 
