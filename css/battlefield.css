@@ -1,0 +1,271 @@
+.battlefield-grass {
+    position: absolute;
+    width: 18px;
+    height: 10px;
+    pointer-events: none;
+    opacity: 0.45;
+    z-index: 1;
+}
+
+.battlefield-grass::before,
+.battlefield-grass::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 2px;
+    height: 9px;
+    background: #3f4938;
+    transform-origin: bottom;
+}
+
+.battlefield-grass::before {
+    left: 6px;
+    transform: rotate(-25deg);
+}
+
+.battlefield-grass::after {
+    left: 11px;
+    transform: rotate(25deg);
+}
+
+.battlefield-rock {
+    position: absolute;
+    width: 16px;
+    height: 11px;
+    background: #55594e;
+    border: 1px solid #34382f;
+    border-radius: 55% 45% 50% 40%;
+    box-shadow:
+        inset 3px 2px 0 rgba(255, 255, 255, 0.06),
+        2px 3px 2px rgba(0, 0, 0, 0.22);
+    pointer-events: none;
+    opacity: 0.75;
+    z-index: 1;
+}
+
+.battlefield-log {
+    position: absolute;
+    width: 55px;
+    height: 10px;
+
+    background: #514536;
+    border: 1px solid #30291f;
+    border-radius: 8px;
+
+    box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, 0.06),
+        2px 3px 3px rgba(0, 0, 0, 0.25);
+
+    pointer-events: none;
+    opacity: 0.85;
+    z-index: 1;
+}
+
+/* Extrémité coupée du tronc */
+.battlefield-log::before {
+    content: "";
+    position: absolute;
+
+    right: -3px;
+    top: 50%;
+
+    width: 10px;
+    height: 12px;
+
+    transform: translateY(-50%);
+
+    background: #75634b;
+    border: 1px solid #30291f;
+    border-radius: 50%;
+}
+
+/* Petite branche cassée */
+.battlefield-log::after {
+    content: "";
+    position: absolute;
+
+    left: 17px;
+    top: -8px;
+
+    width: 5px;
+    height: 13px;
+
+    background: #463a2d;
+    border-radius: 3px;
+
+    transform: rotate(35deg);
+    transform-origin: bottom;
+}
+
+/* =========================================
+   TRANCHÉE
+========================================= */
+
+.trench {
+    position: absolute;
+
+    width: 155px;
+    height: 72px;
+
+    transform: translate(-50%, -50%);
+
+    pointer-events: none;
+    z-index: 2;
+}
+
+
+/* Terre retournée autour */
+.trench-dirt {
+    position: absolute;
+    inset: -8px;
+
+    background: #70684d;
+
+    border-radius:
+        45% 55% 48% 52% /
+        55% 45% 55% 45%;
+
+    box-shadow:
+        0 3px 5px rgba(0, 0, 0, 0.25),
+        inset 0 0 8px rgba(0, 0, 0, 0.18);
+}
+
+
+/* Fosse */
+.trench-hole {
+    position: absolute;
+
+    left: 7px;
+    right: 7px;
+    top: 8px;
+    bottom: 8px;
+
+    background: #302e25;
+
+    border: 4px solid #514a37;
+
+    border-radius: 16px;
+
+    box-shadow:
+        inset 0 5px 8px rgba(0, 0, 0, 0.65),
+        0 0 0 2px #82785a;
+}
+
+
+/* Sol intérieur */
+.trench-hole::before {
+    content: "";
+
+    position: absolute;
+
+    left: 10px;
+    right: 10px;
+    top: 8px;
+    bottom: 8px;
+
+    background: #494536;
+
+    border-radius: 8px;
+
+    opacity: 0.8;
+}
+
+
+/* Planche centrale */
+.trench-plank {
+    position: absolute;
+
+    left: 18px;
+    right: 18px;
+
+    top: 50%;
+
+    height: 5px;
+
+    transform: translateY(-50%);
+
+    background: #67553c;
+
+    border: 1px solid #342b20;
+
+    box-shadow:
+        0 2px 2px rgba(0, 0, 0, 0.35);
+
+    z-index: 2;
+}
+
+
+/* Renforts en bois */
+.trench-plank::before,
+.trench-plank::after {
+    content: "";
+
+    position: absolute;
+
+    width: 5px;
+    height: 32px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    background: #594932;
+
+    border: 1px solid #30271c;
+}
+
+.trench-plank::before {
+    left: 16px;
+}
+
+.trench-plank::after {
+    right: 16px;
+}
+
+/* =========================================
+   PROFONDEUR VISUELLE DE LA TRANCHÉE
+========================================= */
+
+/* Les soldats restent au-dessus du fond */
+.soldier {
+    z-index: 5;
+}
+
+/* Terre + fosse derrière les soldats */
+.trench-dirt,
+.trench-hole {
+    z-index: 2;
+}
+
+/* Planche au-dessus du fond */
+.trench-plank {
+    z-index: 3;
+}
+
+/* Rebord avant qui passe DEVANT les soldats */
+.trench-front {
+    position: absolute;
+
+    left: 4px;
+    right: 4px;
+    bottom: -5px;
+
+    height: 18px;
+
+    background: #756c50;
+
+    border-top: 3px solid #4e4735;
+
+    border-radius:
+        20% 25% 45% 40% /
+        20% 20% 55% 50%;
+
+    box-shadow:
+        0 -3px 4px rgba(0, 0, 0, 0.25),
+        inset 0 3px 2px rgba(255, 255, 255, 0.05);
+
+    pointer-events: none;
+
+    /* soldats = 5, donc rebord devant */
+    z-index: 6;
+}

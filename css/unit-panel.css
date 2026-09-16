@@ -1,0 +1,514 @@
+/* =========================================
+   M&B MOBILE
+   UNIT-PANEL.CSS
+   Fiche d'information d'un soldat
+========================================= */
+
+
+/* =========================================
+   FENÊTRE PRINCIPALE
+========================================= */
+
+#unit-panel {
+    position: absolute;
+
+    left: 12px;
+    bottom: 72px;
+
+    width: 215px;
+
+    padding: 0;
+
+    background:
+        rgba(18, 22, 17, 0.96);
+
+    border:
+        1px solid
+        rgba(145, 160, 120, 0.65);
+
+    border-radius: 4px;
+
+    box-shadow:
+        0 5px 18px
+        rgba(0, 0, 0, 0.55);
+
+    color: #d9dfcf;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size: 12px;
+
+    z-index: 50;
+
+    overflow: hidden;
+
+    /*
+        Important pour le drag :
+        aucune transformation sur
+        la fenêtre elle-même.
+    */
+
+    transform: none;
+
+    max-width:
+        calc(100% - 8px);
+
+    max-height:
+        calc(100% - 8px);
+}
+
+
+/* =========================================
+   PANNEAU CACHÉ
+========================================= */
+
+#unit-panel.hidden {
+    display: none;
+}
+
+
+/* =========================================
+   HEADER / BARRE DRAGGABLE
+========================================= */
+
+.unit-panel-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+        space-between;
+
+    min-height: 30px;
+
+    padding:
+        5px 7px;
+
+    box-sizing:
+        border-box;
+
+    background:
+        rgba(61, 72, 50, 0.95);
+
+    border-bottom:
+        1px solid
+        rgba(145, 160, 120, 0.45);
+
+    cursor: grab;
+
+    user-select: none;
+
+    touch-action: none;
+}
+
+
+/* Curseur pendant déplacement */
+
+#unit-panel.dragging
+.unit-panel-header {
+    cursor: grabbing;
+}
+
+
+/* Passe devant les autres fenêtres */
+
+#unit-panel.dragging {
+    z-index: 100;
+}
+
+
+/* =========================================
+   NOM DU SOLDAT
+========================================= */
+
+#unit-name {
+    margin: 0;
+
+    padding: 0;
+
+    color: #f0f2e9;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    letter-spacing: 0.5px;
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   BOUTON FERMER
+========================================= */
+
+#close-unit-panel {
+    width: 23px;
+    height: 23px;
+
+    padding: 0;
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        rgba(20, 24, 18, 0.75);
+
+    border:
+        1px solid
+        rgba(180, 190, 165, 0.35);
+
+    border-radius: 3px;
+
+    color: #e2e5da;
+
+    font-size: 13px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    touch-action: manipulation;
+}
+
+
+#close-unit-panel:hover {
+    background:
+        rgba(95, 55, 48, 0.9);
+}
+
+
+/* =========================================
+   CONTENU
+========================================= */
+
+.unit-panel-content {
+    padding: 8px;
+
+    box-sizing:
+        border-box;
+}
+
+
+/* =========================================
+   CLASSE DU SOLDAT
+========================================= */
+
+#unit-class {
+    margin-bottom: 8px;
+
+    color: #aeb99c;
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.6px;
+}
+
+
+/* =========================================
+   LIGNES DE STATISTIQUES
+========================================= */
+
+.unit-stat {
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+        space-between;
+
+    gap: 10px;
+
+    min-height: 20px;
+
+    padding:
+        2px 0;
+
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.05);
+}
+
+
+.unit-stat:last-child {
+    border-bottom: none;
+}
+
+
+/* =========================================
+   LABELS
+========================================= */
+
+.unit-stat-label {
+    color: #9ca58e;
+}
+
+
+/* =========================================
+   VALEURS
+========================================= */
+
+.unit-stat-value {
+    color: #e2e6da;
+
+    font-weight: bold;
+
+    text-align: right;
+}
+
+
+/* =========================================
+   VIE
+========================================= */
+
+.unit-hp-container {
+    margin:
+        5px 0 8px 0;
+}
+
+
+/* Texte HP */
+
+#unit-hp-text {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #dfe5d5;
+
+    font-size: 11px;
+}
+
+
+/* Fond de la barre */
+
+.unit-hp-background {
+    width: 100%;
+    height: 6px;
+
+    background: #272c23;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+
+    border-radius: 2px;
+
+    overflow: hidden;
+}
+
+
+/* Barre de vie */
+
+#unit-hp-bar {
+    width: 100%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #536d3e,
+            #81955d
+        );
+
+    transition:
+        width 0.15s linear;
+}
+
+
+/* =========================================
+   STATISTIQUES SPÉCIFIQUES
+========================================= */
+
+#unit-kills,
+#unit-damage,
+#unit-range {
+    color: #e5e8de;
+
+    font-weight: bold;
+}
+
+
+/* =========================================
+   SÉCURITÉ DRAG
+========================================= */
+
+/*
+    Très important :
+    les enfants ne doivent pas modifier
+    le système de coordonnées de la fenêtre.
+*/
+
+#unit-panel * {
+    box-sizing:
+        border-box;
+}
+
+
+/*
+    Empêche la sélection de texte
+    pendant le déplacement.
+*/
+
+#unit-panel.dragging {
+    user-select: none;
+}
+
+
+/*
+    La fenêtre ne doit JAMAIS
+    avoir translate / rotate / scale.
+*/
+
+#unit-panel {
+    translate: none;
+    rotate: none;
+    scale: none;
+}
+
+
+/* =========================================
+   PETITS ÉCRANS / MOBILE
+========================================= */
+
+@media (
+    max-width: 480px
+) {
+
+    #unit-panel {
+        width: 200px;
+
+        left: 8px;
+        bottom: 68px;
+
+        font-size: 11px;
+    }
+
+
+    .unit-panel-header {
+        min-height: 28px;
+
+        padding:
+            4px 6px;
+    }
+
+
+    .unit-panel-content {
+        padding: 7px;
+    }
+
+}
+
+/* =========================================
+   INDICATEUR DE COUVERTURE
+========================================= */
+
+#unit-cover {
+    margin-top: 8px;
+    padding: 6px 8px;
+
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: .5px;
+
+    text-align: center;
+
+    color: #9b9b8e;
+    background: rgba(0, 0, 0, .22);
+
+    border: 1px solid #4c5047;
+    border-radius: 3px;
+}
+
+#unit-cover.active {
+    color: #d8d4bd;
+
+    background: rgba(65, 82, 57, .55);
+
+    border-color: #7e8d6d;
+
+    box-shadow:
+        inset 0 0 6px rgba(180, 200, 150, .08);
+}
+
+#unit-rank-icon {
+    width: 22px;
+    height: 22px;
+
+    object-fit: contain;
+
+    vertical-align: middle;
+
+    margin-right: 6px;
+
+    filter:
+        drop-shadow(0 1px 1px rgba(0, 0, 0, .6));
+}
+
+#unit-name {
+    vertical-align: middle;
+}
+
+/* =========================================
+   EXPÉRIENCE SOLDAT
+========================================= */
+
+#unit-xp-container {
+    margin-top: 6px;
+    margin-bottom: 7px;
+}
+
+.unit-xp-header {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 3px;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    color: #c8c3aa;
+}
+
+.unit-xp-track {
+    width: 100%;
+    height: 5px;
+
+    background: #252b21;
+
+    border: 1px solid #48513f;
+
+    overflow: hidden;
+}
+
+.unit-xp-bar {
+    height: 100%;
+
+    background: #b6a35f;
+
+    transition: width .25s ease;
+}
+
+.unit-xp-max {
+    padding: 4px;
+
+    text-align: center;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    color: #d2bd70;
+
+    border: 1px solid #756b45;
+
+    background: rgba(100, 87, 45, .2);
+}

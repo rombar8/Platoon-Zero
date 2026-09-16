@@ -1,0 +1,12 @@
+{
+    "name": "M&B Mobile",
+    "short_name": "M&B Mobile",
+    "description": "Jeu de survie tactique mobile",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0b100c",
+    "theme_color": "#20281e",
+    "lang": "fr"
+}

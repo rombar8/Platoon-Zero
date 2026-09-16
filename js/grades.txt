@@ -1,0 +1,10 @@
+[PVT]   Private                    /   Soldat                         XP =          0
+[PFC]   Private First Class        /   Soldat de 1re classe           XP =          5
+[SPC]   Specialist                 /   Spécialiste                    XP =         12
+[CPL]   Corporal                   /   Caporal                        XP =         22
+[SGT]   Sergeant                   /   Sergent                        XP =         35
+[SSG]   Staff Sergeant             /   Sergent-chef                   XP =         50
+[SFC]   Sergeant First Class       /   Sergent de 1re classe          XP =         70
+[WO1]   Warrant Officer 1          /   Adjudant                       XP =         95
+[CW2]   Chief Warrant Officer 2    /   Adjudant-chef                  XP =        125
+[2LT]   Second Lieutenant          /   Sous-lieutenant                XP =        160
