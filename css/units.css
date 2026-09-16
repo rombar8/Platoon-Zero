@@ -1,0 +1,355 @@
+/* =========================================
+   M&B MOBILE
+   UNITS.CSS
+   UNITÉS ALLIÉES
+   Palette beige / blanc cassé
+========================================= */
+
+
+/* =========================================
+   CONTENEUR
+========================================= */
+
+.soldier {
+    position: absolute;
+
+    width: 28px;
+    height: 28px;
+
+    transform:
+        translate(-50%, -50%);
+
+    background: transparent !important;
+
+    border: none !important;
+
+    box-shadow: none !important;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    z-index: 5;
+}
+
+
+/* Désactive les anciens pseudo-éléments */
+
+.soldier::before,
+.soldier::after {
+    content: none !important;
+    display: none !important;
+}
+
+
+/* =========================================
+   ICÔNE
+========================================= */
+
+.unit-icon {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 22px;
+    height: 24px;
+
+    transform:
+        translate(-50%, -50%);
+
+    filter:
+        drop-shadow(
+            1px 2px 1px
+            rgba(0, 0, 0, 0.5)
+        );
+}
+
+
+/* =========================================
+   CORPS
+========================================= */
+
+.unit-body {
+    position: absolute;
+
+    left: 50%;
+    top: 10px;
+
+    width: 18px;
+    height: 11px;
+
+    transform:
+        translateX(-50%);
+
+    background: #c7c2aa;
+
+    border:
+        1px solid #49483f;
+
+    border-radius:
+        7px 7px 4px 4px;
+}
+
+
+/* Sac / équipement */
+
+.unit-body::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 3px;
+
+    width: 8px;
+    height: 9px;
+
+    transform:
+        translateX(-50%);
+
+    background: #918d79;
+
+    border-radius: 2px;
+}
+
+
+/* =========================================
+   CASQUE
+========================================= */
+
+.unit-helmet {
+    position: absolute;
+
+    left: 50%;
+    top: 2px;
+
+    width: 14px;
+    height: 11px;
+
+    transform:
+        translateX(-50%);
+
+    background: #d8d4bd;
+
+    border:
+        1px solid #48483f;
+
+    border-radius:
+        50% 50% 35% 35%;
+
+    z-index: 3;
+}
+
+
+/* Bord du casque */
+
+.unit-helmet::after {
+    content: "";
+
+    position: absolute;
+
+    left: -2px;
+    bottom: 0;
+
+    width: 16px;
+    height: 3px;
+
+    background: #aaa58f;
+
+    border-radius: 3px;
+}
+
+
+/* =========================================
+   ARME
+========================================= */
+
+.unit-gun {
+    position: absolute;
+
+    left: 16px;
+    top: 8px;
+
+    width: 3px;
+    height: 21px;
+
+    transform:
+        rotate(-15deg);
+
+    transform-origin:
+        top center;
+
+    background: #151714;
+
+    border-radius: 1px;
+
+    z-index: 4;
+}
+
+
+/* Partie bois / poignée */
+
+.unit-gun::after {
+    content: "";
+
+    position: absolute;
+
+    left: -1px;
+    top: 8px;
+
+    width: 5px;
+    height: 6px;
+
+    background: #665744;
+
+    border-radius: 1px;
+}
+
+
+/* =========================================
+   FANTASSIN
+========================================= */
+
+.soldier.rifleman .unit-body {
+    background: #c8c3aa;
+}
+
+.soldier.rifleman .unit-helmet {
+    background: #ddd8c0;
+}
+
+
+/* =========================================
+   TIREUR
+========================================= */
+
+.soldier.marksman .unit-icon {
+    transform:
+        translate(-50%, -50%)
+        scale(0.95);
+}
+
+
+.soldier.marksman .unit-body {
+    background: #b9b6a4;
+}
+
+
+.soldier.marksman .unit-helmet {
+    background: #d0cdbb;
+}
+
+
+.soldier.marksman .unit-gun {
+    height: 28px;
+    width: 2px;
+
+    top: 5px;
+}
+
+
+/* Lunette */
+
+.soldier.marksman .unit-gun::before {
+    content: "";
+
+    position: absolute;
+
+    left: -2px;
+    top: 8px;
+
+    width: 6px;
+    height: 3px;
+
+    background: #080908;
+
+    border-radius: 2px;
+}
+
+
+/* =========================================
+   ÉCLAIREUR
+========================================= */
+
+.soldier.scout .unit-icon {
+    transform:
+        translate(-50%, -50%)
+        scale(0.85);
+}
+
+
+.soldier.scout .unit-body {
+    background: #d2cdb5;
+}
+
+
+.soldier.scout .unit-helmet {
+    background: #e1dcc5;
+}
+
+
+.soldier.scout .unit-gun {
+    height: 17px;
+}
+
+
+/* =========================================
+   MITRAILLEUR
+========================================= */
+
+.soldier.gunner .unit-icon {
+    transform:
+        translate(-50%, -50%)
+        scale(1.15);
+}
+
+
+.soldier.gunner .unit-body {
+    width: 20px;
+
+    background: #aaa795;
+}
+
+
+.soldier.gunner .unit-helmet {
+    background: #c3c0ad;
+}
+
+
+.soldier.gunner .unit-gun {
+    width: 4px;
+    height: 25px;
+
+    background: #101210;
+}
+
+
+/* =========================================
+   UNITÉ SÉLECTIONNÉE
+========================================= */
+
+.soldier.selected .unit-icon::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 29px;
+    height: 29px;
+
+    transform:
+        translate(-50%, -50%);
+
+    border:
+        1px dashed
+        rgba(245, 241, 215, 0.95);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: -1;
+}

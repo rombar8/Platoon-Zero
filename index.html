@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <title>M&B Mobile</title>
+
+
+    <!-- =====================================
+         CSS PRINCIPAL
+    ====================================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+
+    <!-- =====================================
+         CSS DU JEU
+    ====================================== -->
+
+    <link
+        rel="stylesheet"
+        href="css/units.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/enemies.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/unit-panel.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================
+         MENU PRINCIPAL
+    ====================================== -->
+
+   <main id="main-menu">
+
+    <div class="menu-logo">
+
+        <h1>
+            M&B MOBILE
+        </h1>
+
+        <p>
+            TACTICAL SURVIVAL
+        </p>
+
+    </div>
+
+
+    <div class="player-identity">
+
+        <span class="player-label">
+            🎖️ OPÉRATEUR
+        </span>
+
+        <input
+            id="player-name"
+            type="text"
+            maxlength="16"
+            placeholder="ENTRE TON PSEUDO"
+            autocomplete="off"
+        >
+
+    </div>
+
+
+    <div class="menu-buttons">
+
+        <button
+            id="play-button"
+            type="button"
+        >
+            ▶ DÉPLOYER
+        </button>
+
+        <button
+            id="help-button"
+            type="button"
+        >
+            ? AIDE
+        </button>
+
+    </div>
+
+
+    <div class="menu-record">
+
+        <span>
+            🏆 MEILLEUR SCORE
+        </span>
+
+        <strong id="best-score">
+            0
+        </strong>
+
+    </div>
+
+    </main>
+
+
+
+    <!-- =====================================
+         AIDE
+    ====================================== -->
+
+    <section
+        id="help-panel"
+        class="hidden"
+    >
+
+        <div class="help-window">
+
+            <h2>
+                AIDE
+            </h2>
+
+
+            <p>
+                Sélectionnez un soldat
+                en appuyant dessus.
+            </p>
+
+
+            <p>
+                Touchez ensuite le terrain
+                pour lui donner un ordre
+                de déplacement.
+            </p>
+
+
+            <p>
+                Les soldats attaquent
+                automatiquement les ennemis
+                à portée.
+            </p>
+
+
+            <p>
+                Utilisez les points de
+                commandement pour appeler
+                des renforts et du soutien.
+            </p>
+
+
+            <button
+                id="close-help"
+                type="button"
+            >
+                FERMER
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         JEU
+    ====================================== -->
+
+    <main
+        id="game"
+        class="hidden"
+    >
+
+
+        <!-- =================================
+             HUD
+        ================================== -->
+
+        <header id="hud">
+
+            <div class="hud-item">
+
+                <span class="hud-icon">
+                    🎖️
+                </span>
+
+                <span class="hud-label">
+                    POINTS
+                </span>
+
+                <span id="points">
+                    10
+                </span>
+
+            </div>
+
+
+            <div class="hud-item">
+
+                <span class="hud-icon">
+                    🪖
+                </span>
+
+                <span class="hud-label">
+                    SOLDATS
+                </span>
+
+                <span id="soldiers-count">
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="hud-item">
+
+                <span class="hud-icon">
+                    💀
+                </span>
+
+                <span class="hud-label">
+                    KILLS
+                </span>
+
+                <span id="kills">
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="hud-item">
+
+                <span class="hud-icon">
+                    ⚔️
+                </span>
+
+                <span class="hud-label">
+                    VAGUE
+                </span>
+
+                <span id="wave-number">
+                    0
+                </span>
+
+            </div>
+
+            <button
+                id="pause-button"
+                type="button"
+                aria-label="Pause"
+            >
+                ⏸
+            </button>
+
+        </header>
+
+            <section
+                id="pause-menu"
+                class="hidden"
+            >
+                <div class="pause-window">
+
+                    <div class="pause-label">
+                        PARTIE EN PAUSE
+                    </div>
+
+                    <h2>⏸ PAUSE</h2>
+
+                    <button
+                        id="resume-button"
+                        type="button"
+                    >
+                        ▶ REPRENDRE
+                    </button>
+
+                    <button
+                        id="pause-menu-button"
+                        type="button"
+                    >
+                        ← MENU PRINCIPAL
+                    </button>
+
+                </div>
+            </section>
+
+
+
+        <!-- =================================
+             ANNONCE DES VAGUES
+        ================================== -->
+
+        <div
+            id="wave-announcement"
+            class="hidden"
+        >
+
+            <div id="wave-title">
+                VAGUE 1
+            </div>
+
+            <div id="wave-subtitle">
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================
+             CHAMP DE BATAILLE
+        ================================== -->
+
+        <section
+            id="battlefield"
+        >
+        </section>
+
+
+
+        <!-- =================================
+             FICHE DU SOLDAT
+        ================================== -->
+
+        <section
+            id="unit-panel"
+            class="hidden"
+        >
+
+
+            <!-- BARRE DRAGGABLE -->
+
+            <div class="unit-panel-header">
+
+
+                <span id="unit-name">
+                    PVT. SOLDAT
+                </span>
+
+
+                <button
+                    id="close-unit-panel"
+                    type="button"
+                >
+                    ✕
+                </button>
+
+
+            </div>
+
+
+
+            <!-- CONTENU -->
+
+            <div class="unit-panel-content">
+
+
+                <div id="unit-class">
+                    FANTASSIN
+                </div>
+
+
+
+                <!-- VIE -->
+
+                <div class="unit-hp-container">
+
+
+                    <span id="unit-hp-text">
+                        HP 100 / 100
+                    </span>
+
+
+                    <div class="unit-hp-background">
+
+                        <div
+                            id="unit-hp-bar"
+                        >
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- KILLS -->
+
+                <div class="unit-stat">
+
+                    <span class="unit-stat-label">
+                        KILLS
+                    </span>
+
+                    <span
+                        id="unit-kills"
+                        class="unit-stat-value"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+
+                <!-- DÉGÂTS -->
+
+                <div class="unit-stat">
+
+                    <span class="unit-stat-label">
+                        DÉGÂTS
+                    </span>
+
+                    <span
+                        id="unit-damage"
+                        class="unit-stat-value"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+
+                <!-- PORTÉE -->
+
+                <div class="unit-stat">
+
+                    <span class="unit-stat-label">
+                        PORTÉE
+                    </span>
+
+                    <span
+                        id="unit-range"
+                        class="unit-stat-value"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================
+             MENU TACTIQUE
+        ================================== -->
+
+        <section
+            id="tactical-panel"
+            class="hidden"
+        >
+
+
+            <div class="tactical-header">
+
+
+                <h2 id="tactical-title">
+                    RENFORTS
+                </h2>
+
+
+                <button
+                    id="close-tactical"
+                    type="button"
+                >
+                    ✕
+                </button>
+
+
+            </div>
+
+
+            <div id="tactical-content">
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================
+             BARRE DE COMMANDES
+        ================================== -->
+
+        <nav id="command-bar">
+
+
+            <button
+                type="button"
+                data-menu="reinforcements"
+            >
+
+                <span class="command-icon">
+                    🪖
+                </span>
+
+                <span class="command-label">
+                    RENFORTS
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                data-menu="support"
+            >
+
+                <span class="command-icon">
+                    💥
+                </span>
+
+                <span class="command-label">
+                    SOUTIEN
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                data-menu="orders"
+            >
+
+                <span class="command-icon">
+                    ⚑
+                </span>
+
+                <span class="command-label">
+                    ORDRES
+                </span>
+
+            </button>
+
+
+        </nav>
+
+        <!-- =====================================
+            GAME OVER
+        ====================================== -->
+
+        <section
+            id="game-over"
+            class="hidden"
+        >
+
+            <div class="game-over-window">
+
+                <div class="game-over-small-title">
+                    MISSION TERMINÉE
+                </div>
+
+                <h2 id="game-over-player">
+                    ANONYME
+                </h2>
+
+                <div class="game-over-line"></div>
+
+
+                <div class="game-over-stats">
+
+                    <div>
+                        <span>⚔️ VAGUE</span>
+                        <strong id="final-wave">0</strong>
+                    </div>
+
+                    <div>
+                        <span>💀 KILLS</span>
+                        <strong id="final-kills">0</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="final-score">
+
+                    <span>SCORE FINAL</span>
+
+                    <strong id="final-score">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div
+                    id="new-record"
+                    class="hidden"
+                >
+                    🏆 NOUVEAU RECORD
+                </div>
+
+
+                <div class="game-over-buttons">
+
+                    <button
+                        id="restart-button"
+                        type="button"
+                    >
+                        ↻ REJOUER
+                    </button>
+
+                    <button
+                        id="menu-button"
+                        type="button"
+                    >
+                        ← MENU
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================
+         JAVASCRIPT
+    ====================================== -->
+
+
+    <!-- CONFIGURATION -->
+
+    <script src="js/config.js"></script>
+
+
+    <!-- UNITÉS -->
+
+    <script src="js/units.js"></script>
+
+
+    <!-- MOTEUR PRINCIPAL -->
+
+    <script src="js/game.js"></script>
+
+
+    <!-- DÉPLACEMENTS -->
+
+    <script src="js/movement.js"></script>
+
+
+    <!-- ENNEMIS -->
+
+    <script src="js/enemies.js"></script>
+
+
+    <!-- COMBAT -->
+
+    <script src="js/combat.js"></script>
+
+
+    <!-- SUPPORT -->
+
+    <script src="js/support.js"></script>
+
+
+    <!-- VAGUES -->
+
+    <script src="js/waves.js"></script>
+
+
+    <!-- ORDRES -->
+
+    <script src="js/orders.js"></script>
+
+
+    <!-- INTERFACE TACTIQUE -->
+
+    <script src="js/tactical-menu.js"></script>
+
+
+    <!-- FICHE SOLDAT -->
+
+    <script src="js/unit-panel.js"></script>
+
+
+    <!-- FENÊTRES DRAGGABLE -->
+
+    <script src="js/draggable-windows.js"></script>
+
+
+</body>
+
+</html>

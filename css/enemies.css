@@ -1,0 +1,331 @@
+/* =========================================
+   M&B MOBILE
+   ENEMIES.CSS
+   UNITÉS ENNEMIES
+   Palette gris foncé / anthracite
+========================================= */
+
+
+/* =========================================
+   CONTENEUR
+========================================= */
+
+.enemy {
+    position: absolute;
+
+    width: 28px;
+    height: 28px;
+
+    transform:
+        translate(-50%, -50%);
+
+    background: transparent !important;
+
+    border: none !important;
+
+    box-shadow: none !important;
+
+    user-select: none;
+
+    pointer-events: none;
+
+    z-index: 5;
+}
+
+
+/* Désactive les anciens pseudo-éléments */
+
+.enemy::before,
+.enemy::after {
+    content: none !important;
+    display: none !important;
+}
+
+
+/* =========================================
+   ICÔNE
+========================================= */
+
+.enemy-icon {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 22px;
+    height: 24px;
+
+    transform:
+        translate(-50%, -50%);
+
+    filter:
+        drop-shadow(
+            1px 2px 1px
+            rgba(0, 0, 0, 0.65)
+        );
+}
+
+
+/* =========================================
+   CORPS
+========================================= */
+
+.enemy-body {
+    position: absolute;
+
+    left: 50%;
+    top: 10px;
+
+    width: 18px;
+    height: 11px;
+
+    transform:
+        translateX(-50%);
+
+    background: #484b48;
+
+    border:
+        1px solid #171917;
+
+    border-radius:
+        7px 7px 4px 4px;
+}
+
+
+/* Sac / équipement */
+
+.enemy-body::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 3px;
+
+    width: 8px;
+    height: 9px;
+
+    transform:
+        translateX(-50%);
+
+    background: #303330;
+
+    border-radius: 2px;
+}
+
+
+/* =========================================
+   CASQUE
+========================================= */
+
+.enemy-helmet {
+    position: absolute;
+
+    left: 50%;
+    top: 2px;
+
+    width: 14px;
+    height: 11px;
+
+    transform:
+        translateX(-50%);
+
+    background: #60635e;
+
+    border:
+        1px solid #171917;
+
+    border-radius:
+        50% 50% 35% 35%;
+
+    z-index: 3;
+}
+
+
+/* Bord du casque */
+
+.enemy-helmet::after {
+    content: "";
+
+    position: absolute;
+
+    left: -2px;
+    bottom: 0;
+
+    width: 16px;
+    height: 3px;
+
+    background: #383b37;
+
+    border-radius: 3px;
+}
+
+
+/* =========================================
+   ARME
+========================================= */
+
+.enemy-gun {
+    position: absolute;
+
+    left: 16px;
+    top: 8px;
+
+    width: 3px;
+    height: 21px;
+
+    transform:
+        rotate(-15deg);
+
+    transform-origin:
+        top center;
+
+    background: #0c0e0c;
+
+    border-radius: 1px;
+
+    z-index: 4;
+}
+
+
+/* Poignée */
+
+.enemy-gun::after {
+    content: "";
+
+    position: absolute;
+
+    left: -1px;
+    top: 8px;
+
+    width: 5px;
+    height: 6px;
+
+    background: #3b3730;
+
+    border-radius: 1px;
+}
+
+
+/* =========================================
+   VARIATIONS ENNEMIES
+========================================= */
+
+/* Fantassin */
+
+.enemy.rifleman .enemy-body {
+    background: #484b48;
+}
+
+.enemy.rifleman .enemy-helmet {
+    background: #60635e;
+}
+
+
+/* Tireur */
+
+.enemy.marksman .enemy-icon {
+    transform:
+        translate(-50%, -50%)
+        scale(0.95);
+}
+
+
+.enemy.marksman .enemy-body {
+    background: #3e4140;
+}
+
+
+.enemy.marksman .enemy-helmet {
+    background: #555955;
+}
+
+
+.enemy.marksman .enemy-gun {
+    width: 2px;
+    height: 28px;
+
+    top: 5px;
+}
+
+
+.enemy.marksman .enemy-gun::before {
+    content: "";
+
+    position: absolute;
+
+    left: -2px;
+    top: 8px;
+
+    width: 6px;
+    height: 3px;
+
+    background: #050605;
+
+    border-radius: 2px;
+}
+
+
+/* Rapide */
+
+.enemy.scout .enemy-icon {
+    transform:
+        translate(-50%, -50%)
+        scale(0.85);
+}
+
+
+.enemy.scout .enemy-body {
+    background: #555955;
+}
+
+
+.enemy.scout .enemy-helmet {
+    background: #696d67;
+}
+
+
+.enemy.scout .enemy-gun {
+    height: 17px;
+}
+
+
+/* Lourd */
+
+.enemy.gunner .enemy-icon {
+    transform:
+        translate(-50%, -50%)
+        scale(1.15);
+}
+
+
+.enemy.gunner .enemy-body {
+    width: 20px;
+
+    background: #353837;
+}
+
+
+.enemy.gunner .enemy-helmet {
+    background: #4b4f4b;
+}
+
+
+.enemy.gunner .enemy-gun {
+    width: 4px;
+    height: 25px;
+
+    background: #080a08;
+}
+
+
+/* =========================================
+   MORT
+========================================= */
+
+.enemy.dead {
+    opacity: 0;
+
+    transition:
+        opacity 0.5s;
+}

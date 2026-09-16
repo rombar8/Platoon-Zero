@@ -1,0 +1,2204 @@
+/* =========================================
+   M&B MOBILE
+   STYLE.CSS
+   Interface générale
+========================================= */
+
+
+/* =========================================
+   RESET
+========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #090d09;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+button {
+    font-family: inherit;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================
+   MENU PRINCIPAL
+========================================= */
+
+/* =========================================
+   MENU PRINCIPAL
+========================================= */
+
+#main-menu {
+    position: relative;
+
+    width: min(520px, 100%);
+    height: 100vh;
+
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 70px 30px 45px;
+
+    color: #ecefe5;
+
+    background:
+        radial-gradient(
+            circle at 50% 15%,
+            rgba(83, 101, 67, 0.20),
+            transparent 35%
+        ),
+        linear-gradient(
+            180deg,
+            #20281e 0%,
+            #131a13 48%,
+            #0b100c 100%
+        );
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.menu-logo {
+    width: 100%;
+
+    text-align: center;
+
+    margin-bottom: 68px;
+}
+
+
+.menu-logo h1 {
+    margin: 0;
+
+    color: #f0f2e9;
+
+    font-size: 44px;
+    font-weight: 900;
+
+    line-height: 1;
+
+    letter-spacing: -1.5px;
+
+    text-shadow:
+        0 3px 0
+        rgba(0, 0, 0, 0.45);
+}
+
+
+.menu-logo p {
+    margin: 9px 0 0;
+
+    color: #aebb9b;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    letter-spacing: 4px;
+}
+
+
+/* Petite ligne sous le logo */
+
+.menu-logo::after {
+    content: "";
+
+    display: block;
+
+    width: 75px;
+    height: 2px;
+
+    margin: 20px auto 0;
+
+    background: #7d9167;
+
+    opacity: 0.65;
+}
+
+
+/* =========================================
+   IDENTITÉ DU JOUEUR
+========================================= */
+
+.player-identity {
+    width: min(320px, 100%);
+
+    margin-bottom: 24px;
+}
+
+
+.player-label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #b8c5aa;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    letter-spacing: 1.5px;
+}
+
+
+#player-name {
+    width: 100%;
+    height: 54px;
+
+    padding: 0 15px;
+
+    outline: none;
+
+    background:
+        rgba(12, 17, 12, 0.75);
+
+    border:
+        1px solid #536149;
+
+    border-radius: 3px;
+
+    color: #f1f3eb;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+
+    transition:
+        border-color 0.15s,
+        box-shadow 0.15s;
+}
+
+
+#player-name::placeholder {
+    color: #687363;
+}
+
+
+#player-name:focus {
+    border-color: #8ca273;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(120, 145, 95, 0.12);
+}
+
+
+/* =========================================
+   BOUTONS
+========================================= */
+
+.menu-buttons {
+    width: min(320px, 100%);
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+
+.menu-buttons button {
+    width: 100%;
+    height: 58px;
+
+    background:
+        rgba(60, 74, 50, 0.92);
+
+    border:
+        1px solid #71845e;
+
+    border-radius: 3px;
+
+    color: #f0f2e9;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    letter-spacing: 0.7px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s,
+        border-color 0.15s,
+        transform 0.1s;
+}
+
+
+.menu-buttons button:hover {
+    background: #536446;
+
+    border-color: #91a778;
+}
+
+
+.menu-buttons button:active {
+    transform: scale(0.98);
+}
+
+
+/* =========================================
+   BOUTON PRINCIPAL
+========================================= */
+
+#play-button {
+    background:
+        linear-gradient(
+            180deg,
+            #566b47,
+            #3e5035
+        );
+
+    border-color: #829a6b;
+}
+
+
+#play-button:hover {
+    background:
+        linear-gradient(
+            180deg,
+            #637a52,
+            #495d3e
+        );
+}
+
+
+/* =========================================
+   RECORD
+========================================= */
+
+.menu-record {
+    width: min(320px, 100%);
+
+    margin-top: 46px;
+
+    padding: 18px 14px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    background:
+        rgba(13, 18, 13, 0.55);
+
+    border-top:
+        1px solid
+        rgba(125, 145, 105, 0.3);
+
+    border-bottom:
+        1px solid
+        rgba(125, 145, 105, 0.3);
+
+    color: #8f9c84;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    letter-spacing: 1px;
+}
+
+
+#best-score {
+    color: #e2e7d9;
+
+    font-size: 19px;
+    font-weight: 900;
+}
+
+/* =========================================
+   AIDE
+========================================= */
+
+#help-panel {
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0, 0, 0, 0.72);
+
+    z-index: 500;
+}
+
+
+.help-window {
+    width: min(360px, 100%);
+
+    padding: 18px;
+
+    background: #1b2219;
+
+    border:
+        1px solid #59664d;
+
+    border-radius: 4px;
+
+    box-shadow:
+        0 8px 30px
+        rgba(0, 0, 0, 0.6);
+
+    color: #dfe4d7;
+}
+
+
+.help-window h2 {
+    margin:
+        0 0 15px 0;
+
+    color: #f1f2eb;
+
+    font-size: 18px;
+
+    letter-spacing: 1px;
+}
+
+
+.help-window p {
+    margin:
+        8px 0;
+
+    color: #aeb8a3;
+
+    font-size: 12px;
+
+    line-height: 1.45;
+}
+
+
+#close-help {
+    width: 100%;
+
+    margin-top: 14px;
+
+    padding: 9px;
+
+    background: #3c4933;
+
+    border:
+        1px solid #68775a;
+
+    border-radius: 3px;
+
+    color: #eef0e8;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* =========================================
+   CONTENEUR DU JEU
+========================================= */
+
+#game {
+    position: relative;
+
+    width: min(520px, 100%);
+    height: 100vh;
+
+    margin: 0 auto;
+
+    overflow: hidden;
+
+    background: #69705a;
+
+    border-left:
+        1px solid #30392c;
+
+    border-right:
+        1px solid #30392c;
+}
+
+
+/* =========================================
+   HUD
+========================================= */
+
+#hud {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 62px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding:
+        8px 8px;
+
+    background:
+        rgba(13, 18, 13, 0.97);
+
+    border-bottom:
+        1px solid #4b5841;
+
+    z-index: 40;
+}
+
+
+/* UNE CAPSULE = UNE STAT */
+
+#hud .hud-item {
+    min-width: 0;
+    height: 42px;
+
+    display: grid;
+
+    grid-template-columns:
+        24px 1fr;
+
+    grid-template-rows:
+        18px 18px;
+
+    align-items: center;
+
+    column-gap: 5px;
+
+    padding:
+        3px 6px;
+
+    background:
+        #1b211a;
+
+    border:
+        1px solid
+        rgba(125, 140, 108, 0.25);
+
+    border-radius: 5px;
+}
+
+
+/* Emoji */
+
+#hud .hud-icon {
+    grid-column: 1;
+    grid-row:
+        1 / 3;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 24px;
+
+    font-size: 16px;
+
+    line-height: 1;
+}
+
+
+/* Nom */
+
+#hud .hud-label {
+    grid-column: 2;
+    grid-row: 1;
+
+    align-self: end;
+
+    color: #b8c2ac;
+
+    font-size: 8px;
+    font-weight: bold;
+
+    line-height: 1;
+
+    letter-spacing: 0.3px;
+
+    white-space: nowrap;
+}
+
+
+/* Valeur */
+
+#hud #points,
+#hud #soldiers-count,
+#hud #kills,
+#hud #wave-number {
+    grid-column: 2;
+    grid-row: 2;
+
+    align-self: start;
+
+    min-width: 0;
+
+    padding: 0;
+
+    background: none;
+    border: none;
+
+    color: #f4f5ef;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    line-height: 1;
+
+    text-align: left;
+}
+
+
+/* =========================================
+   CHAMP DE BATAILLE
+========================================= */
+
+#battlefield {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    top: 62px;
+    bottom: 70px;
+
+    overflow: hidden;
+
+    cursor: crosshair;
+
+    background:
+        radial-gradient(
+            ellipse at 18% 25%,
+            rgba(120, 104, 62, 0.45) 0,
+            rgba(120, 104, 62, 0.45) 7%,
+            transparent 8%
+        ),
+        radial-gradient(
+            ellipse at 78% 55%,
+            rgba(53, 65, 45, 0.6) 0,
+            rgba(53, 65, 45, 0.6) 9%,
+            transparent 10%
+        ),
+        linear-gradient(
+            180deg,
+            #747761 0%,
+            #676d57 100%
+        );
+
+    z-index: 1;
+}
+
+
+/* Mode ciblage soutien */
+
+#battlefield.targeting-mode {
+    cursor: crosshair;
+}
+
+/* =========================================
+   LIGNE DE DÉFENSE ALLIÉE
+========================================= */
+
+#battlefield::after {
+    content: "";
+
+    position: absolute;
+
+    left: 4%;
+    right: 4%;
+
+    bottom: 22%;
+
+    height: 1px;
+
+    background:
+        rgba(180, 195, 155, 0.38);
+
+    box-shadow:
+        0 1px 0
+        rgba(20, 28, 18, 0.5);
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+
+/* Petits repères sur la ligne */
+
+#battlefield::before {
+    content: "ZONE ALLIÉE";
+
+    position: absolute;
+
+    left: 6%;
+
+    bottom:
+        calc(22% + 6px);
+
+    padding:
+        2px 5px;
+
+    color:
+        rgba(205, 215, 190, 0.55);
+
+    background:
+        rgba(40, 50, 35, 0.25);
+
+    font-size: 7px;
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+
+/* =========================================
+   BARRE DE COMMANDES
+========================================= */
+
+#command-bar {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 70px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    background:
+        #111711;
+
+    border-top:
+        1px solid #4b5941;
+
+    z-index: 60;
+}
+
+
+#command-bar button {
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    padding: 5px;
+
+    background: transparent;
+
+    border: none;
+    border-right:
+        1px solid #303a2d;
+
+    color: #c6cebb;
+
+    cursor: pointer;
+}
+
+
+#command-bar button:last-child {
+    border-right: none;
+}
+
+
+#command-bar button:hover {
+    background:
+        rgba(100, 120, 82, 0.12);
+}
+
+
+.command-icon {
+    font-size: 18px;
+
+    line-height: 1;
+}
+
+
+.command-label {
+    font-size: 12px;
+    font-weight: bold;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================
+   MENU TACTIQUE
+========================================= */
+
+#tactical-panel {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    bottom: 70px;
+
+    max-height:
+        calc(100% - 132px);
+
+    display: flex;
+
+    flex-direction: column;
+
+    background:
+        rgba(23, 30, 22, 0.98);
+
+    border-top:
+        1px solid #536048;
+
+    z-index: 55;
+}
+
+
+/* Header */
+
+.tactical-header {
+    flex-shrink: 0;
+
+    min-height: 54px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content:
+        space-between;
+
+    padding:
+        0 16px;
+
+    border-bottom:
+        1px solid #35402f;
+}
+
+
+.tactical-header h2 {
+    margin: 0;
+
+    color: #e7eade;
+
+    font-size: 17px;
+
+    letter-spacing: 1px;
+}
+
+
+#close-tactical {
+    width: 34px;
+    height: 34px;
+
+    padding: 0;
+
+    background: transparent;
+
+    border: none;
+
+    color: #b9c1b0;
+
+    font-size: 21px;
+
+    cursor: pointer;
+}
+
+
+/* Contenu */
+
+#tactical-content {
+    overflow-y: auto;
+
+    padding:
+        0 8px 8px 8px;
+}
+
+
+/* =========================================
+   OPTIONS TACTIQUES
+========================================= */
+
+.tactical-option {
+    width: 100%;
+    min-height: 68px;
+
+    display: grid;
+
+    grid-template-columns:
+        48px minmax(0, 1fr) 40px;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding:
+        9px 6px;
+
+    background: transparent;
+
+    border: none;
+    border-bottom:
+        1px solid
+        rgba(130, 145, 115, 0.22);
+
+    color: #eef0e8;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+
+.tactical-option:hover:not(:disabled) {
+    background:
+        rgba(110, 130, 90, 0.1);
+}
+
+
+.tactical-option:disabled {
+    opacity: 0.4;
+
+    cursor: default;
+}
+
+
+/* Icône */
+
+.tactical-icon {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+
+    font-size: 17px;
+}
+
+
+/* Texte */
+
+.tactical-info {
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 4px;
+}
+
+
+.tactical-info strong {
+    display: block;
+
+    color: #f0f2eb;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    line-height: 1.15;
+}
+
+
+.tactical-info small {
+    display: block;
+
+    color: #9eaa95;
+
+    font-size: 10px;
+    font-weight: normal;
+
+    line-height: 1.3;
+
+    white-space: normal;
+}
+
+
+/* Prix */
+
+.tactical-cost {
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    min-width: 32px;
+
+    color: #eef0e8;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+/* =========================================
+   ANNONCES DES VAGUES
+========================================= */
+
+#wave-announcement {
+    position: absolute;
+
+    left: 50%;
+    top: 18%;
+
+    transform:
+        translateX(-50%);
+
+    min-width: 190px;
+
+    padding:
+        10px 18px;
+
+    background:
+        rgba(14, 18, 13, 0.88);
+
+    border:
+        1px solid
+        rgba(150, 165, 125, 0.55);
+
+    border-radius: 3px;
+
+    box-shadow:
+        0 5px 16px
+        rgba(0, 0, 0, 0.45);
+
+    text-align: center;
+
+    pointer-events: none;
+
+    z-index: 45;
+}
+
+
+#wave-title {
+    color: #e9ebe3;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+
+#wave-subtitle {
+    margin-top: 4px;
+
+    color: #aeb99d;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================
+   TRACERS / TIRS
+========================================= */
+
+.bullet-tracer {
+    position: absolute;
+
+    height: 1px;
+
+    transform-origin:
+        left center;
+
+    background:
+        rgba(255, 235, 160, 0.9);
+
+    box-shadow:
+        0 0 3px
+        rgba(255, 220, 120, 0.75);
+
+    pointer-events: none;
+
+    z-index: 20;
+}
+
+
+.bullet-tracer.enemy-tracer {
+    background:
+        rgba(255, 145, 115, 0.85);
+}
+
+
+/* =========================================
+   MORT
+========================================= */
+
+.soldier.dead,
+.enemy.dead {
+    opacity: 0;
+
+    transition:
+        opacity 0.7s;
+}
+
+
+/* =========================================
+   GRENADE / MORTIER
+========================================= */
+
+.support-explosion {
+    position: absolute;
+
+    transform:
+        translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 240, 180, 0.95) 0%,
+            rgba(225, 145, 70, 0.78) 25%,
+            rgba(80, 65, 48, 0.48) 55%,
+            transparent 72%
+        );
+
+    pointer-events: none;
+
+    z-index: 25;
+
+    animation:
+        supportExplosion
+        0.45s
+        ease-out
+        forwards;
+}
+
+
+@keyframes supportExplosion {
+
+    0% {
+        scale: 0.15;
+        opacity: 1;
+    }
+
+    60% {
+        scale: 1;
+        opacity: 1;
+    }
+
+    100% {
+        scale: 1.15;
+        opacity: 0;
+    }
+
+}
+
+
+/* Cible mortier */
+
+.mortar-marker {
+    position: absolute;
+
+    width: 55px;
+    height: 55px;
+
+    transform:
+        translate(-50%, -50%);
+
+    border:
+        2px dashed
+        rgba(190, 75, 55, 0.9);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: 22;
+
+    animation:
+        mortarPulse
+        0.4s
+        infinite
+        alternate;
+}
+
+
+.mortar-marker::before,
+.mortar-marker::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    background:
+        rgba(195, 75, 55, 0.85);
+}
+
+
+.mortar-marker::before {
+    width: 70px;
+    height: 1px;
+}
+
+
+.mortar-marker::after {
+    width: 1px;
+    height: 70px;
+}
+
+
+@keyframes mortarPulse {
+
+    from {
+        opacity: 0.4;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+
+/* =========================================
+   RAVITAILLEMENT
+========================================= */
+
+.supply-marker {
+    position: absolute;
+
+    width: 70px;
+    height: 70px;
+
+    transform:
+        translate(-50%, -50%);
+
+    border:
+        2px dashed
+        rgba(135, 170, 110, 0.85);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: 22;
+
+    animation:
+        supplyMarkerPulse
+        0.5s
+        infinite
+        alternate;
+}
+
+
+@keyframes supplyMarkerPulse {
+
+    from {
+        scale: 0.85;
+        opacity: 0.45;
+    }
+
+    to {
+        scale: 1;
+        opacity: 1;
+    }
+
+}
+
+
+.supply-crate {
+    position: absolute;
+
+    width: 28px;
+    height: 24px;
+
+    transform:
+        translate(-50%, -50%);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #596648;
+
+    border:
+        2px solid #303828;
+
+    border-radius: 2px;
+
+    color: #dce6ce;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    box-shadow:
+        2px 3px 5px
+        rgba(0, 0, 0, 0.5);
+
+    pointer-events: none;
+
+    z-index: 21;
+
+    animation:
+        supplyDrop
+        0.3s
+        ease-out;
+}
+
+
+@keyframes supplyDrop {
+
+    from {
+        translate: 0 -40px;
+        opacity: 0;
+    }
+
+    to {
+        translate: 0 0;
+        opacity: 1;
+    }
+
+}
+
+
+.supply-crate-disappear {
+    opacity: 0;
+
+    transition:
+        opacity 0.5s;
+}
+
+
+/* =========================================
+   ORDRES
+========================================= */
+
+.order-indicator {
+    position: absolute;
+
+    transform:
+        translate(-50%, -140%);
+
+    font-size: 18px;
+
+    pointer-events: none;
+
+    z-index: 30;
+
+    animation:
+        orderIndicator
+        0.9s
+        ease-out
+        forwards;
+}
+
+
+@keyframes orderIndicator {
+
+    0% {
+        opacity: 0;
+        translate: 0 5px;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        translate: 0 -15px;
+    }
+
+}
+
+
+/* =========================================
+   PETITS ÉCRANS
+========================================= */
+
+@media (max-width: 480px) {
+
+    #hud {
+        gap: 4px;
+
+        padding:
+            8px 5px;
+    }
+
+
+    #hud .hud-item {
+        grid-template-columns:
+            19px 1fr;
+
+        column-gap: 3px;
+
+        padding:
+            3px 4px;
+    }
+
+
+    #hud .hud-icon {
+        width: 19px;
+
+        font-size: 13px;
+    }
+
+
+    #hud .hud-label {
+        font-size: 7px;
+
+        letter-spacing: 0;
+    }
+
+
+    #hud #points,
+    #hud #soldiers-count,
+    #hud #kills,
+    #hud #wave-number {
+        font-size: 12px;
+    }
+
+
+    .command-label {
+        font-size: 10px;
+    }
+
+
+    .tactical-option {
+        grid-template-columns:
+            42px minmax(0, 1fr) 34px;
+
+        gap: 6px;
+
+        min-height: 64px;
+    }
+
+
+    .tactical-info strong {
+        font-size: 12px;
+    }
+
+
+    .tactical-info small {
+        font-size: 9px;
+    }
+
+}
+
+/* =========================================
+   GAME OVER
+========================================= */
+
+#game-over {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px;
+
+    background:
+        rgba(5, 8, 5, 0.82);
+
+    backdrop-filter:
+        blur(2px);
+
+    z-index: 500;
+}
+
+
+.game-over-window {
+    width: min(340px, 100%);
+
+    padding:
+        28px 24px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #20281e,
+            #121812
+        );
+
+    border:
+        1px solid #66775a;
+
+    border-radius: 4px;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0, 0, 0, 0.7);
+
+    color: #e9ece3;
+
+    text-align: center;
+}
+
+
+.game-over-small-title {
+    color: #9eab93;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    letter-spacing: 3px;
+}
+
+
+#game-over-player {
+    margin:
+        9px 0 14px;
+
+    color: #f1f3eb;
+
+    font-size: 25px;
+
+    letter-spacing: 1px;
+}
+
+
+.game-over-line {
+    width: 60px;
+    height: 2px;
+
+    margin:
+        0 auto 25px;
+
+    background: #758968;
+}
+
+
+/* =========================================
+   STATS
+========================================= */
+
+.game-over-stats {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+}
+
+
+.game-over-stats > div {
+    padding:
+        12px 8px;
+
+    background:
+        rgba(8, 12, 8, 0.45);
+
+    border:
+        1px solid
+        rgba(120, 140, 105, 0.25);
+}
+
+
+.game-over-stats span {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #929e88;
+
+    font-size: 9px;
+    font-weight: bold;
+
+    letter-spacing: 1px;
+}
+
+
+.game-over-stats strong {
+    color: #f1f3eb;
+
+    font-size: 20px;
+}
+
+
+/* =========================================
+   SCORE FINAL
+========================================= */
+
+.final-score {
+    margin-top: 12px;
+
+    padding:
+        18px 10px;
+
+    background:
+        rgba(83, 101, 67, 0.18);
+
+    border-top:
+        1px solid #526148;
+
+    border-bottom:
+        1px solid #526148;
+}
+
+
+.final-score span {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #aeba9f;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+
+.final-score strong {
+    color: #ffffff;
+
+    font-size: 32px;
+    font-weight: 900;
+}
+
+
+/* =========================================
+   RECORD
+========================================= */
+
+#new-record {
+    margin-top: 14px;
+
+    color: #d8c878;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================
+   BOUTONS GAME OVER
+========================================= */
+
+.game-over-buttons {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 9px;
+
+    margin-top: 22px;
+}
+
+
+.game-over-buttons button {
+    height: 45px;
+
+    background: #3d4b34;
+
+    border:
+        1px solid #687b59;
+
+    border-radius: 3px;
+
+    color: #eef0e8;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.game-over-buttons button:hover {
+    background: #4d5e41;
+}
+
+
+#restart-button {
+    background:
+        linear-gradient(
+            180deg,
+            #586d49,
+            #3f5136
+        );
+}
+
+/* =========================================
+   PAUSE
+========================================= */
+
+#pause-button {
+    position: absolute;
+
+    right: 7px;
+    top: 50%;
+
+    width: 32px;
+    height: 32px;
+
+    transform:
+        translateY(-50%);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    background: #20271f;
+
+    border:
+        1px solid #485443;
+
+    border-radius: 4px;
+
+    color: #e9ece3;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+
+#pause-button:hover {
+    background: #303a2d;
+}
+
+
+/* =========================================
+   ÉCRAN PAUSE
+========================================= */
+
+#pause-menu {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px;
+
+    background:
+        rgba(5, 8, 5, 0.78);
+
+    backdrop-filter:
+        blur(2px);
+
+    z-index: 450;
+}
+
+
+.pause-window {
+    width: min(300px, 100%);
+
+    padding:
+        27px 22px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            180deg,
+            #20281e,
+            #121812
+        );
+
+    border:
+        1px solid #66775a;
+
+    border-radius: 4px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(0, 0, 0, 0.65);
+}
+
+
+.pause-label {
+    color: #909d86;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+
+.pause-window h2 {
+    margin:
+        10px 0 25px;
+
+    color: #f0f2ea;
+
+    font-size: 24px;
+
+    letter-spacing: 2px;
+}
+
+
+.pause-window button {
+    width: 100%;
+    height: 48px;
+
+    margin-top: 9px;
+
+    background: #3e4d35;
+
+    border:
+        1px solid #697c59;
+
+    border-radius: 3px;
+
+    color: #eef1e8;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    letter-spacing: 0.7px;
+
+    cursor: pointer;
+}
+
+
+#resume-button {
+    background:
+        linear-gradient(
+            180deg,
+            #586d49,
+            #3f5136
+        );
+}
+
+/* =========================================
+   FIGER LES ANIMATIONS PENDANT LA PAUSE
+========================================= */
+
+#game.paused .support-explosion,
+#game.paused .mortar-marker,
+#game.paused .supply-marker,
+#game.paused .supply-crate {
+    animation-play-state: paused !important;
+};
+
+/* ==========================================
+   M&B MOBILE
+   MOBILE V1
+   ========================================== */
+
+
+/* ==========================================
+   COMPORTEMENT TACTILE
+   ========================================== */
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+
+    overscroll-behavior: none;
+    touch-action: manipulation;
+
+    -webkit-user-select: none;
+    user-select: none;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* Le pseudo doit rester sélectionnable */
+#player-name {
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+
+/* ==========================================
+   JEU
+   ========================================== */
+
+#game {
+    width: 100%;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+
+/* ==========================================
+   BATTLEFIELD
+   ========================================== */
+
+#battlefield {
+    touch-action: none;
+    overflow: hidden;
+}
+
+
+/* ==========================================
+   BOUTONS
+   ========================================== */
+
+button {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (max-width: 600px) {
+
+    /* ======================================
+       MENU PRINCIPAL
+       ====================================== */
+
+    #main-menu {
+        width: 100%;
+        min-height: 100dvh;
+
+        padding:
+            max(45px, env(safe-area-inset-top))
+            20px
+            max(25px, env(safe-area-inset-bottom));
+    }
+
+
+    .menu-logo {
+        margin-bottom: 45px;
+    }
+
+
+    .menu-logo h1 {
+        font-size: clamp(
+            32px,
+            10vw,
+            44px
+        );
+    }
+
+
+    .menu-logo p {
+        font-size: 9px;
+        letter-spacing: 3px;
+    }
+
+
+    .player-identity,
+    .menu-buttons,
+    .menu-record {
+        width: min(
+            100%,
+            340px
+        );
+    }
+
+
+    #player-name {
+        height: 52px;
+        font-size: 16px;
+    }
+
+
+    .menu-buttons button {
+        min-height: 56px;
+    }
+
+
+    /* ======================================
+       HUD
+       ====================================== */
+
+    #hud {
+        height: 58px;
+
+        grid-template-columns:
+            repeat(
+                4,
+                minmax(0, 1fr)
+            );
+
+        gap: 3px;
+
+        padding:
+            max(5px, env(safe-area-inset-top))
+            5px
+            5px;
+    }
+
+
+    #hud .hud-item {
+        height: 40px;
+
+        grid-template-columns:
+            20px 1fr;
+
+        padding: 3px 4px;
+
+        column-gap: 3px;
+    }
+
+
+    #hud .hud-icon {
+        width: 20px;
+        font-size: 14px;
+    }
+
+
+    #hud .hud-label {
+        font-size: 7px;
+        letter-spacing: 0;
+    }
+
+
+    #hud #points,
+    #hud #soldiers-count,
+    #hud #kills,
+    #hud #wave-number {
+        font-size: 13px;
+    }
+
+
+    /* ======================================
+       PAUSE
+       ====================================== */
+
+    #pause-button {
+        width: 36px;
+        height: 36px;
+
+        top: 66px;
+        right: 8px;
+
+        font-size: 15px;
+    }
+
+
+    /* ======================================
+       SOLDATS / ENNEMIS
+       Zone tactile plus confortable
+       sans agrandir leur dessin.
+       ====================================== */
+
+    .soldier,
+    .enemy {
+        width: 36px;
+        height: 36px;
+    }
+
+
+    /* ======================================
+       BARRE DE COMMANDES
+       ====================================== */
+
+    #command-bar {
+        padding-bottom:
+            max(
+                8px,
+                env(safe-area-inset-bottom)
+            );
+    }
+
+
+    #command-bar button {
+        min-height: 48px;
+
+        font-size: 11px;
+
+        touch-action: manipulation;
+    }
+
+
+    /* ======================================
+       PANNEAUX
+       ====================================== */
+
+    #tactical-panel,
+    #unit-panel {
+        max-width:
+            calc(100vw - 20px);
+
+        max-height:
+            calc(100dvh - 90px);
+    }
+
+
+    #tactical-content {
+        overflow-y: auto;
+
+        -webkit-overflow-scrolling:
+            touch;
+    }
+
+
+    /* ======================================
+       GAME OVER / PAUSE
+       ====================================== */
+
+    .game-over-window,
+    .pause-window {
+        width:
+            min(
+                calc(100vw - 30px),
+                360px
+            );
+
+        max-height:
+            calc(100dvh - 40px);
+
+        overflow-y: auto;
+    }
+
+
+    .game-over-buttons button,
+    .pause-window button {
+        min-height: 50px;
+    }
+}
+
+
+/* ==========================================
+   TRÈS PETITS TÉLÉPHONES
+   ========================================== */
+
+@media (max-width: 380px) {
+
+    #hud {
+        gap: 2px;
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+
+
+    #hud .hud-item {
+        grid-template-columns:
+            17px 1fr;
+
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
+
+    #hud .hud-icon {
+        width: 17px;
+        font-size: 12px;
+    }
+
+
+    #hud .hud-label {
+        font-size: 6px;
+    }
+
+
+    #hud #points,
+    #hud #soldiers-count,
+    #hud #kills,
+    #hud #wave-number {
+        font-size: 12px;
+    }
+
+
+    .menu-logo h1 {
+        font-size: 31px;
+    }
+}
+
+
+/* ==========================================
+   PAYSAGE
+   ========================================== */
+
+@media (
+    orientation: landscape
+)
+and (max-height: 500px) {
+
+    #hud {
+        height: 52px;
+    }
+
+
+    #hud .hud-item {
+        height: 36px;
+    }
+
+
+    #pause-button {
+        top: 58px;
+    }
+
+
+    #tactical-panel,
+    #unit-panel {
+        max-height:
+            calc(100dvh - 70px);
+    }
+
+
+    .game-over-window,
+    .pause-window {
+        max-height:
+            calc(100dvh - 20px);
+    }
+}
