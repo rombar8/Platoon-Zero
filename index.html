@@ -48,6 +48,11 @@
         href="css/unit-panel.css"
     >
 
+    <link 
+        rel="stylesheet" 
+        href="css/battlefield.css"
+    >
+
 </head>
 
 
@@ -507,14 +512,12 @@
              BARRE DE COMMANDES
         ================================== -->
 
-        <nav id="command-bar">
-
+       <nav id="command-bar">
 
             <button
                 type="button"
                 data-menu="reinforcements"
             >
-
                 <span class="command-icon">
                     🪖
                 </span>
@@ -522,7 +525,6 @@
                 <span class="command-label">
                     RENFORTS
                 </span>
-
             </button>
 
 
@@ -530,7 +532,6 @@
                 type="button"
                 data-menu="support"
             >
-
                 <span class="command-icon">
                     💥
                 </span>
@@ -538,7 +539,20 @@
                 <span class="command-label">
                     SOUTIEN
                 </span>
+            </button>
 
+
+            <button
+                type="button"
+                data-menu="defenses"
+            >
+                <span class="command-icon">
+                    🛠️
+                </span>
+
+                <span class="command-label">
+                    DÉFENSES
+                </span>
             </button>
 
 
@@ -546,7 +560,6 @@
                 type="button"
                 data-menu="orders"
             >
-
                 <span class="command-icon">
                     ⚑
                 </span>
@@ -554,9 +567,7 @@
                 <span class="command-label">
                     ORDRES
                 </span>
-
             </button>
-
 
         </nav>
 
@@ -681,6 +692,11 @@
     <!-- SUPPORT -->
 
     <script src="js/support.js"></script>
+
+
+    <!-- DÉFENSES -->
+    
+    <script src="js/defenses.js"></script>
 
 
     <!-- VAGUES -->

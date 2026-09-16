@@ -93,6 +93,30 @@ battlefield.addEventListener(
         const y =
             event.clientY - rect.top;
 
+        
+        // ======================================
+        // PLACEMENT AUTOMATIQUE DANS TRANCHÉE
+        // ======================================
+
+        if (
+            typeof getTrenchSlotAt === "function"
+        ) {
+
+            const trenchSlot =
+                getTrenchSlotAt(x, y);
+
+            if (trenchSlot) {
+
+                selectedSoldier.targetX =
+                    trenchSlot.x;
+
+                selectedSoldier.targetY =
+                    trenchSlot.y;
+
+                return;
+            }
+        }
+
 
         // Limite horizontale
         selectedSoldier.targetX =

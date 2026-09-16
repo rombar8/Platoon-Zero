@@ -120,6 +120,20 @@ const tacticalMenus = {
     },
 
 
+    defenses: {
+                title: "DÉFENSES",
+                options: [
+                    {
+                        icon: "⛏️",
+                        name: "TRANCHÉE",
+                        description: "Couverture défensive • réduit les dégâts",
+                        cost: 8,
+                        type: "trench"
+                    }
+                ]
+            },
+
+
     orders: {
         title: "ORDRES",
 

@@ -194,11 +194,36 @@ function damageUnit(
     }
 
 
+    // ======================================
+    // PROTECTION DE LA TRANCHÉE
+    // ======================================
+
+    const targetIsAlly =
+        soldiers.includes(target);
+
+    const attackerIsEnemy =
+        enemies.includes(attacker);
+
+    if (
+        targetIsAlly &&
+        attackerIsEnemy &&
+        typeof isSoldierInTrench === "function" &&
+        isSoldierInTrench(target)
+    ) {
+
+        // La tranchée absorbe 50 %
+        // des dégâts ennemis
+        damage *= 0.5;
+    }
+
+
+    // ======================================
+    // DÉGÂTS
+    // ======================================
+
     target.hp -= damage;
 
-
     if (target.hp < 0) {
-
         target.hp = 0;
     }
 
@@ -212,9 +237,7 @@ function damageUnit(
         typeof showUnitPanel === "function"
     ) {
 
-        showUnitPanel(
-            target
-        );
+        showUnitPanel(target);
     }
 
 
@@ -230,7 +253,6 @@ function damageUnit(
         );
     }
 }
-
 
 // ==========================================
 // MORT D'UNE UNITÉ
@@ -403,6 +425,103 @@ function killUnit(
 // TIR
 // ==========================================
 
+
+function findFriendlyFireTarget(
+    shooter,
+    target
+) {
+
+    // Le friendly fire ne concerne ici
+    // que les tirs des soldats alliés
+    if (!soldiers.includes(shooter)) {
+        return null;
+    }
+
+    const dx = target.x - shooter.x;
+    const dy = target.y - shooter.y;
+
+    const shotLengthSquared =
+        dx * dx + dy * dy;
+
+    if (shotLengthSquared === 0) {
+        return null;
+    }
+
+    let closestFriendly = null;
+    let closestProgress = Infinity;
+
+
+    for (const soldier of soldiers) {
+
+        if (
+            soldier === shooter ||
+            !soldier.alive
+        ) {
+            continue;
+        }
+
+
+        // Position du soldat projetée
+        // sur la trajectoire de la balle
+        const progress =
+            (
+                (soldier.x - shooter.x) * dx +
+                (soldier.y - shooter.y) * dy
+            ) / shotLengthSquared;
+
+
+        // Il doit être ENTRE le tireur
+        // et la cible
+        if (
+            progress <= 0 ||
+            progress >= 1
+        ) {
+            continue;
+        }
+
+
+        const lineX =
+            shooter.x + dx * progress;
+
+        const lineY =
+            shooter.y + dy * progress;
+
+
+        const distanceFromShot =
+            Math.hypot(
+                soldier.x - lineX,
+                soldier.y - lineY
+            );
+
+
+        // Rayon approximatif d'un soldat
+        if (distanceFromShot > 14) {
+            continue;
+        }
+
+
+        // On garde le premier allié
+        // rencontré par la balle
+        if (progress < closestProgress) {
+
+            closestProgress = progress;
+            closestFriendly = soldier;
+        }
+    }
+
+
+    if (
+        closestFriendly &&
+        Math.random() < 0.33
+    ) {
+        return closestFriendly;
+    }
+
+
+    return null;
+}
+
+
 function shoot(
     shooter,
     target,
@@ -415,7 +534,6 @@ function shoot(
         !target ||
         !target.alive
     ) {
-
         return;
     }
 
@@ -438,12 +556,38 @@ function shoot(
 
 
     // ======================================
+    // FRIENDLY FIRE
+    // ======================================
+
+    let actualTarget = target;
+
+    if (!enemyShot) {
+
+        const friendlyTarget =
+            findFriendlyFireTarget(
+                shooter,
+                target
+            );
+
+        if (friendlyTarget) {
+
+            actualTarget =
+                friendlyTarget;
+
+            console.log(
+                "FRIENDLY FIRE !"
+            );
+        }
+    }
+
+
+    // ======================================
     // TRACEUR
     // ======================================
 
     createTracer(
         shooter,
-        target,
+        actualTarget,
         enemyShot
     );
 
@@ -453,7 +597,7 @@ function shoot(
     // ======================================
 
     damageUnit(
-        target,
+        actualTarget,
         shooter.damage,
         shooter
     );

@@ -149,10 +149,7 @@ function buyTacticalOption(option) {
     // VÉRIFICATION DES POINTS
     // ======================================
 
-    if (
-        commandPoints <
-        option.cost
-    ) {
+    if (commandPoints < option.cost) {
 
         console.log(
             "Pas assez de points."
@@ -163,12 +160,31 @@ function buyTacticalOption(option) {
 
 
     // ======================================
-    // PAIEMENT
+    // TRANCHÉE
+    // Le paiement aura lieu AU PLACEMENT
+    // ======================================
+
+    if (
+        option.type === "trench"
+    ) {
+
+        activateDefensePlacement(
+            "trench",
+            option.cost
+        );
+
+        closeTacticalMenu();
+
+        return;
+    }
+
+
+    // ======================================
+    // PAIEMENT DES AUTRES OPTIONS
     // ======================================
 
     commandPoints -=
         option.cost;
-
 
     updatePoints();
 
@@ -182,7 +198,6 @@ function buyTacticalOption(option) {
         spawnReinforcement(
             option.type
         );
-
 
         closeTacticalMenu();
 
@@ -203,7 +218,6 @@ function buyTacticalOption(option) {
             "grenade"
         );
 
-
         closeTacticalMenu();
 
         return;
@@ -222,7 +236,6 @@ function buyTacticalOption(option) {
         activateSupport(
             "mortar"
         );
-
 
         closeTacticalMenu();
 
@@ -243,7 +256,6 @@ function buyTacticalOption(option) {
             "supply"
         );
 
-
         closeTacticalMenu();
 
         return;
@@ -253,6 +265,7 @@ function buyTacticalOption(option) {
     // ======================================
     // TENIR POSITION
     // ======================================
+
     if (
         option.name ===
         "TENIR POSITION"
@@ -309,9 +322,7 @@ function buyTacticalOption(option) {
         option.name
     );
 
-
     closeTacticalMenu();
-
 }
 
 

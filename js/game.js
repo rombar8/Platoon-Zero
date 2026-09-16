@@ -203,6 +203,83 @@ closeHelpButton.addEventListener(
 );
 
 
+function createBattlefieldDecorations() {
+
+
+    // Supprime toutes les anciennes décorations
+    battlefield
+        .querySelectorAll(
+            ".battlefield-grass, .battlefield-rock, .battlefield-log"
+        )
+        .forEach(function (element) {
+            element.remove();
+        });
+
+
+    // 🌿 Herbes
+    for (let i = 0; i < 50; i++) {
+
+        const grass = document.createElement("div");
+
+        grass.className = "battlefield-grass";
+
+        grass.style.left =
+            (5 + Math.random() * 90) + "%";
+
+        grass.style.top =
+            (10 + Math.random() * 75) + "%";
+
+        grass.style.transform =
+            `rotate(${Math.random() * 360}deg)`;
+
+        battlefield.appendChild(grass);
+    }
+
+
+    // 🪨 Petit rocher
+    for (let i = 0; i < 12; i++) {
+
+        const rock = document.createElement("div");
+
+        rock.className = "battlefield-rock";
+
+        rock.style.left =
+            (5 + Math.random() * 90) + "%";
+
+        rock.style.top =
+            (10 + Math.random() * 75) + "%";
+
+        const scale =
+            0.7 + Math.random() * 0.7;
+
+        rock.style.transform =
+            `rotate(${Math.random() * 360}deg) scale(${scale})`;
+
+        battlefield.appendChild(rock);
+    }
+
+
+    // 🪵 Troncs d'arbres couchés
+    for (let i = 0; i < 5; i++) {
+
+        const log = document.createElement("div");
+
+        log.className = "battlefield-log";
+
+        log.style.left =
+            (10 + Math.random() * 80) + "%";
+
+        log.style.top =
+            (15 + Math.random() * 60) + "%";
+
+        log.style.transform =
+            `rotate(${-35 + Math.random() * 70}deg)`;
+
+        battlefield.appendChild(log);
+    }
+}
+
+
 // ==========================================
 // LANCEMENT D'UNE PARTIE
 // ==========================================
@@ -252,6 +329,8 @@ function startGame() {
     // ======================================
 
     resetGameState();
+
+    createBattlefieldDecorations();
 
 
     // ======================================
