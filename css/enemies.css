@@ -485,3 +485,56 @@
 
     transition: width 0.15s linear;
 }
+
+/* ==========================================
+   BOSS - JUGGERNAUT
+   ========================================== */
+
+.enemy.boss {
+    z-index: 15;
+}
+
+.enemy.boss .enemy-icon {
+    transform: scale(1.75);
+}
+
+.enemy.boss .enemy-helmet {
+    background: #292929;
+}
+
+.enemy.boss .enemy-body {
+    background: #202020;
+
+    width: 18px;
+    height: 20px;
+}
+
+.enemy.boss .enemy-gun {
+    width: 32px;
+    height: 6px;
+
+    background: #111;
+}
+
+.enemy.boss .enemy-class {
+    display: block;
+
+    top: -27px;
+
+    font-size: 11px;
+
+    color: #ff4a4a;
+
+    text-shadow:
+        0 0 4px #000,
+        0 0 6px #8b0000;
+}
+
+.enemy.boss .enemy-health {
+    width: 48px;
+    height: 6px;
+
+    top: -15px;
+
+    opacity: 1;
+}

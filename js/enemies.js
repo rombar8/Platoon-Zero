@@ -13,6 +13,15 @@ const enemies = [];
 
 const enemyTypes = {
 
+    boss: {
+    name: "JUGGERNAUT",
+    hp: 650,
+    speed: 10,
+    damage: 30,
+    range: 145,
+    fireRate: 900
+},
+
     rifleman: {
         name: "Fusilier",
         hp: 60,
@@ -108,7 +117,8 @@ function createEnemy(
         rifleman: "",
         scout: "⚡",
         gunner: "◆",
-        marksman: "⌖"
+        marksman: "⌖",
+        boss: "☠ BOSS"
     };
 
     element.innerHTML = `

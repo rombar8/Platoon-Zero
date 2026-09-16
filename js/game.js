@@ -56,6 +56,8 @@ const commandButtons =
 const speedButton =
     document.querySelector("#speed-button");
 
+const speedValue = document.querySelector("#speed-value");
+
 
 // ==========================================
 // JOUEUR
@@ -1297,41 +1299,35 @@ function pauseGame() {
 
 if (speedButton) {
 
-    if (speedButton) {
-
     speedButton.addEventListener(
         "click",
         function () {
 
-            if (
-                !gameStarted ||
-                gameOver
-            ) {
+            if (!gameStarted || gameOver) {
                 return;
             }
 
+            // ×1 → ×2 → ×4 → ×1
             if (gameSpeed === 1) {
-
                 gameSpeed = 2;
 
             } else if (gameSpeed === 2) {
-
                 gameSpeed = 4;
 
             } else {
-
                 gameSpeed = 1;
             }
 
+            // Mise à jour graphique
+            const speedValue =
+                document.querySelector("#speed-value");
 
             if (speedValue) {
-
                 speedValue.textContent =
                     "×" + gameSpeed;
             }
         }
     );
-    }
 }
 
 
