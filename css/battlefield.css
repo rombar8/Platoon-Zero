@@ -1,0 +1,29 @@
+.battlefield-grass {
+    position: absolute;
+    width: 18px;
+    height: 10px;
+    pointer-events: none;
+    opacity: 0.45;
+    z-index: 1;
+}
+
+.battlefield-grass::before,
+.battlefield-grass::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 2px;
+    height: 9px;
+    background: #3f4938;
+    transform-origin: bottom;
+}
+
+.battlefield-grass::before {
+    left: 6px;
+    transform: rotate(-25deg);
+}
+
+.battlefield-grass::after {
+    left: 11px;
+    transform: rotate(25deg);
+}
