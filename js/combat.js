@@ -41,9 +41,7 @@ function findClosestTarget(
 ) {
 
     let closestTarget = null;
-
     let closestDistance = Infinity;
-
 
     possibleTargets.forEach(
         function (target) {
@@ -55,13 +53,11 @@ function findClosestTarget(
                 return;
             }
 
-
             const distance =
                 getDistance(
                     unit,
                     target
                 );
-
 
             if (
                 distance <= unit.range &&
@@ -76,7 +72,6 @@ function findClosestTarget(
             }
         }
     );
-
 
     return closestTarget;
 }
@@ -99,17 +94,14 @@ function createTracer(
         return;
     }
 
-
     const tracer =
         document.createElement(
             "div"
         );
 
-
     tracer.classList.add(
         "bullet-tracer"
     );
-
 
     if (enemyShot) {
 
@@ -118,20 +110,17 @@ function createTracer(
         );
     }
 
-
     const dx =
         target.x - shooter.x;
 
     const dy =
         target.y - shooter.y;
 
-
     const distance =
         Math.sqrt(
             dx * dx +
             dy * dy
         );
-
 
     const angle =
         Math.atan2(
@@ -140,7 +129,6 @@ function createTracer(
         ) *
         180 /
         Math.PI;
-
 
     tracer.style.left =
         shooter.x + "px";
@@ -156,14 +144,9 @@ function createTracer(
         angle +
         "deg)";
 
-
     battlefield.appendChild(
         tracer
     );
-
-
-    // Purement visuel :
-    // pas d'effet sur le gameplay.
 
     setTimeout(
         function () {
@@ -172,6 +155,71 @@ function createTracer(
 
         },
         70
+    );
+}
+
+
+// ==========================================
+// BARRE DE VIE ENNEMIE
+// ==========================================
+
+function updateEnemyHealthBar(enemy) {
+
+    if (
+        !enemy ||
+        !enemy.element ||
+        !enemies.includes(enemy)
+    ) {
+        return;
+    }
+
+    let container =
+        enemy.element.querySelector(
+            ".enemy-health"
+        );
+
+    if (!container) {
+
+        container =
+            document.createElement(
+                "div"
+            );
+
+        container.className =
+            "enemy-health";
+
+        container.innerHTML = `
+            <div class="enemy-health-bar"></div>
+        `;
+
+        enemy.element.appendChild(
+            container
+        );
+    }
+
+    const bar =
+        container.querySelector(
+            ".enemy-health-bar"
+        );
+
+    const percent =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                (enemy.hp / enemy.maxHp) * 100
+            )
+        );
+
+    bar.style.width =
+        percent + "%";
+
+    // Barre visible seulement
+    // quand l'ennemi est blessé
+    container.classList.toggle(
+        "visible",
+        percent < 100 &&
+        enemy.alive !== false
     );
 }
 
@@ -207,24 +255,39 @@ function damageUnit(
     if (
         targetIsAlly &&
         attackerIsEnemy &&
-        typeof isSoldierInTrench === "function" &&
+        typeof isSoldierInTrench ===
+            "function" &&
         isSoldierInTrench(target)
     ) {
 
-        // La tranchée absorbe 50 %
-        // des dégâts ennemis
+        // Réduction de 50 %
         damage *= 0.5;
     }
 
 
     // ======================================
-    // DÉGÂTS
+    // APPLICATION DES DÉGÂTS
     // ======================================
 
     target.hp -= damage;
 
     if (target.hp < 0) {
+
         target.hp = 0;
+    }
+
+
+    // ======================================
+    // VIE ENNEMIE
+    // ======================================
+
+    if (
+        enemies.includes(target)
+    ) {
+
+        updateEnemyHealthBar(
+            target
+        );
     }
 
 
@@ -234,10 +297,13 @@ function damageUnit(
 
     if (
         target === selectedSoldier &&
-        typeof showUnitPanel === "function"
+        typeof showUnitPanel ===
+            "function"
     ) {
 
-        showUnitPanel(target);
+        showUnitPanel(
+            target
+        );
     }
 
 
@@ -256,35 +322,201 @@ function damageUnit(
 
 
 // ==========================================
+// BONUS DE COMBAT DES GRADES
+// ==========================================
+
+const rankCombatBonuses = {
+
+    PVT: {
+        hp: 1.00,
+        damage: 1.00,
+        range: 1.00
+    },
+
+    PFC: {
+        hp: 1.04,
+        damage: 1.03,
+        range: 1.01
+    },
+
+    SPC: {
+        hp: 1.08,
+        damage: 1.06,
+        range: 1.02
+    },
+
+    CPL: {
+        hp: 1.12,
+        damage: 1.09,
+        range: 1.03
+    },
+
+    SGT: {
+        hp: 1.16,
+        damage: 1.12,
+        range: 1.04
+    },
+
+    SSG: {
+        hp: 1.20,
+        damage: 1.15,
+        range: 1.05
+    },
+
+    SFC: {
+        hp: 1.25,
+        damage: 1.18,
+        range: 1.06
+    },
+
+    WO1: {
+        hp: 1.30,
+        damage: 1.22,
+        range: 1.08
+    },
+
+    CW2: {
+        hp: 1.35,
+        damage: 1.26,
+        range: 1.10
+    },
+
+    "2LT": {
+        hp: 1.40,
+        damage: 1.30,
+        range: 1.12
+    }
+};
+
+
+// ==========================================
+// APPLICATION BONUS DE GRADE
+// ==========================================
+
+function applyRankCombatBonus(
+    soldier,
+    oldRank,
+    newRank
+) {
+
+    const oldBonus =
+        rankCombatBonuses[oldRank] ||
+        rankCombatBonuses.PVT;
+
+    const newBonus =
+        rankCombatBonuses[newRank] ||
+        rankCombatBonuses.PVT;
+
+
+    const hpRatio =
+        newBonus.hp /
+        oldBonus.hp;
+
+    const damageRatio =
+        newBonus.damage /
+        oldBonus.damage;
+
+    const rangeRatio =
+        newBonus.range /
+        oldBonus.range;
+
+
+    const oldMaxHp =
+        soldier.maxHp;
+
+
+    soldier.maxHp *=
+        hpRatio;
+
+    soldier.damage *=
+        damageRatio;
+
+    soldier.range *=
+        rangeRatio;
+
+
+    // Le bonus de PV max est également
+    // ajouté aux PV actuels
+    soldier.hp +=
+        soldier.maxHp -
+        oldMaxHp;
+
+
+    soldier.hp =
+        Math.min(
+            soldier.hp,
+            soldier.maxHp
+        );
+}
+
+
+// ==========================================
 // PROGRESSION / GRADES
 // ==========================================
 
-function updateSoldierRank(soldier) {
+function updateSoldierRank(
+    soldier
+) {
 
     if (!soldier) {
+
         return;
     }
+
 
     let newRank =
         soldierRanks[0].rank;
 
-    // Cherche le grade correspondant à l'XP
-    for (const rankData of soldierRanks) {
 
-        if (soldier.xp >= rankData.xp) {
-            newRank = rankData.rank;
+    // Cherche le grade correspondant
+    // à l'XP actuelle
+    for (
+        const rankData
+        of soldierRanks
+    ) {
+
+        if (
+            soldier.xp >=
+            rankData.xp
+        ) {
+
+            newRank =
+                rankData.rank;
+
         } else {
+
             break;
         }
     }
 
-    // Pas de changement
-    if (soldier.rank === newRank) {
+
+    // Pas de promotion
+    if (
+        soldier.rank ===
+        newRank
+    ) {
+
         return;
     }
 
-    // Promotion
-    soldier.rank = newRank;
+
+    // ======================================
+    // PROMOTION
+    // ======================================
+
+    const oldRank =
+        soldier.rank;
+
+    soldier.rank =
+        newRank;
+
+
+    applyRankCombatBonus(
+        soldier,
+        oldRank,
+        newRank
+    );
+
 
     console.log(
         soldier.name +
@@ -293,12 +525,18 @@ function updateSoldierRank(soldier) {
         " !"
     );
 
-    // Actualise immédiatement la fiche
+
+    // Actualise immédiatement
+    // la fiche
     if (
         soldier === selectedSoldier &&
-        typeof showUnitPanel === "function"
+        typeof showUnitPanel ===
+            "function"
     ) {
-        showUnitPanel(soldier);
+
+        showUnitPanel(
+            soldier
+        );
     }
 }
 
@@ -316,6 +554,7 @@ function killUnit(
         !target ||
         !target.alive
     ) {
+
         return;
     }
 
@@ -333,9 +572,7 @@ function killUnit(
     // ======================================
 
     if (
-        enemies.includes(
-            target
-        )
+        enemies.includes(target)
     ) {
 
         const index =
@@ -344,7 +581,9 @@ function killUnit(
             );
 
 
-        if (index !== -1) {
+        if (
+            index !== -1
+        ) {
 
             enemies.splice(
                 index,
@@ -354,32 +593,32 @@ function killUnit(
 
 
         // ==================================
-        // KILL INDIVIDUEL
+        // KILL INDIVIDUEL / XP
         // ==================================
 
         if (
             attacker &&
-            soldiers.includes(
-                attacker
-            )
+            soldiers.includes(attacker)
         ) {
 
-            // Kill individuel
             attacker.kills++;
 
             // 1 kill = 1 XP
             attacker.xp++;
 
-            // Vérifie une éventuelle promotion
+
             updateSoldierRank(
                 attacker
             );
 
-            // Actualise la fiche du soldat
+
             if (
-                attacker === selectedSoldier &&
-                typeof showUnitPanel === "function"
+                attacker ===
+                    selectedSoldier &&
+                typeof showUnitPanel ===
+                    "function"
             ) {
+
                 showUnitPanel(
                     attacker
                 );
@@ -388,7 +627,7 @@ function killUnit(
 
 
         // ==================================
-        // KILL GLOBAL
+        // KILLS GLOBAUX
         // ==================================
 
         totalKills++;
@@ -413,9 +652,7 @@ function killUnit(
     // ======================================
 
     else if (
-        soldiers.includes(
-            target
-        )
+        soldiers.includes(target)
     ) {
 
         const index =
@@ -424,7 +661,9 @@ function killUnit(
             );
 
 
-        if (index !== -1) {
+        if (
+            index !== -1
+        ) {
 
             soldiers.splice(
                 index,
@@ -439,7 +678,7 @@ function killUnit(
 
         if (
             typeof updateSoldiersCount ===
-            "function"
+                "function"
         ) {
 
             updateSoldiersCount();
@@ -447,23 +686,73 @@ function killUnit(
 
 
         // ==================================
-        // UNITÉ SÉLECTIONNÉE MORTE
+        // MULTI-SÉLECTION
         // ==================================
 
         if (
-            selectedSoldier ===
-            target
+            typeof selectedSoldiers !==
+                "undefined"
         ) {
 
-            selectedSoldier = null;
+            const selectedIndex =
+                selectedSoldiers.indexOf(
+                    target
+                );
 
 
             if (
-                typeof hideUnitPanel ===
-                "function"
+                selectedIndex !== -1
             ) {
 
-                hideUnitPanel();
+                selectedSoldiers.splice(
+                    selectedIndex,
+                    1
+                );
+            }
+        }
+
+
+        // ==================================
+        // SOLDAT PRINCIPAL MORT
+        // ==================================
+
+        if (
+            selectedSoldier === target
+        ) {
+
+            if (
+                typeof selectedSoldiers !==
+                    "undefined" &&
+                selectedSoldiers.length > 0
+            ) {
+
+                selectedSoldier =
+                    selectedSoldiers[0];
+
+
+                if (
+                    typeof showUnitPanel ===
+                        "function"
+                ) {
+
+                    showUnitPanel(
+                        selectedSoldier
+                    );
+                }
+
+            } else {
+
+                selectedSoldier =
+                    null;
+
+
+                if (
+                    typeof hideUnitPanel ===
+                        "function"
+                ) {
+
+                    hideUnitPanel();
+                }
             }
         }
     }
@@ -488,100 +777,146 @@ function killUnit(
     );
 }
 
-
 // ==========================================
 // TIR
 // ==========================================
-
 
 function findFriendlyFireTarget(
     shooter,
     target
 ) {
 
-    // Le friendly fire ne concerne ici
-    // que les tirs des soldats alliés
-    if (!soldiers.includes(shooter)) {
+    // Friendly fire uniquement
+    // pour les soldats alliés
+    if (
+        !soldiers.includes(shooter)
+    ) {
+
         return null;
     }
 
-    const dx = target.x - shooter.x;
-    const dy = target.y - shooter.y;
+
+    const dx =
+        target.x - shooter.x;
+
+    const dy =
+        target.y - shooter.y;
+
 
     const shotLengthSquared =
-        dx * dx + dy * dy;
+        dx * dx +
+        dy * dy;
 
-    if (shotLengthSquared === 0) {
+
+    if (
+        shotLengthSquared === 0
+    ) {
+
         return null;
     }
 
-    let closestFriendly = null;
-    let closestProgress = Infinity;
+
+    let closestFriendly =
+        null;
+
+    let closestProgress =
+        Infinity;
 
 
-    for (const soldier of soldiers) {
+    for (
+        const soldier
+        of soldiers
+    ) {
 
         if (
             soldier === shooter ||
             !soldier.alive
         ) {
+
             continue;
         }
 
 
         // Position du soldat projetée
-        // sur la trajectoire de la balle
+        // sur la trajectoire du tir
         const progress =
             (
-                (soldier.x - shooter.x) * dx +
-                (soldier.y - shooter.y) * dy
-            ) / shotLengthSquared;
+                (
+                    soldier.x -
+                    shooter.x
+                ) *
+                dx +
+
+                (
+                    soldier.y -
+                    shooter.y
+                ) *
+                dy
+            ) /
+            shotLengthSquared;
 
 
-        // Il doit être ENTRE le tireur
+        // Doit être entre le tireur
         // et la cible
         if (
             progress <= 0 ||
             progress >= 1
         ) {
+
             continue;
         }
 
 
         const lineX =
-            shooter.x + dx * progress;
+            shooter.x +
+            dx * progress;
 
         const lineY =
-            shooter.y + dy * progress;
+            shooter.y +
+            dy * progress;
 
 
         const distanceFromShot =
             Math.hypot(
-                soldier.x - lineX,
-                soldier.y - lineY
+                soldier.x -
+                    lineX,
+
+                soldier.y -
+                    lineY
             );
 
 
-        // Rayon approximatif d'un soldat
-        if (distanceFromShot > 14) {
+        // Rayon approximatif
+        // d'un soldat
+        if (
+            distanceFromShot > 14
+        ) {
+
             continue;
         }
 
 
-        // On garde le premier allié
-        // rencontré par la balle
-        if (progress < closestProgress) {
+        if (
+            progress <
+            closestProgress
+        ) {
 
-            closestProgress = progress;
-            closestFriendly = soldier;
+            closestProgress =
+                progress;
+
+            closestFriendly =
+                soldier;
         }
     }
 
 
+    // 33 % de risque de toucher
+    // l'allié placé sur la trajectoire
     if (
         closestFriendly &&
         Math.random() < 0.33
     ) {
+
         return closestFriendly;
     }
 
@@ -589,6 +924,10 @@ function findFriendlyFireTarget(
     return null;
 }
 
+
+// ==========================================
+// EFFECTUE UN TIR
+// ==========================================
 
 function shoot(
     shooter,
@@ -602,6 +941,7 @@ function shoot(
         !target ||
         !target.alive
     ) {
+
         return;
     }
 
@@ -612,7 +952,7 @@ function shoot(
 
     if (
         typeof rotateUnitTowards ===
-        "function"
+            "function"
     ) {
 
         rotateUnitTowards(
@@ -627,7 +967,9 @@ function shoot(
     // FRIENDLY FIRE
     // ======================================
 
-    let actualTarget = target;
+    let actualTarget =
+        target;
+
 
     if (!enemyShot) {
 
@@ -637,10 +979,14 @@ function shoot(
                 target
             );
 
-        if (friendlyTarget) {
+
+        if (
+            friendlyTarget
+        ) {
 
             actualTarget =
                 friendlyTarget;
+
 
             console.log(
                 "FRIENDLY FIRE !"
@@ -700,7 +1046,8 @@ function updateSoldierCombat(
         getDistance(
             soldier,
             soldier.target
-        ) > soldier.range
+        ) >
+        soldier.range
     ) {
 
         soldier.target =
@@ -715,7 +1062,9 @@ function updateSoldierCombat(
     // AUCUNE CIBLE
     // ======================================
 
-    if (!soldier.target) {
+    if (
+        !soldier.target
+    ) {
 
         soldier.isFiring =
             false;
@@ -734,7 +1083,7 @@ function updateSoldierCombat(
 
     if (
         typeof rotateUnitTowards ===
-        "function"
+            "function"
     ) {
 
         rotateUnitTowards(
@@ -786,31 +1135,27 @@ function updateEnemyCombat(
 
 
     // ======================================
-    // RECHERCHE D'UNE CIBLE
+    // IA PLUS RÉACTIVE
     // ======================================
 
-    if (
-        !enemy.target ||
-        !enemy.target.alive ||
-        getDistance(
-            enemy,
-            enemy.target
-        ) > enemy.range
-    ) {
+    // L'ennemi recherche en permanence
+    // le soldat vivant le plus proche
+    // qui se trouve à portée.
 
-        enemy.target =
-            findClosestTarget(
-                enemy,
-                soldiers
-            );
-    }
+    enemy.target =
+        findClosestTarget(
+            enemy,
+            soldiers
+        );
 
 
     // ======================================
     // AUCUNE CIBLE
     // ======================================
 
-    if (!enemy.target) {
+    if (
+        !enemy.target
+    ) {
 
         enemy.isFiring =
             false;
@@ -829,7 +1174,7 @@ function updateEnemyCombat(
 
     if (
         typeof rotateUnitTowards ===
-        "function"
+            "function"
     ) {
 
         rotateUnitTowards(
@@ -870,6 +1215,11 @@ function updateEnemyCombat(
 function updateCombat(
     currentTime
 ) {
+
+    // Copie du tableau :
+    // permet de supprimer une unité
+    // pendant l'update sans casser
+    // la boucle.
 
     soldiers
         .slice()
@@ -917,7 +1267,9 @@ function resetCombat() {
         );
 
 
-    if (killsDisplay) {
+    if (
+        killsDisplay
+    ) {
 
         killsDisplay.textContent =
             "0";
@@ -947,11 +1299,14 @@ function resetCombat() {
     soldiers.forEach(
         function (soldier) {
 
-            soldier.target = null;
+            soldier.target =
+                null;
 
-            soldier.isFiring = false;
+            soldier.isFiring =
+                false;
 
-            soldier.lastShot = 0;
+            soldier.lastShot =
+                0;
         }
     );
 
@@ -963,11 +1318,14 @@ function resetCombat() {
     enemies.forEach(
         function (enemy) {
 
-            enemy.target = null;
+            enemy.target =
+                null;
 
-            enemy.isFiring = false;
+            enemy.isFiring =
+                false;
 
-            enemy.lastShot = 0;
+            enemy.lastShot =
+                0;
         }
     );
 

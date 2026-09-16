@@ -442,3 +442,46 @@
 .enemy.marksman .enemy-class {
     color: #d2d2d2;
 }
+
+/* ==========================================
+   BARRE DE VIE ENNEMIE
+   ========================================== */
+
+.enemy-health {
+    position: absolute;
+
+    left: 50%;
+    top: -8px;
+
+    transform: translateX(-50%);
+
+    width: 30px;
+    height: 4px;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    border-radius: 2px;
+
+    overflow: hidden;
+
+    opacity: 0;
+
+    transition: opacity 0.15s ease;
+
+    pointer-events: none;
+}
+
+.enemy-health.visible {
+    opacity: 1;
+}
+
+.enemy-health-bar {
+    width: 100%;
+    height: 100%;
+
+    background: #b83232;
+
+    transition: width 0.15s linear;
+}

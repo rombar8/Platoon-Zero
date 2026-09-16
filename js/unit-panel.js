@@ -291,16 +291,50 @@ closeUnitPanelButton.addEventListener(
         hideUnitPanel();
 
 
-        if (selectedSoldier !== null) {
+        // ======================================
+        // RETIRE LA SÉLECTION VISUELLE
+        // DE TOUT LE GROUPE
+        // ======================================
+
+        if (
+            typeof selectedSoldiers !==
+            "undefined"
+        ) {
+
+            selectedSoldiers.forEach(
+                function (soldier) {
+
+                    if (
+                        soldier &&
+                        soldier.element
+                    ) {
+
+                        soldier.element
+                            .classList
+                            .remove("selected");
+                    }
+                }
+            );
+
+            // Vide la multi-sélection
+            selectedSoldiers.length = 0;
+        }
+
+
+        // ======================================
+        // COMPATIBILITÉ SÉLECTION SIMPLE
+        // ======================================
+
+        if (
+            selectedSoldier !== null
+        ) {
 
             selectedSoldier.element
                 .classList
                 .remove("selected");
-
         }
 
 
         selectedSoldier = null;
-
     }
 );

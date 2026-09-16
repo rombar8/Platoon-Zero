@@ -1297,6 +1297,8 @@ function pauseGame() {
 
 if (speedButton) {
 
+    if (speedButton) {
+
     speedButton.addEventListener(
         "click",
         function () {
@@ -1309,15 +1311,27 @@ if (speedButton) {
             }
 
             if (gameSpeed === 1) {
+
                 gameSpeed = 2;
+
+            } else if (gameSpeed === 2) {
+
+                gameSpeed = 4;
+
             } else {
+
                 gameSpeed = 1;
             }
 
-            speedButton.textContent =
-                "×" + gameSpeed;
+
+            if (speedValue) {
+
+                speedValue.textContent =
+                    "×" + gameSpeed;
+            }
         }
     );
+    }
 }
 
 
