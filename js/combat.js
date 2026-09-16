@@ -449,6 +449,21 @@ function applyRankCombatBonus(
         );
 }
 
+soldier.maxHp =
+    Math.round(soldier.maxHp);
+
+soldier.hp =
+    Math.min(
+        soldier.maxHp,
+        Math.round(soldier.hp)
+    );
+
+soldier.damage =
+    Math.round(soldier.damage * 10) / 10;
+
+soldier.range =
+    Math.round(soldier.range);
+
 
 // ==========================================
 // PROGRESSION / GRADES
