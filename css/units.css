@@ -352,4 +352,16 @@
     pointer-events: none;
 
     z-index: -1;
+};
+
+.soldier {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+.soldier:focus,
+.soldier:focus-visible,
+.soldier:active {
+    outline: none;
+    box-shadow: none !important;
 }
