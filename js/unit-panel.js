@@ -16,6 +16,22 @@ function showUnitPanel(soldier) {
 
     const name =
         document.querySelector("#unit-name");
+    let rankIcon =
+    document.querySelector("#unit-rank-icon");
+
+        if (!rankIcon) {
+
+            rankIcon =
+                document.createElement("img");
+
+            rankIcon.id =
+                "unit-rank-icon";
+
+            name.parentNode.insertBefore(
+                rankIcon,
+                name
+            );
+        }
 
     const unitClass =
         document.querySelector("#unit-class");
@@ -35,10 +51,57 @@ function showUnitPanel(soldier) {
     const range =
         document.querySelector("#unit-range");
 
+        let xpContainer =
+            document.querySelector("#unit-xp-container");
+
+        if (!xpContainer) {
+
+            xpContainer =
+                document.createElement("div");
+
+            xpContainer.id =
+                "unit-xp-container";
+
+            const hpBar =
+                document.querySelector("#unit-hp-bar");
+
+            const hpBarContainer =
+                hpBar.parentElement;
+
+            hpBarContainer.insertAdjacentElement(
+                "afterend",
+                xpContainer
+            );
+        }
+
 
     // ======================================
     // IDENTITÉ
     // ======================================
+
+    const rankImages = {
+        PVT: "private.png",
+        PFC: "private-first-class.png",
+        SPC: "specialist.png",
+        CPL: "corporal.png",
+        SGT: "sergeant.png",
+        SSG: "staff-sergeant.png",
+        SFC: "sergeant-first-class.png",
+        WO1: "warrant-officer-1.png",
+        CW2: "chief-warrant-officer-2.png",
+        "2LT": "second-lieutenant.png"
+    };
+
+    rankIcon.src =
+        "img/rangs/" +
+        rankImages[soldier.rank];
+
+    rankIcon.alt =
+        soldier.rank;
+
+    rankIcon.alt =
+
+    soldier.rank;
 
     name.textContent =
         soldier.rank + ". " + soldier.name;
@@ -61,6 +124,73 @@ function showUnitPanel(soldier) {
 
     hpBar.style.width =
         hpPercent + "%";
+
+    // ======================================
+    // EXPÉRIENCE / PROCHAIN GRADE
+    // ======================================
+
+    const currentRankIndex =
+        soldierRanks.findIndex(
+            function (rankData) {
+                return rankData.rank === soldier.rank;
+            }
+        );
+
+    const nextRank =
+        soldierRanks[
+            currentRankIndex + 1
+        ];
+
+    if (nextRank) {
+
+        const currentRank =
+            soldierRanks[
+                currentRankIndex
+            ];
+
+        const xpInCurrentRank =
+            soldier.xp -
+            currentRank.xp;
+
+        const xpNeeded =
+            nextRank.xp -
+            currentRank.xp;
+
+        const xpPercent =
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    (xpInCurrentRank / xpNeeded) * 100
+                )
+            );
+
+        xpContainer.innerHTML = `
+            <div class="unit-xp-header">
+                <span>XP</span>
+
+                <span>
+                    ${xpInCurrentRank} / ${xpNeeded}
+                </span>
+            </div>
+
+            <div class="unit-xp-track">
+                <div
+                    class="unit-xp-bar"
+                    style="width: ${xpPercent}%"
+                ></div>
+            </div>
+        `;
+
+    } else {
+
+        // Grade maximum
+        xpContainer.innerHTML = `
+            <div class="unit-xp-max">
+                ★ GRADE MAXIMUM ★
+            </div>
+        `;
+    }
 
 
     // ======================================
