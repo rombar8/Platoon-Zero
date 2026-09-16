@@ -40,7 +40,7 @@ const soldierTypes = {
         name: "LOURD",
         hp: 180,
         speed: 25,
-        damage: 22,
+        damage: 35,
         range: 125,
         fireRate: 550
     },
@@ -49,7 +49,7 @@ const soldierTypes = {
         name: "Tireur",
         hp: 80,
         speed: 22,
-        damage: 45,
+        damage: 50,
         range: 280,
         fireRate: 1600
     },
@@ -58,7 +58,7 @@ const soldierTypes = {
         name: "Éclaireur",
         hp: 70,
         speed: 38,
-        damage: 14,
+        damage: 27,
         range: 130,
         fireRate: 650
     },
@@ -67,9 +67,9 @@ const soldierTypes = {
         name: "Mitrailleur",
         hp: 140,
         speed: 17,
-        damage: 12,
+        damage: 18,
         range: 190,
-        fireRate: 220
+        fireRate: 210
     }
 };
 
@@ -88,7 +88,7 @@ const tacticalMenus = {
 
         {
             icon: "🪖",
-            name: "FANTASSIN",
+            name: "SOLDAT",
             description: "Polyvalent • moyenne portée",
             cost: 5,
             type: "rifleman"
@@ -96,7 +96,7 @@ const tacticalMenus = {
 
         {
             icon: "🎯",
-            name: "TIREUR",
+            name: "SNIPER",
             description: "Longue portée • dégâts élevés",
             cost: 8,
             type: "marksman"
@@ -104,7 +104,7 @@ const tacticalMenus = {
 
         {
             icon: "💨",
-            name: "ÉCLAIREUR",
+            name: "SCOUT",
             description: "Très mobile • faible résistance",
             cost: 6,
             type: "scout"
@@ -112,7 +112,7 @@ const tacticalMenus = {
 
         {
             icon: "🛡️",
-            name: "MITRAILLEUR",
+            name: "MACHINE GUN",
             description: "Tir soutenu • lourd et lent",
             cost: 12,
             type: "gunner"
@@ -228,16 +228,16 @@ const tacticalMenus = {
 // ==========================================
 
 const soldierRanks = [
-    { rank: "PVT",  xp: 0 },
-    { rank: "PFC",  xp: 5 },
-    { rank: "CPL",  xp: 12 },
-    { rank: "SGT",  xp: 22 },
-    { rank: "SSGT", xp: 35 },
-    { rank: "SFC",  xp: 50 },
-    { rank: "MSG",  xp: 70 },
-    { rank: "1SG",  xp: 95 },
-    { rank: "SGM",  xp: 125 },
-    { rank: "CSM",  xp: 160 }
+    { rank: "PVT", xp: 0 },
+    { rank: "PFC", xp: 5 },
+    { rank: "SPC", xp: 12 },
+    { rank: "CPL", xp: 22 },
+    { rank: "SGT", xp: 35 },
+    { rank: "SSG", xp: 50 },
+    { rank: "SFC", xp: 70 },
+    { rank: "WO1", xp: 95 },
+    { rank: "CW2", xp: 125 },
+    { rank: "2LT", xp: 160 }
 ];
 
 // ... tout ton config.js actuel au-dessus

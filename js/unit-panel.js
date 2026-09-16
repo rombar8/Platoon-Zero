@@ -92,16 +92,33 @@ function showUnitPanel(soldier) {
         "2LT": "second-lieutenant.png"
     };
 
+const rankImage =
+    rankImages[soldier.rank];
+
+if (rankImage) {
+
     rankIcon.src =
         "img/rangs/" +
-        rankImages[soldier.rank];
+        rankImage;
 
     rankIcon.alt =
         soldier.rank;
 
-    rankIcon.alt =
+    rankIcon.style.display =
+        "block";
 
-    soldier.rank;
+} else {
+
+    console.warn(
+        "Grade sans image :",
+        soldier.rank
+    );
+
+    rankIcon.removeAttribute("src");
+
+    rankIcon.style.display =
+        "none";
+}
 
     name.textContent =
         soldier.rank + ". " + soldier.name;
