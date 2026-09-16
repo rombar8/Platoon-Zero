@@ -2041,7 +2041,11 @@ button {
        sans agrandir leur dessin.
        ====================================== */
 
-    .soldier,
+    .soldier {
+        width: 28px;
+        height: 28px;
+    }
+
     .enemy {
         width: 36px;
         height: 36px;
