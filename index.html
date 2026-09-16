@@ -92,63 +92,71 @@
 
         <div id="version-info">
 
-            <div id="version-info">
-
     <div class="version-number">
         M&B MOBILE — v0.2.1 ALPHA
     </div>
 
-    <div class="patch-version">
-    <strong>v0.2.1 Alpha</strong>
-</div>
+    <button
+        id="patch-toggle"
+        type="button"
+    >
+        📋 VOIR LE PATCH v0.2.1
+    </button>
 
-<div class="patch-section">
-    <h3>⚔️ NOUVEAUTÉS</h3>
+    <div
+        id="patch-notes"
+        class="hidden"
+    >
 
-    <p>• Nouvelles classes alliées : Médecin, Assaut et Lourd</p>
-    <p>• Nouvelles classes ennemies : Éclaireur, Mitrailleur et Tireur d'élite</p>
-    <p>• Ajout du Juggernaut, un boss apparaissant toutes les 10 vagues</p>
-    <p>• Le nombre de Juggernauts augmente : 1 vague 10, 2 vague 20, 3 vague 30...</p>
-</div>
+        <div class="patch-section">
+            <h3>⚔️ NOUVEAUTÉS</h3>
 
-<div class="patch-section">
-    <h3>🌊 VAGUES & DIFFICULTÉ</h3>
+            <p>• Nouvelles classes alliées : Médecin, Assaut et Lourd</p>
+            <p>• Nouvelles classes ennemies : Éclaireur, Mitrailleur et Tireur d'élite</p>
+            <p>• Ajout du Juggernaut, un boss apparaissant toutes les 10 vagues</p>
+            <p>• Le nombre de Juggernauts augmente : 1 vague 10, 2 vague 20, 3 vague 30...</p>
+        </div>
 
-    <p>• Réduction du nombre d'ennemis dans toutes les difficultés</p>
-    <p>• Progression des classes ennemies retravaillée</p>
-    <p>• Vagues 1 à 7 : Fusiliers uniquement</p>
-    <p>• Éclaireurs à partir de la vague 8</p>
-    <p>• Mitrailleurs à partir de la vague 15</p>
-    <p>• Tireurs d'élite à partir de la vague 22</p>
-    <p>• Composition ennemie complète à partir de la vague 30</p>
-</div>
+        <div class="patch-section">
+            <h3>🌊 VAGUES & DIFFICULTÉ</h3>
 
-<div class="patch-section">
-    <h3>🎖️ UNITÉS</h3>
+            <p>• Réduction du nombre d'ennemis dans toutes les difficultés</p>
+            <p>• Progression des classes ennemies retravaillée</p>
+            <p>• Vagues 1 à 7 : Fusiliers uniquement</p>
+            <p>• Éclaireurs à partir de la vague 8</p>
+            <p>• Mitrailleurs à partir de la vague 15</p>
+            <p>• Tireurs d'élite à partir de la vague 22</p>
+            <p>• Composition ennemie complète à partir de la vague 30</p>
+        </div>
 
-    <p>• Nouveau système d'expérience et de grades</p>
-    <p>• Bonus de PV, dégâts et portée selon le grade</p>
-    <p>• Affichage du grade et de l'expérience dans la fiche d'unité</p>
-    <p>• Les soldats se désélectionnent automatiquement après un ordre de déplacement</p>
-</div>
+        <div class="patch-section">
+            <h3>🎖️ UNITÉS</h3>
 
-<div class="patch-section">
-    <h3>💰 ÉCONOMIE</h3>
+            <p>• Nouveau système d'expérience et de grades</p>
+            <p>• Bonus de PV, dégâts et portée selon le grade</p>
+            <p>• Affichage du grade et de l'expérience dans la fiche d'unité</p>
+            <p>• Désélection automatique après un ordre de déplacement</p>
+        </div>
 
-    <p>• Le prix des renforts dépend maintenant du nombre de soldats actuellement déployés</p>
-    <p>• Plus l'escouade est grande, plus les nouveaux renforts coûtent cher</p>
-    <p>• Le prix redescend lorsque des soldats sont perdus</p>
-</div>
+        <div class="patch-section">
+            <h3>💰 ÉCONOMIE</h3>
 
-<div class="patch-section">
-    <h3>🛠️ AMÉLIORATIONS</h3>
+            <p>• Le prix des renforts dépend du nombre de soldats déployés</p>
+            <p>• Plus l'escouade est grande, plus les renforts coûtent cher</p>
+            <p>• Le prix redescend lorsque des soldats sont perdus</p>
+        </div>
 
-    <p>• Ajout de la barre de vie des ennemis blessés</p>
-    <p>• Amélioration du déplacement et de l'orientation des unités</p>
-    <p>• Amélioration du comportement des ennemis</p>
-    <p>• Rééquilibrage général des vagues</p>
-    <p>• Correction de l'affichage de la vitesse ×1 / ×2 / ×4</p>
-</div>
+        <div class="patch-section">
+            <h3>🛠️ AMÉLIORATIONS</h3>
+
+            <p>• Ajout de la barre de vie des ennemis blessés</p>
+            <p>• Amélioration du déplacement et de l'orientation des unités</p>
+            <p>• Amélioration du comportement des ennemis</p>
+            <p>• Rééquilibrage général des vagues</p>
+            <p>• Correction de l'affichage de la vitesse ×1 / ×2 / ×4</p>
+        </div>
+
+    </div>
 
 </div>
 
@@ -967,6 +975,37 @@
         M&B Mobile • v0.2.1 Alpha
     </div>
 
+    <script>
+    const patchToggle =
+        document.querySelector("#patch-toggle");
+
+    const patchNotes =
+        document.querySelector("#patch-notes");
+
+    patchToggle.addEventListener(
+        "click",
+        function () {
+
+            const isHidden =
+                patchNotes.classList.contains("hidden");
+
+            if (isHidden) {
+
+                patchNotes.classList.remove("hidden");
+
+                patchToggle.textContent =
+                    "✕ FERMER LE PATCH";
+
+            } else {
+
+                patchNotes.classList.add("hidden");
+
+                patchToggle.textContent =
+                    "📋 VOIR LE PATCH v0.2.1";
+            }
+        }
+    );
+</script>
 
 </body>
 

@@ -414,3 +414,64 @@ button[data-difficulty="impossible"].selected {
 .patch-notes span {
     line-height: 1.3;
 }
+
+/* ==========================================
+   SCROLL DU MENU PRINCIPAL
+========================================== */
+
+#main-menu {
+    max-height: 100dvh;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    box-sizing: border-box;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+
+/* ==========================================
+   BOUTON PATCH NOTES
+========================================== */
+
+#patch-toggle {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 14px;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+
+    background: rgba(0, 0, 0, 0.35);
+    color: white;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+
+/* ==========================================
+   PATCH NOTES
+========================================== */
+
+#patch-notes {
+    margin-top: 10px;
+}
+
+#patch-notes.hidden {
+    display: none;
+}
+
+.patch-section {
+    margin-bottom: 14px;
+}
+
+.patch-section h3 {
+    margin-bottom: 6px;
+}
+
+.patch-section p {
+    margin: 4px 0;
+}
