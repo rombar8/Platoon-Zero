@@ -360,3 +360,57 @@ button[data-difficulty="impossible"].selected {
     line-height: 1.4;
     letter-spacing: .3px;
 }
+
+/* ==========================================
+   VERSION / PATCH NOTES
+   ========================================== */
+
+#version-info {
+    width: min(90%, 360px);
+
+    margin: 12px auto 16px;
+    padding: 10px 12px;
+
+    background: rgba(10, 14, 10, 0.82);
+
+    border: 1px solid #3c4935;
+    border-radius: 5px;
+
+    text-align: left;
+}
+
+.version-number {
+    margin-bottom: 8px;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+    color: #d9e2c7;
+
+    text-align: center;
+}
+
+.patch-notes {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    font-size: 9px;
+
+    color: #aeb99d;
+}
+
+.patch-notes strong {
+    margin-bottom: 3px;
+
+    font-size: 10px;
+
+    color: #ffffff;
+}
+
+.patch-notes span {
+    line-height: 1.3;
+}

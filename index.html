@@ -12,8 +12,8 @@
     >
 
     <link
-    rel="manifest"
-    href="./manifest.webmanifest"
+        rel="manifest"
+        href="./manifest.webmanifest"
     >
 
     <title>M&B Mobile</title>
@@ -53,8 +53,8 @@
         href="css/unit-panel.css"
     >
 
-    <link 
-        rel="stylesheet" 
+    <link
+        rel="stylesheet"
         href="css/battlefield.css"
     >
 
@@ -68,118 +68,203 @@
          MENU PRINCIPAL
     ====================================== -->
 
-   <main id="main-menu">
-
-    <div class="menu-logo">
-
-        <h1>
-            M&B MOBILE
-        </h1>
-
-        <p>
-            TACTICAL SURVIVAL
-        </p>
-
-    </div>
+    <main id="main-menu">
 
 
-    <div class="player-identity">
+        <!-- LOGO -->
 
-        <span class="player-label">
-            🎖️ OPÉRATEUR
-        </span>
+        <div class="menu-logo">
 
-        <input
-            id="player-name"
-            type="text"
-            maxlength="16"
-            placeholder="ENTRE TON PSEUDO"
-            autocomplete="off"
-        >
+            <h1>
+                M&B MOBILE
+            </h1>
 
-    </div>
+            <p>
+                TACTICAL SURVIVAL
+            </p>
 
-
-    <div class="menu-buttons">
-
-        <div id="difficulty-selector">
-
-    <div class="difficulty-title">
-        DIFFICULTÉ
-    </div>
-
-    <div class="difficulty-buttons">
-
-        <button data-difficulty="easy">
-            FACILE
-        </button>
-
-        <button data-difficulty="medium" class="selected">
-            MOYEN
-        </button>
-
-        <button data-difficulty="hard">
-            DIFFICILE
-        </button>
-
-        <button data-difficulty="extreme">
-            EXTRÊME
-        </button>
-
-        <button data-difficulty="apocalypse">
-            APOCALYPSE
-        </button>
-
-        <button data-difficulty="ultimate">
-            ULTIME
-        </button>
-
-        <button data-difficulty="impossible">
-            IMPOSSIBLE
-        </button>
-
-    </div>
-
-    <div id="difficulty-info">
-        <div id="difficulty-info-name">
-            MOYEN
         </div>
 
-        <div id="difficulty-info-description">
-            Expérience standard. Forces ennemies équilibrées.
+
+        <!-- =================================
+             VERSION / PATCH NOTES
+        ================================== -->
+
+        <div id="version-info">
+
+            <div class="version-number">
+                M&B MOBILE — v0.2.0 ALPHA
+            </div>
+
+            <div class="patch-notes">
+
+                <strong>
+                    PATCH v0.2.0
+                </strong>
+
+                <span>
+                    • Nouveaux types d'ennemis
+                </span>
+
+                <span>
+                    • Multi-sélection des soldats
+                </span>
+
+                <span>
+                    • Barres de vie ennemies
+                </span>
+
+                <span>
+                    • IA ennemie améliorée
+                </span>
+
+                <span>
+                    • Bonus de statistiques par grade
+                </span>
+
+                <span>
+                    • Vitesse ×1 / ×2 / ×4
+                </span>
+
+                <span>
+                    • Améliorations du système de combat
+                </span>
+
+            </div>
+
         </div>
-    </div>
-
-    </div>
-
-        <button
-            id="play-button"
-            type="button"
-        >
-            ▶ DÉPLOYER
-        </button>
-
-        <button
-            id="help-button"
-            type="button"
-        >
-            ? AIDE
-        </button>
-
-    </div>
 
 
-    <div class="menu-record">
+        <!-- =================================
+             IDENTITÉ JOUEUR
+        ================================== -->
 
-        <span>
-            🏆 MEILLEUR SCORE
-        </span>
+        <div class="player-identity">
 
-        <strong id="best-score">
-            0
-        </strong>
+            <span class="player-label">
+                🎖️ OPÉRATEUR
+            </span>
 
-    </div>
+            <input
+                id="player-name"
+                type="text"
+                maxlength="16"
+                placeholder="ENTRE TON PSEUDO"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <!-- =================================
+             DIFFICULTÉ / BOUTONS
+        ================================== -->
+
+        <div class="menu-buttons">
+
+
+            <div id="difficulty-selector">
+
+                <div class="difficulty-title">
+                    DIFFICULTÉ
+                </div>
+
+
+                <div class="difficulty-buttons">
+
+                    <button
+                        data-difficulty="easy"
+                    >
+                        FACILE
+                    </button>
+
+                    <button
+                        data-difficulty="medium"
+                        class="selected"
+                    >
+                        MOYEN
+                    </button>
+
+                    <button
+                        data-difficulty="hard"
+                    >
+                        DIFFICILE
+                    </button>
+
+                    <button
+                        data-difficulty="extreme"
+                    >
+                        EXTRÊME
+                    </button>
+
+                    <button
+                        data-difficulty="apocalypse"
+                    >
+                        APOCALYPSE
+                    </button>
+
+                    <button
+                        data-difficulty="ultimate"
+                    >
+                        ULTIME
+                    </button>
+
+                    <button
+                        data-difficulty="impossible"
+                    >
+                        IMPOSSIBLE
+                    </button>
+
+                </div>
+
+
+                <div id="difficulty-info">
+
+                    <div id="difficulty-info-name">
+                        MOYEN
+                    </div>
+
+                    <div id="difficulty-info-description">
+                        Expérience standard. Forces ennemies équilibrées.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                id="play-button"
+                type="button"
+            >
+                ▶ DÉPLOYER
+            </button>
+
+
+            <button
+                id="help-button"
+                type="button"
+            >
+                ? AIDE
+            </button>
+
+        </div>
+
+
+        <!-- RECORD -->
+
+        <div class="menu-record">
+
+            <span>
+                🏆 MEILLEUR SCORE
+            </span>
+
+            <strong id="best-score">
+                0
+            </strong>
+
+        </div>
+
 
     </main>
 
@@ -257,6 +342,9 @@
 
         <header id="hud">
 
+
+            <!-- POINTS -->
+
             <div class="hud-item">
 
                 <span class="hud-icon">
@@ -273,6 +361,8 @@
 
             </div>
 
+
+            <!-- SOLDATS -->
 
             <div class="hud-item">
 
@@ -291,6 +381,8 @@
             </div>
 
 
+            <!-- KILLS -->
+
             <div class="hud-item">
 
                 <span class="hud-icon">
@@ -308,6 +400,8 @@
             </div>
 
 
+            <!-- VAGUE -->
+
             <div class="hud-item">
 
                 <span class="hud-icon">
@@ -324,6 +418,9 @@
 
             </div>
 
+
+            <!-- PAUSE -->
+
             <button
                 id="pause-button"
                 type="button"
@@ -332,45 +429,74 @@
                 ⏸
             </button>
 
-            <button id="speed-button" class="speed-button">
-                <span class="speed-icon">⏩</span>
+
+            <!-- VITESSE -->
+
+            <button
+                id="speed-button"
+                class="speed-button"
+                type="button"
+            >
+
+                <span class="speed-icon">
+                    ⏩
+                </span>
 
                 <span class="speed-info">
-                    <small>VITESSE</small>
-                    <strong id="speed-value">×1</strong>
+
+                    <small>
+                        VITESSE
+                    </small>
+
+                    <strong id="speed-value">
+                        ×1
+                    </strong>
+
                 </span>
+
             </button>
 
         </header>
 
-            <section
-                id="pause-menu"
-                class="hidden"
-            >
-                <div class="pause-window">
 
-                    <div class="pause-label">
-                        PARTIE EN PAUSE
-                    </div>
+        <!-- =================================
+             MENU PAUSE
+        ================================== -->
 
-                    <h2>⏸ PAUSE</h2>
+        <section
+            id="pause-menu"
+            class="hidden"
+        >
 
-                    <button
-                        id="resume-button"
-                        type="button"
-                    >
-                        ▶ REPRENDRE
-                    </button>
+            <div class="pause-window">
 
-                    <button
-                        id="pause-menu-button"
-                        type="button"
-                    >
-                        ← MENU PRINCIPAL
-                    </button>
-
+                <div class="pause-label">
+                    PARTIE EN PAUSE
                 </div>
-            </section>
+
+                <h2>
+                    ⏸ PAUSE
+                </h2>
+
+
+                <button
+                    id="resume-button"
+                    type="button"
+                >
+                    ▶ REPRENDRE
+                </button>
+
+
+                <button
+                    id="pause-menu-button"
+                    type="button"
+                >
+                    ← MENU PRINCIPAL
+                </button>
+
+            </div>
+
+        </section>
 
 
 
@@ -398,9 +524,7 @@
              CHAMP DE BATAILLE
         ================================== -->
 
-        <section
-            id="battlefield"
-        >
+        <section id="battlefield">
         </section>
 
 
@@ -415,10 +539,7 @@
         >
 
 
-            <!-- BARRE DRAGGABLE -->
-
             <div class="unit-panel-header">
-
 
                 <span id="unit-name">
                     PVT. SOLDAT
@@ -432,12 +553,8 @@
                     ✕
                 </button>
 
-
             </div>
 
-
-
-            <!-- CONTENU -->
 
             <div class="unit-panel-content">
 
@@ -447,29 +564,22 @@
                 </div>
 
 
-
                 <!-- VIE -->
 
                 <div class="unit-hp-container">
-
 
                     <span id="unit-hp-text">
                         HP 100 / 100
                     </span>
 
-
                     <div class="unit-hp-background">
 
-                        <div
-                            id="unit-hp-bar"
-                        >
+                        <div id="unit-hp-bar">
                         </div>
 
                     </div>
 
-
                 </div>
-
 
 
                 <!-- KILLS -->
@@ -490,7 +600,6 @@
                 </div>
 
 
-
                 <!-- DÉGÂTS -->
 
                 <div class="unit-stat">
@@ -507,7 +616,6 @@
                     </span>
 
                 </div>
-
 
 
                 <!-- PORTÉE -->
@@ -527,15 +635,11 @@
 
                 </div>
 
-
             </div>
-
 
         </section>
 
-
-
-        <!-- =================================
+            <!-- =================================
              MENU TACTIQUE
         ================================== -->
 
@@ -544,14 +648,11 @@
             class="hidden"
         >
 
-
             <div class="tactical-header">
-
 
                 <h2 id="tactical-title">
                     RENFORTS
                 </h2>
-
 
                 <button
                     id="close-tactical"
@@ -560,13 +661,11 @@
                     ✕
                 </button>
 
-
             </div>
 
 
             <div id="tactical-content">
             </div>
-
 
         </section>
 
@@ -576,12 +675,16 @@
              BARRE DE COMMANDES
         ================================== -->
 
-       <nav id="command-bar">
+        <nav id="command-bar">
+
+
+            <!-- RENFORTS -->
 
             <button
                 type="button"
                 data-menu="reinforcements"
             >
+
                 <span class="command-icon">
                     🪖
                 </span>
@@ -589,13 +692,17 @@
                 <span class="command-label">
                     RENFORTS
                 </span>
+
             </button>
 
+
+            <!-- SOUTIEN -->
 
             <button
                 type="button"
                 data-menu="support"
             >
+
                 <span class="command-icon">
                     💥
                 </span>
@@ -603,13 +710,17 @@
                 <span class="command-label">
                     SOUTIEN
                 </span>
+
             </button>
 
+
+            <!-- DÉFENSES -->
 
             <button
                 type="button"
                 data-menu="defenses"
             >
+
                 <span class="command-icon">
                     🛠️
                 </span>
@@ -617,13 +728,17 @@
                 <span class="command-label">
                     DÉFENSES
                 </span>
+
             </button>
 
+
+            <!-- ORDRES -->
 
             <button
                 type="button"
                 data-menu="orders"
             >
+
                 <span class="command-icon">
                     ⚑
                 </span>
@@ -631,12 +746,15 @@
                 <span class="command-label">
                     ORDRES
                 </span>
+
             </button>
 
         </nav>
 
+
+
         <!-- =====================================
-            GAME OVER
+             GAME OVER
         ====================================== -->
 
         <section
@@ -650,31 +768,55 @@
                     MISSION TERMINÉE
                 </div>
 
+
                 <h2 id="game-over-player">
                     ANONYME
                 </h2>
 
-                <div class="game-over-line"></div>
 
+                <div class="game-over-line">
+                </div>
+
+
+                <!-- STATS -->
 
                 <div class="game-over-stats">
 
                     <div>
-                        <span>⚔️ VAGUE</span>
-                        <strong id="final-wave">0</strong>
+
+                        <span>
+                            ⚔️ VAGUE
+                        </span>
+
+                        <strong id="final-wave">
+                            0
+                        </strong>
+
                     </div>
 
+
                     <div>
-                        <span>💀 KILLS</span>
-                        <strong id="final-kills">0</strong>
+
+                        <span>
+                            💀 KILLS
+                        </span>
+
+                        <strong id="final-kills">
+                            0
+                        </strong>
+
                     </div>
 
                 </div>
 
 
+                <!-- SCORE FINAL -->
+
                 <div class="final-score">
 
-                    <span>SCORE FINAL</span>
+                    <span>
+                        SCORE FINAL
+                    </span>
 
                     <strong id="final-score">
                         0
@@ -682,6 +824,8 @@
 
                 </div>
 
+
+                <!-- NOUVEAU RECORD -->
 
                 <div
                     id="new-record"
@@ -691,6 +835,8 @@
                 </div>
 
 
+                <!-- BOUTONS -->
+
                 <div class="game-over-buttons">
 
                     <button
@@ -699,6 +845,7 @@
                     >
                         ↻ REJOUER
                     </button>
+
 
                     <button
                         id="menu-button"
@@ -759,7 +906,7 @@
 
 
     <!-- DÉFENSES -->
-    
+
     <script src="js/defenses.js"></script>
 
 
@@ -788,9 +935,15 @@
     <script src="js/draggable-windows.js"></script>
 
 
+
+    <!-- =====================================
+         VERSION DU JEU
+    ====================================== -->
+
     <div id="game-version">
         M&B Mobile • v0.2.0 Alpha
     </div>
+
 
 </body>
 
