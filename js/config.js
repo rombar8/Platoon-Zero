@@ -18,6 +18,33 @@ const soldierTypes = {
         fireRate: 900
     },
 
+    medic: {
+        name: "MÉDECIN",
+        hp: 85,
+        speed: 40,
+        damage: 9,
+        range: 115,
+        fireRate: 800
+    },
+
+    assault: {
+        name: "ASSAUT",
+        hp: 110,
+        speed: 48,
+        damage: 15,
+        range: 95,
+        fireRate: 420
+    },
+
+    heavy: {
+        name: "LOURD",
+        hp: 180,
+        speed: 25,
+        damage: 22,
+        range: 125,
+        fireRate: 550
+    },
+
     marksman: {
         name: "Tireur",
         hp: 80,

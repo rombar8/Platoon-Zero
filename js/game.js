@@ -661,6 +661,15 @@ function gameLoop(currentTime) {
         updateCombat(
             gameTime
         );
+
+        if (
+            typeof updateMedics === "function"
+        ) {
+
+            updateMedics(
+                gameTime
+            );
+        }
     }
 
 
@@ -954,8 +963,8 @@ function resetGameState() {
 
     gameTime = 0;
 
-    if (speedButton) {
-        speedButton.textContent = "×1";
+    if (speedValue) {
+        speedValue.textContent = "×1";
     }
 
 

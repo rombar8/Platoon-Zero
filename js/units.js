@@ -154,112 +154,33 @@ battlefield.appendChild(
     );
 
 
-    // ======================================
-    // SÉLECTION DU SOLDAT
-    // ======================================
+// ======================================
+// SÉLECTION DU SOLDAT
+// ======================================
 
 element.addEventListener(
     "click",
 
     function (event) {
 
-        // Empêche le clic de déclencher
-        // un ordre de déplacement
+        // Empêche le clic sur le soldat
+        // d'être interprété comme un clic terrain.
         event.stopPropagation();
 
 
-        // ======================================
-        // CTRL + CLIC = MULTI-SÉLECTION
-        // ======================================
-
-        if (event.ctrlKey) {
-
-            const index =
-                selectedSoldiers.indexOf(
-                    soldier
-                );
-
-
-            // Déjà sélectionné
-            // => on le retire du groupe
-            if (index !== -1) {
-
-                selectedSoldiers.splice(
-                    index,
-                    1
-                );
-
-                soldier.element
-                    .classList
-                    .remove("selected");
-
-
-                // Si c'était le soldat principal
-                // on prend un autre soldat du groupe
-                if (
-                    selectedSoldier === soldier
-                ) {
-
-                    selectedSoldier =
-                        selectedSoldiers[0] ||
-                        null;
-                }
-
-            } else {
-
-                // Ajoute au groupe
-                selectedSoldiers.push(
-                    soldier
-                );
-
-                soldier.element
-                    .classList
-                    .add("selected");
-
-
-                // Premier soldat du groupe
-                if (
-                    selectedSoldier === null
-                ) {
-
-                    selectedSoldier =
-                        soldier;
-                }
-            }
-
-
-            // ==================================
-            // PANNEAU D'UNITÉ
-            // ==================================
-
-            if (selectedSoldier) {
-
-                showUnitPanel(
-                    selectedSoldier
-                );
-            }
-
+        // Soldat mort = impossible à sélectionner
+        if (soldier.alive === false) {
             return;
         }
 
 
         // ======================================
-        // CLIC SIMPLE = SÉLECTION UNIQUE
+        // RETIRE L'ANCIENNE SÉLECTION
         // ======================================
 
-        selectedSoldiers.forEach(
-            function (selectedUnit) {
-
-                selectedUnit.element
-                    .classList
-                    .remove("selected");
-            }
-        );
-
-
-        // Compatibilité avec l'ancien système
         if (
-            selectedSoldier !== null
+            selectedSoldier &&
+            selectedSoldier !== soldier
         ) {
 
             selectedSoldier.element
@@ -268,23 +189,21 @@ element.addEventListener(
         }
 
 
-        // Vide l'ancienne multi-sélection
-        selectedSoldiers.length = 0;
+        // ======================================
+        // NOUVELLE SÉLECTION
+        // ======================================
 
-
-        // Nouvelle sélection
         selectedSoldier =
             soldier;
-
-        selectedSoldiers.push(
-            soldier
-        );
-
 
         soldier.element
             .classList
             .add("selected");
 
+
+        // ======================================
+        // FICHE DU SOLDAT
+        // ======================================
 
         showUnitPanel(
             soldier

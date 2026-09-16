@@ -538,3 +538,94 @@
 
     opacity: 1;
 }
+
+/* ==========================================
+   BOSS - JUGGERNAUT
+   ========================================== */
+
+.enemy.boss {
+    z-index: 20;
+}
+
+
+/* Boss sensiblement plus gros */
+
+.enemy.boss .enemy-icon {
+    transform:
+        translate(-50%, -50%)
+        scale(1.55);
+
+    filter:
+        drop-shadow(0 0 4px rgba(255, 40, 40, 0.7));
+}
+
+
+/* Casque très sombre */
+
+.enemy.boss .enemy-helmet {
+    background: #242424;
+
+    border:
+        1px solid #8f2929;
+}
+
+
+/* Corps massif */
+
+.enemy.boss .enemy-body {
+    width: 18px;
+    height: 21px;
+
+    background: #343434;
+
+    border:
+        1px solid #151515;
+}
+
+
+/* Arme plus imposante */
+
+.enemy.boss .enemy-gun {
+    width: 29px;
+    height: 5px;
+
+    background: #171717;
+}
+
+
+/* Nom du boss */
+
+.enemy.boss .enemy-class {
+    display: block;
+
+    top: -31px;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    color: #ff5555;
+
+    text-shadow:
+        0 1px 2px #000,
+        0 0 5px #8b0000;
+}
+
+
+/* Barre de vie spéciale */
+
+.enemy.boss .enemy-health {
+    width: 55px;
+    height: 6px;
+
+    top: -18px;
+
+    opacity: 1;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.45);
+}
+
+
+.enemy.boss .enemy-health-bar {
+    background: #b82d2d;
+}
