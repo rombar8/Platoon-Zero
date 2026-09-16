@@ -35,6 +35,8 @@ const bonusWaveReward = 10;
 
 let enemiesToSpawn = 0;
 
+let bossesToSpawn = 0;
+
 let spawnTimer = 0;
 
 let nextWaveTimer = 0;
@@ -241,6 +243,27 @@ enemiesToSpawn =
         )
     );
 
+// ======================================
+// BOSS
+// 1 boss vague 10
+// 2 boss vague 20
+// 3 boss vague 30...
+// ======================================
+
+if (
+    currentWave % 10 === 0
+) {
+
+    bossesToSpawn =
+        Math.floor(
+            currentWave / 10
+        );
+
+} else {
+
+    bossesToSpawn = 0;
+}
+
 
     // Premier spawn immédiat
 
@@ -249,35 +272,50 @@ enemiesToSpawn =
 
 
     // ======================================
-    // ANNONCE
-    // ======================================
+// ANNONCE
+// ======================================
 
-    if (isBonusWave()) {
+if (bossesToSpawn > 0) {
 
-        showWaveAnnouncement(
-            "★ VAGUE BONUS " +
-            currentWave +
-            " ★",
+    showWaveAnnouncement(
+        "☠ VAGUE BOSS " +
+        currentWave +
+        " ☠",
 
-            enemiesToSpawn +
-            " ENNEMIS"
-        );
+        bossesToSpawn +
+        (
+            bossesToSpawn > 1
+                ? " JUGGERNAUTS"
+                : " JUGGERNAUT"
+        ) +
+        " • " +
+        enemiesToSpawn +
+        " ENNEMIS"
+    );
 
-    } else {
+} else if (isBonusWave()) {
 
-        showWaveAnnouncement(
-            "VAGUE " +
-            currentWave,
+    showWaveAnnouncement(
+        "★ VAGUE BONUS " +
+        currentWave +
+        " ★",
 
-            enemiesToSpawn +
-            " ENNEMIS"
-        );
+        enemiesToSpawn +
+        " ENNEMIS"
+    );
 
-    }
+} else {
 
+    showWaveAnnouncement(
+        "VAGUE " +
+        currentWave,
 
-    announcementTimer =
-        1800;
+        enemiesToSpawn +
+        " ENNEMIS"
+    );
+}
+
+announcementTimer = 1800;
 
 }
 
@@ -304,14 +342,61 @@ function updateEnemySpawning(
     }
 
 
-    // ======================================
-    // SPAWN
-    // ======================================
+// ======================================
+// SPAWN DES BOSS EN PRIORITÉ
+// ======================================
 
+if (bossesToSpawn > 0) {
+
+    const bossX =
+        20 +
+        Math.random() * 60;
+
+    const bossY =
+        5 +
+        Math.random() * 5;
+
+    createEnemy(
+        bossX,
+        bossY,
+        "boss"
+    );
+
+    bossesToSpawn--;
+
+} else if (enemiesToSpawn > 0) {
+
+    // Ennemi normal
     spawnEnemy();
 
-
     enemiesToSpawn--;
+}
+
+
+// ======================================
+// FIN DU SPAWN
+// ======================================
+
+if (
+    bossesToSpawn <= 0 &&
+    enemiesToSpawn <= 0
+) {
+
+    bossesToSpawn = 0;
+    enemiesToSpawn = 0;
+
+    waveSpawning = false;
+
+    return;
+}
+
+
+// ======================================
+// PROCHAIN SPAWN
+// ======================================
+
+spawnTimer =
+    enemySpawnDelay;
 
 
     if (
@@ -539,6 +624,7 @@ function updateWaves(
 function resetWaves() {
 
     currentWave = 0;
+    bossesToSpawn = 0;
 
     waveActive = false;
     waveSpawning = false;

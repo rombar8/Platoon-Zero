@@ -81,42 +81,70 @@ const soldierTypes = {
 const tacticalMenus = {
 
     reinforcements: {
-        title: "RENFORTS",
 
-        options: [
-            {
-                icon: "🪖",
-                name: "FANTASSIN",
-                description: "Polyvalent • efficace à moyenne portée",
-                cost: 5,
-                type: "rifleman"
-            },
+    title: "RENFORTS",
 
-            {
-                icon: "🎯",
-                name: "TIREUR",
-                description: "Longue portée • dégâts élevés",
-                cost: 8,
-                type: "marksman"
-            },
+    options: [
 
-            {
-                icon: "💨",
-                name: "ÉCLAIREUR",
-                description: "Très mobile • faible résistance",
-                cost: 6,
-                type: "scout"
-            },
+        {
+            icon: "🪖",
+            name: "FANTASSIN",
+            description: "Polyvalent • moyenne portée",
+            cost: 5,
+            type: "rifleman"
+        },
 
-            {
-                icon: "🛡️",
-                name: "MITRAILLEUR",
-                description: "Tir soutenu • lourd et lent",
-                cost: 12,
-                type: "gunner"
-            }
-        ]
-    },
+        {
+            icon: "🎯",
+            name: "TIREUR",
+            description: "Longue portée • dégâts élevés",
+            cost: 8,
+            type: "marksman"
+        },
+
+        {
+            icon: "💨",
+            name: "ÉCLAIREUR",
+            description: "Très mobile • faible résistance",
+            cost: 6,
+            type: "scout"
+        },
+
+        {
+            icon: "🛡️",
+            name: "MITRAILLEUR",
+            description: "Tir soutenu • lourd et lent",
+            cost: 12,
+            type: "gunner"
+        },
+
+        {
+            icon: "✚",
+            name: "MÉDECIN",
+            description: "Soigne automatiquement les alliés proches",
+            cost: 9,
+            type: "medic"
+        },
+
+        {
+            icon: "🔥",
+            name: "ASSAUT",
+            description: "Très rapide • combat rapproché",
+            cost: 8,
+            type: "assault"
+        },
+
+        {
+            icon: "💪",
+            name: "LOURD",
+            description: "Très résistant • puissance de feu élevée",
+            cost: 14,
+            type: "heavy"
+        }
+
+    ]
+
+},
 
 
     support: {
@@ -220,12 +248,13 @@ const soldierRanks = [
 // ======================================
 
 const difficulties = {
+
     easy: {
         name: "FACILE",
         enemyHp: 0.75,
         enemyDamage: 0.75,
         enemySpeed: 0.90,
-        enemyCount: 0.80,
+        enemyCount: 0.65,
         pointGain: 0.70
     },
 
@@ -234,7 +263,7 @@ const difficulties = {
         enemyHp: 1,
         enemyDamage: 1,
         enemySpeed: 1,
-        enemyCount: 1,
+        enemyCount: 0.80,
         pointGain: 0.50
     },
 
@@ -243,7 +272,7 @@ const difficulties = {
         enemyHp: 1.25,
         enemyDamage: 1.20,
         enemySpeed: 1.05,
-        enemyCount: 1.20,
+        enemyCount: 0.95,
         pointGain: 0.40
     },
 
@@ -252,7 +281,7 @@ const difficulties = {
         enemyHp: 1.55,
         enemyDamage: 1.45,
         enemySpeed: 1.10,
-        enemyCount: 1.40,
+        enemyCount: 1.10,
         pointGain: 0.30
     },
 
@@ -261,7 +290,7 @@ const difficulties = {
         enemyHp: 2,
         enemyDamage: 1.75,
         enemySpeed: 1.15,
-        enemyCount: 1.65,
+        enemyCount: 1.30,
         pointGain: 0.25
     },
 
@@ -270,7 +299,7 @@ const difficulties = {
         enemyHp: 2.6,
         enemyDamage: 2.15,
         enemySpeed: 1.20,
-        enemyCount: 2,
+        enemyCount: 1.55,
         pointGain: 0.20
     },
 
@@ -279,9 +308,10 @@ const difficulties = {
         enemyHp: 3.5,
         enemyDamage: 2.75,
         enemySpeed: 1.30,
-        enemyCount: 2.5,
+        enemyCount: 1.85,
         pointGain: 0.15
     }
+
 };
 
 let selectedDifficulty = "medium";

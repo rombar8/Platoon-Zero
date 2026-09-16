@@ -215,6 +215,7 @@ function updateEnemyPosition(
 
 // ==========================================
 // CHOIX DU TYPE D'ENNEMI
+// Déblocage progressif des spécialistes
 // ==========================================
 
 function getRandomEnemyType() {
@@ -224,25 +225,27 @@ function getRandomEnemyType() {
 
 
     // ======================================
-    // VAGUES 1 - 2
+    // VAGUES 1 - 7
     // Fusiliers uniquement
     // ======================================
 
-    if (currentWave < 3) {
+    if (currentWave <= 7) {
 
         return "rifleman";
     }
 
 
     // ======================================
-    // VAGUES 3 - 4
-    // Apparition des éclaireurs
+    // VAGUES 8 - 14
+    // Premiers éclaireurs
+    //
+    // 85% Fusiliers
+    // 15% Éclaireurs
     // ======================================
 
-    if (currentWave < 5) {
+    if (currentWave <= 14) {
 
-        if (roll < 25) {
-
+        if (roll < 15) {
             return "scout";
         }
 
@@ -251,19 +254,21 @@ function getRandomEnemyType() {
 
 
     // ======================================
-    // VAGUES 5 - 7
-    // Apparition des mitrailleurs
+    // VAGUES 15 - 21
+    // Premiers mitrailleurs
+    //
+    // 70% Fusiliers
+    // 20% Éclaireurs
+    // 10% Mitrailleurs
     // ======================================
 
-    if (currentWave < 8) {
+    if (currentWave <= 21) {
 
-        if (roll < 20) {
-
+        if (roll < 10) {
             return "gunner";
         }
 
-        if (roll < 45) {
-
+        if (roll < 30) {
             return "scout";
         }
 
@@ -272,22 +277,80 @@ function getRandomEnemyType() {
 
 
     // ======================================
-    // VAGUE 8+
-    // Toutes les classes
+    // VAGUES 22 - 29
+    // Premiers tireurs d'élite
+    //
+    // 60% Fusiliers
+    // 20% Éclaireurs
+    // 13% Mitrailleurs
+    // 7% Tireurs d'élite
     // ======================================
 
-    if (roll < 15) {
+    if (currentWave <= 29) {
 
+        if (roll < 7) {
+            return "marksman";
+        }
+
+        if (roll < 20) {
+            return "gunner";
+        }
+
+        if (roll < 40) {
+            return "scout";
+        }
+
+        return "rifleman";
+    }
+
+
+    // ======================================
+    // VAGUES 30 - 39
+    // Toutes les classes
+    //
+    // 50% Fusiliers
+    // 22% Éclaireurs
+    // 18% Mitrailleurs
+    // 10% Tireurs d'élite
+    // ======================================
+
+    if (currentWave <= 39) {
+
+        if (roll < 10) {
+            return "marksman";
+        }
+
+        if (roll < 28) {
+            return "gunner";
+        }
+
+        if (roll < 50) {
+            return "scout";
+        }
+
+        return "rifleman";
+    }
+
+
+    // ======================================
+    // VAGUE 40+
+    // Composition ennemie avancée
+    //
+    // 40% Fusiliers
+    // 25% Éclaireurs
+    // 22% Mitrailleurs
+    // 13% Tireurs d'élite
+    // ======================================
+
+    if (roll < 13) {
         return "marksman";
     }
 
     if (roll < 35) {
-
         return "gunner";
     }
 
     if (roll < 60) {
-
         return "scout";
     }
 

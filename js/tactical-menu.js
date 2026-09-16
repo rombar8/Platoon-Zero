@@ -6,47 +6,108 @@
 
 
 // ==========================================
-// OUVERTURE DU MENU
+// PRIX DYNAMIQUE DES RENFORTS
 // ==========================================
 
+const REINFORCEMENT_COST_PER_SOLDIER = 0.10;
+
 
 // ==========================================
-// INFLATION DES PRIX
+// VÉRIFIE SI UNE OPTION EST UN RENFORT
 // ==========================================
 
-let tacticalPurchaseCounts = {};
+function isReinforcementOption(option) {
 
-function getTacticalCost(option) {
+    if (!option || !option.type) {
+        return false;
+    }
 
-    const key =
-        option.type ||
-        option.name;
-
-    const purchases =
-        tacticalPurchaseCounts[key] || 0;
-
-    const multiplier =
-        1 + (purchases * 0.20);
-
-    return Math.ceil(
-        option.cost * multiplier
+    return Object.prototype.hasOwnProperty.call(
+        soldierTypes,
+        option.type
     );
 }
 
-function increaseTacticalCost(option) {
 
-    const key =
-        option.type ||
-        option.name;
+// ==========================================
+// CALCUL DU PRIX
+// ==========================================
 
-    tacticalPurchaseCounts[key] =
-        (tacticalPurchaseCounts[key] || 0) + 1;
+function getTacticalCost(option) {
+
+    // Prix de base
+    const baseCost =
+        option.cost || 0;
+
+
+    // ======================================
+    // SOUTIENS / DÉFENSES / ORDRES
+    // ======================================
+
+    // Ils gardent leur prix normal.
+    if (!isReinforcementOption(option)) {
+
+        return baseCost;
+    }
+
+
+    // ======================================
+    // RENFORTS
+    // ======================================
+
+    // On compte uniquement les soldats
+    // actuellement présents sur le terrain.
+
+    const soldierCount =
+        soldiers.filter(
+            function (soldier) {
+
+                return (
+                    soldier &&
+                    soldier.alive !== false
+                );
+            }
+        ).length;
+
+
+    // +10 % du prix de base
+    // par soldat vivant.
+
+    const multiplier =
+        1 +
+        (
+            soldierCount *
+            REINFORCEMENT_COST_PER_SOLDIER
+        );
+
+
+    return Math.ceil(
+        baseCost *
+        multiplier
+    );
 }
+
+
+// ==========================================
+// COMPATIBILITÉ RESET
+// ==========================================
+
+// L'ancien système utilisait un compteur
+// d'achats qu'il fallait remettre à zéro.
+//
+// Il n'existe plus.
+// On garde simplement cette fonction
+// au cas où game.js l'appelle encore.
 
 function resetTacticalCosts() {
-    tacticalPurchaseCounts = {};
+
+    // Rien à réinitialiser.
 }
 
+
+// ==========================================
+// OUVERTURE DU MENU
+// ==========================================
 
 function openTacticalMenu(menuName) {
 
@@ -89,7 +150,10 @@ function openTacticalMenu(menuName) {
         function (option) {
 
             const currentCost =
-                getTacticalCost(option);
+                getTacticalCost(
+                    option
+                );
+
 
             const button =
                 document.createElement(
@@ -135,14 +199,13 @@ function openTacticalMenu(menuName) {
             // PAS ASSEZ DE POINTS
             // ==================================
 
-                if (
-                    currentCost >
-                    commandPoints
-                ) {
+            if (
+                currentCost >
+                commandPoints
+            ) {
 
                 button.disabled =
                     true;
-
             }
 
 
@@ -152,12 +215,12 @@ function openTacticalMenu(menuName) {
 
             button.addEventListener(
                 "click",
+
                 function () {
 
                     buyTacticalOption(
                         option
                     );
-
                 }
             );
 
@@ -165,7 +228,6 @@ function openTacticalMenu(menuName) {
             tacticalContent.appendChild(
                 button
             );
-
         }
     );
 
@@ -177,7 +239,6 @@ function openTacticalMenu(menuName) {
     tacticalPanel.classList.remove(
         "hidden"
     );
-
 }
 
 
@@ -187,14 +248,26 @@ function openTacticalMenu(menuName) {
 
 function buyTacticalOption(option) {
 
+    // Recalcul au moment exact de l'achat.
+    //
+    // Important :
+    // le nombre de soldats peut avoir changé
+    // depuis l'ouverture du menu.
+
     const currentCost =
-    getTacticalCost(option);
+        getTacticalCost(
+            option
+        );
+
 
     // ======================================
     // VÉRIFICATION DES POINTS
     // ======================================
 
-    if (commandPoints < currentCost) {
+    if (
+        commandPoints <
+        currentCost
+    ) {
 
         console.log(
             "Pas assez de points."
@@ -206,11 +279,14 @@ function buyTacticalOption(option) {
 
     // ======================================
     // TRANCHÉE
-    // Le paiement aura lieu AU PLACEMENT
     // ======================================
 
+    // Le paiement est effectué
+    // au moment du placement.
+
     if (
-        option.type === "trench"
+        option.type ===
+        "trench"
     ) {
 
         activateDefensePlacement(
@@ -225,28 +301,26 @@ function buyTacticalOption(option) {
 
 
     // ======================================
-    // PAIEMENT DES AUTRES OPTIONS
+    // RENFORT
     // ======================================
 
-    commandPoints -=
-        currentCost;
+    if (
+        isReinforcementOption(
+            option
+        )
+    ) {
 
-    increaseTacticalCost(
-        option
-    );
-
-    updatePoints();
+        commandPoints -=
+            currentCost;
 
 
-    // ======================================
-    // RENFORTS
-    // ======================================
+        updatePoints();
 
-    if (option.type) {
 
         spawnReinforcement(
             option.type
         );
+
 
         closeTacticalMenu();
 
@@ -263,9 +337,17 @@ function buyTacticalOption(option) {
         "GRENADE"
     ) {
 
+        commandPoints -=
+            currentCost;
+
+
+        updatePoints();
+
+
         activateSupport(
             "grenade"
         );
+
 
         closeTacticalMenu();
 
@@ -282,9 +364,17 @@ function buyTacticalOption(option) {
         "MORTIER"
     ) {
 
+        commandPoints -=
+            currentCost;
+
+
+        updatePoints();
+
+
         activateSupport(
             "mortar"
         );
+
 
         closeTacticalMenu();
 
@@ -301,9 +391,17 @@ function buyTacticalOption(option) {
         "RAVITAILLEMENT"
     ) {
 
+        commandPoints -=
+            currentCost;
+
+
+        updatePoints();
+
+
         activateSupport(
             "supply"
         );
+
 
         closeTacticalMenu();
 
@@ -371,6 +469,7 @@ function buyTacticalOption(option) {
         option.name
     );
 
+
     closeTacticalMenu();
 }
 
@@ -384,7 +483,6 @@ function closeTacticalMenu() {
     tacticalPanel.classList.add(
         "hidden"
     );
-
 }
 
 
@@ -397,6 +495,7 @@ commandButtons.forEach(
 
         button.addEventListener(
             "click",
+
             function () {
 
                 const menuName =
@@ -404,6 +503,7 @@ commandButtons.forEach(
 
 
                 if (!menuName) {
+
                     return;
                 }
 
@@ -411,10 +511,8 @@ commandButtons.forEach(
                 openTacticalMenu(
                     menuName
                 );
-
             }
         );
-
     }
 );
 
