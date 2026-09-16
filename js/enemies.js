@@ -8,6 +8,51 @@ const enemies = [];
 
 
 // ==========================================
+// TYPES D'ENNEMIS
+// ==========================================
+
+const enemyTypes = {
+
+    rifleman: {
+        name: "Fusilier",
+        hp: 60,
+        speed: 20,
+        damage: 10,
+        range: 130,
+        fireRate: 1200
+    },
+
+    scout: {
+        name: "Éclaireur",
+        hp: 40,
+        speed: 32,
+        damage: 7,
+        range: 100,
+        fireRate: 900
+    },
+
+    gunner: {
+        name: "Mitrailleur",
+        hp: 100,
+        speed: 14,
+        damage: 13,
+        range: 120,
+        fireRate: 650
+    },
+
+    marksman: {
+        name: "Tireur d'élite",
+        hp: 45,
+        speed: 16,
+        damage: 22,
+        range: 210,
+        fireRate: 2200
+    }
+
+};
+
+
+// ==========================================
 // CRÉATION D'UN ENNEMI
 // ==========================================
 
@@ -20,12 +65,31 @@ function createEnemy(
     const rect =
         battlefield.getBoundingClientRect();
 
-
     const x =
         rect.width * (xPercent / 100);
 
     const y =
         rect.height * (yPercent / 100);
+
+
+    // ======================================
+    // TYPE / STATS
+    // ======================================
+
+    const stats =
+        enemyTypes[type] ||
+        enemyTypes.rifleman;
+
+    const difficulty =
+        typeof getDifficulty === "function"
+        ? getDifficulty()
+        : {
+            enemyHp: 1,
+            enemyDamage: 1,
+            enemySpeed: 1,
+            enemyCount: 1,
+            pointGain: 1
+        };
 
 
     // ======================================
@@ -35,20 +99,29 @@ function createEnemy(
     const element =
         document.createElement("div");
 
-
     element.classList.add(
         "enemy",
         type
     );
 
+    const classIcons = {
+        rifleman: "",
+        scout: "⚡",
+        gunner: "◆",
+        marksman: "⌖"
+    };
+
     element.innerHTML = `
+        <span class="enemy-class">
+            ${classIcons[type] || ""}
+        </span>
+
         <span class="enemy-icon">
             <span class="enemy-helmet"></span>
             <span class="enemy-body"></span>
             <span class="enemy-gun"></span>
         </span>
     `;
-
 
     battlefield.appendChild(
         element
@@ -65,26 +138,40 @@ function createEnemy(
 
         type: type,
 
+        name: stats.name,
+
         x: x,
         y: y,
 
-        hp: 60,
-        maxHp: 60,
+        hp:
+            stats.hp *
+            difficulty.enemyHp,
 
-        speed: 20,
+        maxHp:
+            stats.hp *
+            difficulty.enemyHp,
 
-        damage: 10,
+        speed:
+            stats.speed *
+            difficulty.enemySpeed,
 
-        range: 130,
+        damage:
+            stats.damage *
+            difficulty.enemyDamage,
 
-        fireRate: 1200,
+        range:
+            stats.range,
+
+        fireRate:
+            stats.fireRate,
 
         target: null,
+
         isFiring: false,
+
         lastShot: 0,
 
         alive: true
-
     };
 
 
@@ -92,11 +179,9 @@ function createEnemy(
         enemy
     );
 
-
     updateEnemyPosition(
         enemy
     );
-
 
     return enemy;
 }
@@ -115,7 +200,88 @@ function updateEnemyPosition(
 
     enemy.element.style.top =
         enemy.y + "px";
+}
 
+
+// ==========================================
+// CHOIX DU TYPE D'ENNEMI
+// ==========================================
+
+function getRandomEnemyType() {
+
+    const roll =
+        Math.random() * 100;
+
+
+    // ======================================
+    // VAGUES 1 - 2
+    // Fusiliers uniquement
+    // ======================================
+
+    if (currentWave < 3) {
+
+        return "rifleman";
+    }
+
+
+    // ======================================
+    // VAGUES 3 - 4
+    // Apparition des éclaireurs
+    // ======================================
+
+    if (currentWave < 5) {
+
+        if (roll < 25) {
+
+            return "scout";
+        }
+
+        return "rifleman";
+    }
+
+
+    // ======================================
+    // VAGUES 5 - 7
+    // Apparition des mitrailleurs
+    // ======================================
+
+    if (currentWave < 8) {
+
+        if (roll < 20) {
+
+            return "gunner";
+        }
+
+        if (roll < 45) {
+
+            return "scout";
+        }
+
+        return "rifleman";
+    }
+
+
+    // ======================================
+    // VAGUE 8+
+    // Toutes les classes
+    // ======================================
+
+    if (roll < 15) {
+
+        return "marksman";
+    }
+
+    if (roll < 35) {
+
+        return "gunner";
+    }
+
+    if (roll < 60) {
+
+        return "scout";
+    }
+
+    return "rifleman";
 }
 
 
@@ -129,16 +295,18 @@ function spawnEnemy() {
         10 +
         Math.random() * 80;
 
-
     // Arrivée depuis le haut
     const y =
         5 +
         Math.random() * 5;
 
+    const type =
+        getRandomEnemyType();
 
     return createEnemy(
         x,
-        y
+        y,
+        type
     );
 }
 
@@ -158,8 +326,8 @@ function rotateEnemyTowards(
         targetX,
         targetY
     );
-
 }
+
 
 // ==========================================
 // DÉPLACEMENT DES ENNEMIS
@@ -171,6 +339,7 @@ function moveEnemies(deltaTime) {
         function (enemy) {
 
             if (!enemy.alive) {
+
                 return;
             }
 
@@ -180,30 +349,34 @@ function moveEnemies(deltaTime) {
             // ==================================
 
             let closestSoldier = null;
-            let closestDistance = Infinity;
+
+            let closestDistance =
+                Infinity;
 
 
             soldiers.forEach(
                 function (soldier) {
 
-                    if (soldier.alive === false) {
+                    if (
+                        soldier.alive === false
+                    ) {
+
                         return;
                     }
 
-
                     const dx =
-                        soldier.x - enemy.x;
+                        soldier.x -
+                        enemy.x;
 
                     const dy =
-                        soldier.y - enemy.y;
-
+                        soldier.y -
+                        enemy.y;
 
                     const distance =
                         Math.sqrt(
                             dx * dx +
                             dy * dy
                         );
-
 
                     if (
                         distance <
@@ -215,14 +388,13 @@ function moveEnemies(deltaTime) {
 
                         closestSoldier =
                             soldier;
-
                     }
-
                 }
             );
 
 
             if (!closestSoldier) {
+
                 return;
             }
 
@@ -248,7 +420,6 @@ function moveEnemies(deltaTime) {
             ) {
 
                 return;
-
             }
 
 
@@ -264,7 +435,6 @@ function moveEnemies(deltaTime) {
                 closestSoldier.y -
                 enemy.y;
 
-
             const directionX =
                 dx /
                 closestDistance;
@@ -273,11 +443,9 @@ function moveEnemies(deltaTime) {
                 dy /
                 closestDistance;
 
-
             const movement =
                 enemy.speed *
                 deltaTime;
-
 
             enemy.x +=
                 directionX *
@@ -291,8 +459,6 @@ function moveEnemies(deltaTime) {
             updateEnemyPosition(
                 enemy
             );
-
         }
     );
-
 }

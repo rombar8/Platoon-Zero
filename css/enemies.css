@@ -329,3 +329,116 @@
     transition:
         opacity 0.5s;
 }
+
+/* ==========================================
+   TYPES D'ENNEMIS
+   ========================================== */
+
+/* FUSILIER
+   Standard : on garde le design actuel */
+.enemy.rifleman {
+    --enemy-accent: #8b8b73;
+}
+
+
+/* ==========================================
+   ÉCLAIREUR
+   Plus petit / léger
+   ========================================== */
+
+.enemy.scout .enemy-icon {
+    transform: scale(0.85);
+}
+
+.enemy.scout .enemy-helmet {
+    background: #6f7d58;
+}
+
+.enemy.scout .enemy-body {
+    background: #596447;
+}
+
+.enemy.scout .enemy-gun {
+    width: 14px;
+}
+
+
+/* ==========================================
+   MITRAILLEUR
+   Plus massif + arme plus imposante
+   ========================================== */
+
+.enemy.gunner .enemy-icon {
+    transform: scale(1.15);
+}
+
+.enemy.gunner .enemy-helmet {
+    background: #494c3e;
+}
+
+.enemy.gunner .enemy-body {
+    background: #3d4034;
+}
+
+.enemy.gunner .enemy-gun {
+    width: 24px;
+    height: 5px;
+}
+
+
+/* ==========================================
+   TIREUR D'ÉLITE
+   Silhouette fine + long fusil
+   ========================================== */
+
+.enemy.marksman .enemy-icon {
+    transform: scale(0.95);
+}
+
+.enemy.marksman .enemy-helmet {
+    background: #4f5948;
+}
+
+.enemy.marksman .enemy-body {
+    background: #424a3c;
+}
+
+.enemy.marksman .enemy-gun {
+    width: 30px;
+    height: 3px;
+}
+
+.enemy-class {
+    position: absolute;
+
+    left: 50%;
+    top: -17px;
+
+    transform: translateX(-50%);
+
+    font-size: 10px;
+    font-weight: 900;
+
+    color: #d8d8c4;
+
+    text-shadow:
+        0 1px 2px #000;
+
+    pointer-events: none;
+}
+
+.enemy.rifleman .enemy-class {
+    display: none;
+}
+
+.enemy.scout .enemy-class {
+    color: #d6e68a;
+}
+
+.enemy.gunner .enemy-class {
+    color: #e0b66b;
+}
+
+.enemy.marksman .enemy-class {
+    color: #d2d2d2;
+}
