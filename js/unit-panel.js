@@ -52,14 +52,12 @@ function showUnitPanel(soldier) {
     // ======================================
 
     hpText.textContent =
-        soldier.hp +
+        Math.ceil(soldier.hp) +
         " / " +
         soldier.maxHp;
 
-
     const hpPercent =
         (soldier.hp / soldier.maxHp) * 100;
-
 
     hpBar.style.width =
         hpPercent + "%";
@@ -79,7 +77,57 @@ function showUnitPanel(soldier) {
         soldier.range;
 
 
-    // Affiche la fiche
+    // ======================================
+    // COUVERTURE
+    // ======================================
+
+    let coverIndicator =
+        document.querySelector(
+            "#unit-cover"
+        );
+
+    // Création automatique si inexistant
+    if (!coverIndicator) {
+
+        coverIndicator =
+            document.createElement("div");
+
+        coverIndicator.id =
+            "unit-cover";
+
+        panel.appendChild(
+            coverIndicator
+        );
+    }
+
+    const inTrench =
+        typeof isSoldierInTrench === "function" &&
+        isSoldierInTrench(soldier);
+
+    if (inTrench) {
+
+        coverIndicator.textContent =
+            "🛡️ COUVERT — TRANCHÉE";
+
+        coverIndicator.classList.add(
+            "active"
+        );
+
+    } else {
+
+        coverIndicator.textContent =
+            "⚠ AUCUNE COUVERTURE";
+
+        coverIndicator.classList.remove(
+            "active"
+        );
+    }
+
+
+    // ======================================
+    // AFFICHAGE
+    // ======================================
+
     panel.classList.remove(
         "hidden"
     );

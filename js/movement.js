@@ -156,20 +156,17 @@ function moveSoldiers(deltaTime) {
                 return;
             }
 
-
             const dx =
                 soldier.targetX - soldier.x;
 
             const dy =
                 soldier.targetY - soldier.y;
 
-
             const distance =
                 Math.sqrt(
                     dx * dx +
                     dy * dy
                 );
-
 
             // ==================================
             // ORIENTATION
@@ -193,9 +190,11 @@ function moveSoldiers(deltaTime) {
                     soldier.targetX,
                     soldier.targetY
                 );
-
             }
 
+            // ==================================
+            // ARRIVÉ À DESTINATION
+            // ==================================
 
             if (distance < 0.5) {
 
@@ -209,9 +208,12 @@ function moveSoldiers(deltaTime) {
                     soldier
                 );
 
+                updateTrenchStatus(
+                    soldier
+                );
+
                 return;
             }
-
 
             // ==================================
             // VITESSE EN PIXELS / SECONDE
@@ -221,13 +223,11 @@ function moveSoldiers(deltaTime) {
                 soldier.speed *
                 deltaTime;
 
-
             const directionX =
                 dx / distance;
 
             const directionY =
                 dy / distance;
-
 
             if (movement < distance) {
 
@@ -246,15 +246,77 @@ function moveSoldiers(deltaTime) {
 
                 soldier.y =
                     soldier.targetY;
-
             }
-
 
             updateSoldierPosition(
                 soldier
             );
 
+            updateTrenchStatus(
+                soldier
+            );
         }
     );
+}
 
+
+// ==========================================
+// ÉTAT DE COUVERTURE
+// ==========================================
+
+function updateTrenchStatus(soldier) {
+
+    if (
+        typeof isSoldierInTrench !== "function"
+    ) {
+        return;
+    }
+
+    const inTrench =
+        isSoldierInTrench(soldier);
+
+    // ======================================
+    // INDICATEUR SUR LE TERRAIN
+    // ======================================
+
+    soldier.element.classList.toggle(
+        "in-trench",
+        inTrench
+    );
+
+
+    // ======================================
+    // MISE À JOUR LIVE DE LA FICHE
+    // ======================================
+
+    if (soldier === selectedSoldier) {
+
+        const coverIndicator =
+            document.querySelector(
+                "#unit-cover"
+            );
+
+        if (!coverIndicator) {
+            return;
+        }
+
+        if (inTrench) {
+
+            coverIndicator.textContent =
+                "🛡️ COUVERT — TRANCHÉE";
+
+            coverIndicator.classList.add(
+                "active"
+            );
+
+        } else {
+
+            coverIndicator.textContent =
+                "⚠ AUCUNE COUVERTURE";
+
+            coverIndicator.classList.remove(
+                "active"
+            );
+        }
+    }
 }

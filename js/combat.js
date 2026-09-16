@@ -254,6 +254,55 @@ function damageUnit(
     }
 }
 
+
+// ==========================================
+// PROGRESSION / GRADES
+// ==========================================
+
+function updateSoldierRank(soldier) {
+
+    if (!soldier) {
+        return;
+    }
+
+    let newRank =
+        soldierRanks[0].rank;
+
+    // Cherche le grade correspondant à l'XP
+    for (const rankData of soldierRanks) {
+
+        if (soldier.xp >= rankData.xp) {
+            newRank = rankData.rank;
+        } else {
+            break;
+        }
+    }
+
+    // Pas de changement
+    if (soldier.rank === newRank) {
+        return;
+    }
+
+    // Promotion
+    soldier.rank = newRank;
+
+    console.log(
+        soldier.name +
+        " est promu " +
+        newRank +
+        " !"
+    );
+
+    // Actualise immédiatement la fiche
+    if (
+        soldier === selectedSoldier &&
+        typeof showUnitPanel === "function"
+    ) {
+        showUnitPanel(soldier);
+    }
+}
+
+
 // ==========================================
 // MORT D'UNE UNITÉ
 // ==========================================
@@ -315,7 +364,26 @@ function killUnit(
             )
         ) {
 
+            // Kill individuel
             attacker.kills++;
+
+            // 1 kill = 1 XP
+            attacker.xp++;
+
+            // Vérifie une éventuelle promotion
+            updateSoldierRank(
+                attacker
+            );
+
+            // Actualise la fiche du soldat
+            if (
+                attacker === selectedSoldier &&
+                typeof showUnitPanel === "function"
+            ) {
+                showUnitPanel(
+                    attacker
+                );
+            }
         }
 
 

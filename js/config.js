@@ -162,3 +162,25 @@ const tacticalMenus = {
     }
 
 };
+
+
+// ==========================================
+// GRADES DES SOLDATS
+// ==========================================
+
+// ==========================================
+// GRADES DES SOLDATS
+// ==========================================
+
+const soldierRanks = [
+    { rank: "PVT",  xp: 0 },
+    { rank: "PFC",  xp: 5 },
+    { rank: "CPL",  xp: 12 },
+    { rank: "SGT",  xp: 22 },
+    { rank: "SSGT", xp: 35 },
+    { rank: "SFC",  xp: 50 },
+    { rank: "MSG",  xp: 70 },
+    { rank: "1SG",  xp: 95 },
+    { rank: "SGM",  xp: 125 },
+    { rank: "CSM",  xp: 160 }
+];
