@@ -101,6 +101,15 @@ function createTrench(x, y, cost) {
     pointsDisplay.textContent =
         commandPoints;
 
+    // La tranchée a réellement été achetée :
+    // son prochain prix augmente
+    increaseTacticalCost({
+        type: "trench",
+        name: "TRANCHÉE"
+    });
+
+    updatePoints();
+
 
     // Élément HTML
     const trench =

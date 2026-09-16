@@ -199,7 +199,7 @@ const difficulties = {
         enemyDamage: 0.75,
         enemySpeed: 0.90,
         enemyCount: 0.80,
-        pointGain: 1.25
+        pointGain: 0.70
     },
 
     medium: {
@@ -208,7 +208,7 @@ const difficulties = {
         enemyDamage: 1,
         enemySpeed: 1,
         enemyCount: 1,
-        pointGain: 1
+        pointGain: 0.50
     },
 
     hard: {
@@ -217,7 +217,7 @@ const difficulties = {
         enemyDamage: 1.20,
         enemySpeed: 1.05,
         enemyCount: 1.20,
-        pointGain: 0.90
+        pointGain: 0.40
     },
 
     extreme: {
@@ -226,7 +226,7 @@ const difficulties = {
         enemyDamage: 1.45,
         enemySpeed: 1.10,
         enemyCount: 1.40,
-        pointGain: 0.80
+        pointGain: 0.30
     },
 
     apocalypse: {
@@ -235,7 +235,7 @@ const difficulties = {
         enemyDamage: 1.75,
         enemySpeed: 1.15,
         enemyCount: 1.65,
-        pointGain: 0.70
+        pointGain: 0.25
     },
 
     ultimate: {
@@ -244,7 +244,7 @@ const difficulties = {
         enemyDamage: 2.15,
         enemySpeed: 1.20,
         enemyCount: 2,
-        pointGain: 0.60
+        pointGain: 0.20
     },
 
     impossible: {
@@ -253,7 +253,7 @@ const difficulties = {
         enemyDamage: 2.75,
         enemySpeed: 1.30,
         enemyCount: 2.5,
-        pointGain: 0.50
+        pointGain: 0.15
     }
 };
 

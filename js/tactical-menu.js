@@ -9,6 +9,45 @@
 // OUVERTURE DU MENU
 // ==========================================
 
+
+// ==========================================
+// INFLATION DES PRIX
+// ==========================================
+
+let tacticalPurchaseCounts = {};
+
+function getTacticalCost(option) {
+
+    const key =
+        option.type ||
+        option.name;
+
+    const purchases =
+        tacticalPurchaseCounts[key] || 0;
+
+    const multiplier =
+        1 + (purchases * 0.20);
+
+    return Math.ceil(
+        option.cost * multiplier
+    );
+}
+
+function increaseTacticalCost(option) {
+
+    const key =
+        option.type ||
+        option.name;
+
+    tacticalPurchaseCounts[key] =
+        (tacticalPurchaseCounts[key] || 0) + 1;
+}
+
+function resetTacticalCosts() {
+    tacticalPurchaseCounts = {};
+}
+
+
 function openTacticalMenu(menuName) {
 
     const menu =
@@ -49,6 +88,9 @@ function openTacticalMenu(menuName) {
     menu.options.forEach(
         function (option) {
 
+            const currentCost =
+                getTacticalCost(option);
+
             const button =
                 document.createElement(
                     "button"
@@ -83,7 +125,7 @@ function openTacticalMenu(menuName) {
                 </span>
 
                 <span class="tactical-cost">
-                    ${option.cost}
+                    ${currentCost}
                 </span>
 
             `;
@@ -93,10 +135,10 @@ function openTacticalMenu(menuName) {
             // PAS ASSEZ DE POINTS
             // ==================================
 
-            if (
-                option.cost >
-                commandPoints
-            ) {
+                if (
+                    currentCost >
+                    commandPoints
+                ) {
 
                 button.disabled =
                     true;
@@ -145,11 +187,14 @@ function openTacticalMenu(menuName) {
 
 function buyTacticalOption(option) {
 
+    const currentCost =
+    getTacticalCost(option);
+
     // ======================================
     // VÉRIFICATION DES POINTS
     // ======================================
 
-    if (commandPoints < option.cost) {
+    if (commandPoints < currentCost) {
 
         console.log(
             "Pas assez de points."
@@ -170,7 +215,7 @@ function buyTacticalOption(option) {
 
         activateDefensePlacement(
             "trench",
-            option.cost
+            currentCost
         );
 
         closeTacticalMenu();
@@ -184,7 +229,11 @@ function buyTacticalOption(option) {
     // ======================================
 
     commandPoints -=
-        option.cost;
+        currentCost;
+
+    increaseTacticalCost(
+        option
+    );
 
     updatePoints();
 

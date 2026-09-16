@@ -53,6 +53,9 @@ const commandButtons =
         "#command-bar button"
     );
 
+const speedButton =
+    document.querySelector("#speed-button");
+
 
 // ==========================================
 // JOUEUR
@@ -101,6 +104,9 @@ let commandPoints = 10;
 // ==========================================
 
 let lastFrameTime = 0;
+
+let gameSpeed = 1;
+let gameTime = 0;
 
 
 // ==========================================
@@ -600,6 +606,15 @@ function gameLoop(currentTime) {
             deltaTime,
             0.05
         );
+    
+    // ======================================
+    // VITESSE DU JEU
+    // ======================================
+
+    deltaTime *= gameSpeed;
+
+    gameTime +=
+        deltaTime * 1000;
 
 
     // ======================================
@@ -642,7 +657,7 @@ function gameLoop(currentTime) {
     ) {
 
         updateCombat(
-            currentTime
+            gameTime
         );
     }
 
@@ -933,6 +948,14 @@ function resetGameState() {
 
     gameOver = false;
 
+    gameSpeed = 1;
+
+    gameTime = 0;
+
+    if (speedButton) {
+        speedButton.textContent = "×1";
+    }
+
 
     game.classList.remove(
         "paused"
@@ -1064,6 +1087,7 @@ function resetGameState() {
         resetWaves();
     }
 
+        resetTacticalCosts();
 
     // ======================================
     // NETTOYAGE VISUEL
@@ -1269,6 +1293,31 @@ function pauseGame() {
             "hidden"
         );
     }
+}
+
+if (speedButton) {
+
+    speedButton.addEventListener(
+        "click",
+        function () {
+
+            if (
+                !gameStarted ||
+                gameOver
+            ) {
+                return;
+            }
+
+            if (gameSpeed === 1) {
+                gameSpeed = 2;
+            } else {
+                gameSpeed = 1;
+            }
+
+            speedButton.textContent =
+                "×" + gameSpeed;
+        }
+    );
 }
 
 

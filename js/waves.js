@@ -113,20 +113,30 @@ function isBonusWave() {
 
 function getWaveReward() {
 
-    let reward =
-        3 + currentWave;
+    const difficulty =
+        getDifficulty();
 
+    // Récompense de base beaucoup plus faible
+    let baseReward =
+        2 + Math.floor(currentWave / 3);
 
+    // Bonus toutes les 5 vagues
     if (isBonusWave()) {
-
-        reward +=
+        baseReward +=
             bonusWaveReward;
-
     }
 
+    // La difficulté réduit les gains
+    const finalReward =
+        Math.max(
+            1,
+            Math.round(
+                baseReward *
+                difficulty.pointGain
+            )
+        );
 
-    return reward;
-
+    return finalReward;
 }
 
 
@@ -216,8 +226,20 @@ function startNextWave() {
     // NOMBRE D'ENNEMIS
     // ======================================
 
-    enemiesToSpawn =
-        2 + currentWave;
+const difficulty =
+    getDifficulty();
+
+const baseEnemyCount =
+    2 + currentWave;
+
+enemiesToSpawn =
+    Math.max(
+        1,
+        Math.round(
+            baseEnemyCount *
+            difficulty.enemyCount
+        )
+    );
 
 
     // Premier spawn immédiat
