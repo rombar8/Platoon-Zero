@@ -42,9 +42,8 @@ function rotateUnitTowards(
         );
 
     if (unitIcon) {
-        unitIcon.style.rotate =
-            angle + "deg";
-
+        unitIcon.style.transform =
+            `translate(-50%, -50%) rotate(${angle}deg)`;
         return;
     }
 
