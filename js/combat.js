@@ -393,12 +393,15 @@ const rankCombatBonuses = {
 // APPLICATION BONUS DE GRADE
 // ==========================================
 
+// ==========================================
+// APPLICATION BONUS DE GRADE
+// ==========================================
+
 function applyRankCombatBonus(
     soldier,
     oldRank,
     newRank
 ) {
-
     const oldBonus =
         rankCombatBonuses[oldRank] ||
         rankCombatBonuses.PVT;
@@ -406,7 +409,6 @@ function applyRankCombatBonus(
     const newBonus =
         rankCombatBonuses[newRank] ||
         rankCombatBonuses.PVT;
-
 
     const hpRatio =
         newBonus.hp /
@@ -420,10 +422,8 @@ function applyRankCombatBonus(
         newBonus.range /
         oldBonus.range;
 
-
     const oldMaxHp =
         soldier.maxHp;
-
 
     soldier.maxHp *=
         hpRatio;
@@ -434,35 +434,45 @@ function applyRankCombatBonus(
     soldier.range *=
         rangeRatio;
 
-
     // Le bonus de PV max est également
     // ajouté aux PV actuels
+
     soldier.hp +=
         soldier.maxHp -
         oldMaxHp;
-
 
     soldier.hp =
         Math.min(
             soldier.hp,
             soldier.maxHp
         );
+
+
+    // ======================================
+    // ARRONDI DES STATS
+    // ======================================
+
+    soldier.maxHp =
+        Math.round(
+            soldier.maxHp
+        );
+
+    soldier.hp =
+        Math.min(
+            soldier.maxHp,
+            Math.round(soldier.hp)
+        );
+
+    soldier.damage =
+        Math.round(
+            soldier.damage * 10
+        ) / 10;
+
+    soldier.range =
+        Math.round(
+            soldier.range
+        );
 }
-
-soldier.maxHp =
-    Math.round(soldier.maxHp);
-
-soldier.hp =
-    Math.min(
-        soldier.maxHp,
-        Math.round(soldier.hp)
-    );
-
-soldier.damage =
-    Math.round(soldier.damage * 10) / 10;
-
-soldier.range =
-    Math.round(soldier.range);
 
 
 // ==========================================
