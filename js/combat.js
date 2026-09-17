@@ -243,25 +243,15 @@ function damageUnit(
 
 
     // ======================================
-    // PROTECTION DE LA TRANCHÉE
+    // SÉCURITÉ DÉGÂTS
     // ======================================
 
-    const targetIsAlly =
-        soldiers.includes(target);
-
-    const attackerIsEnemy =
-        enemies.includes(attacker);
-
     if (
-        targetIsAlly &&
-        attackerIsEnemy &&
-        typeof isSoldierInTrench ===
-            "function" &&
-        isSoldierInTrench(target)
+        typeof damage !== "number" ||
+        !Number.isFinite(damage) ||
+        damage <= 0
     ) {
-
-        // Réduction de 50 %
-        damage *= 0.5;
+        return;
     }
 
 
@@ -272,9 +262,18 @@ function damageUnit(
     target.hp -= damage;
 
     if (target.hp < 0) {
-
         target.hp = 0;
     }
+
+
+    // ======================================
+    // ARRONDI DE LA VIE
+    // ======================================
+
+    target.hp =
+        Math.round(
+            target.hp * 10
+        ) / 10;
 
 
     // ======================================
@@ -311,7 +310,9 @@ function damageUnit(
     // MORT
     // ======================================
 
-    if (target.hp <= 0) {
+    if (
+        target.hp <= 0
+    ) {
 
         killUnit(
             target,
@@ -966,7 +967,6 @@ function shoot(
         !target ||
         !target.alive
     ) {
-
         return;
     }
 
@@ -977,7 +977,7 @@ function shoot(
 
     if (
         typeof rotateUnitTowards ===
-            "function"
+        "function"
     ) {
 
         rotateUnitTowards(
@@ -995,7 +995,6 @@ function shoot(
     let actualTarget =
         target;
 
-
     if (!enemyShot) {
 
         const friendlyTarget =
@@ -1004,14 +1003,10 @@ function shoot(
                 target
             );
 
-
-        if (
-            friendlyTarget
-        ) {
+        if (friendlyTarget) {
 
             actualTarget =
                 friendlyTarget;
-
 
             console.log(
                 "FRIENDLY FIRE !"
@@ -1032,12 +1027,51 @@ function shoot(
 
 
     // ======================================
-    // DÉGÂTS
+    // DÉGÂTS DE BASE
+    // ======================================
+
+    let finalDamage =
+        shooter.damage;
+
+
+    // ======================================
+    // COUVERTURE
+    // Uniquement contre les tirs ennemis
+    // ======================================
+
+    if (
+        enemyShot &&
+        typeof getSoldierProtection ===
+        "function"
+    ) {
+
+        const protection =
+            getSoldierProtection(
+                actualTarget
+            );
+
+        finalDamage *=
+            1 - protection;
+    }
+
+
+    // ======================================
+    // ARRONDI
+    // ======================================
+
+    finalDamage =
+        Math.round(
+            finalDamage * 10
+        ) / 10;
+
+
+    // ======================================
+    // APPLICATION DES DÉGÂTS
     // ======================================
 
     damageUnit(
         actualTarget,
-        shooter.damage,
+        finalDamage,
         shooter
     );
 }

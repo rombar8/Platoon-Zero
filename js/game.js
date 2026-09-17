@@ -577,11 +577,9 @@ function gameLoop(currentTime) {
         lastFrameTime =
             currentTime;
 
-
         requestAnimationFrame(
             gameLoop
         );
-
 
         return;
     }
@@ -598,22 +596,22 @@ function gameLoop(currentTime) {
         ) /
         1000;
 
-
     lastFrameTime =
         currentTime;
-
 
     deltaTime =
         Math.min(
             deltaTime,
             0.05
         );
-    
+
+
     // ======================================
     // VITESSE DU JEU
     // ======================================
 
-    deltaTime *= gameSpeed;
+    deltaTime *=
+        gameSpeed;
 
     gameTime +=
         deltaTime * 1000;
@@ -650,6 +648,19 @@ function gameLoop(currentTime) {
 
 
     // ======================================
+    // DÉFENSES
+    // ======================================
+
+    if (
+        typeof updateDefenses ===
+        "function"
+    ) {
+
+        updateDefenses();
+    }
+
+
+    // ======================================
     // COMBAT
     // ======================================
 
@@ -662,8 +673,14 @@ function gameLoop(currentTime) {
             gameTime
         );
 
+
+        // ==================================
+        // MÉDECINS
+        // ==================================
+
         if (
-            typeof updateMedics === "function"
+            typeof updateMedics ===
+            "function"
         ) {
 
             updateMedics(

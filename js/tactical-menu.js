@@ -284,13 +284,20 @@ function buyTacticalOption(option) {
     // Le paiement est effectué
     // au moment du placement.
 
-    if (
-        option.type ===
-        "trench"
-    ) {
+    const defenseOption =
+    [
+        "trench",
+        "sandbags",
+        "barbedwire",
+        "mine"
+    ].includes(
+        option.type
+    );
+
+    if (defenseOption) {
 
         activateDefensePlacement(
-            "trench",
+            option.type,
             currentCost
         );
 
@@ -525,3 +532,4 @@ closeTacticalButton.addEventListener(
     "click",
     closeTacticalMenu
 );
+

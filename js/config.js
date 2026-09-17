@@ -10,7 +10,7 @@
 
 const soldierTypes = {
     rifleman: {
-        name: "Fantassin",
+        name: "SOLDAT",
         hp: 100,
         speed: 28,
         damage: 20,
@@ -46,7 +46,7 @@ const soldierTypes = {
     },
 
     marksman: {
-        name: "Tireur",
+        name: "SNIPER",
         hp: 80,
         speed: 22,
         damage: 50,
@@ -55,7 +55,7 @@ const soldierTypes = {
     },
 
     scout: {
-        name: "Éclaireur",
+        name: "COMMANDO",
         hp: 70,
         speed: 38,
         damage: 27,
@@ -64,7 +64,7 @@ const soldierTypes = {
     },
 
     gunner: {
-        name: "Mitrailleur",
+        name: "MITRAILLEUR",
         hp: 140,
         speed: 17,
         damage: 18,
@@ -112,7 +112,7 @@ const tacticalMenus = {
 
         {
             icon: "🛡️",
-            name: "MACHINE GUN",
+            name: "MITRAILLEUR",
             description: "Tir soutenu • lourd et lent",
             cost: 12,
             type: "gunner"
@@ -176,17 +176,42 @@ const tacticalMenus = {
 
 
     defenses: {
-                title: "DÉFENSES",
-                options: [
-                    {
-                        icon: "⛏️",
-                        name: "TRANCHÉE",
-                        description: "Couverture défensive • réduit les dégâts",
-                        cost: 8,
-                        type: "trench"
-                    }
-                ]
+        title: "DÉFENSES",
+
+        options: [
+            {
+                icon: "⛏️",
+                name: "TRANCHÉE",
+                description: "4 places • protection 50%",
+                cost: 8,
+                type: "trench"
             },
+
+            {
+                icon: "🧱",
+                name: "SACS DE SABLE",
+                description: "3 places • protection 25%",
+                cost: 5,
+                type: "sandbags"
+            },
+
+            {
+                icon: "🧵",
+                name: "BARBELÉS",
+                description: "Ralentit fortement les ennemis",
+                cost: 6,
+                type: "barbedwire"
+            },
+
+            {
+                icon: "💥",
+                name: "MINE",
+                description: "Explosion • dégâts de zone",
+                cost: 7,
+                type: "mine"
+            }
+        ]
+    },
 
 
     orders: {

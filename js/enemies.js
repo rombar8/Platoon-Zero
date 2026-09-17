@@ -412,7 +412,6 @@ function moveEnemies(deltaTime) {
         function (enemy) {
 
             if (!enemy.alive) {
-
                 return;
             }
 
@@ -433,9 +432,9 @@ function moveEnemies(deltaTime) {
                     if (
                         soldier.alive === false
                     ) {
-
                         return;
                     }
+
 
                     const dx =
                         soldier.x -
@@ -450,6 +449,7 @@ function moveEnemies(deltaTime) {
                             dx * dx +
                             dy * dy
                         );
+
 
                     if (
                         distance <
@@ -467,7 +467,6 @@ function moveEnemies(deltaTime) {
 
 
             if (!closestSoldier) {
-
                 return;
             }
 
@@ -491,13 +490,12 @@ function moveEnemies(deltaTime) {
                 closestDistance <=
                 enemy.range * 0.90
             ) {
-
                 return;
             }
 
 
             // ==================================
-            // AVANCE
+            // DIRECTION
             // ==================================
 
             const dx =
@@ -508,6 +506,7 @@ function moveEnemies(deltaTime) {
                 closestSoldier.y -
                 enemy.y;
 
+
             const directionX =
                 dx /
                 closestDistance;
@@ -516,9 +515,35 @@ function moveEnemies(deltaTime) {
                 dy /
                 closestDistance;
 
+
+            // ==================================
+            // BARBELÉS
+            // ==================================
+
+            let speedMultiplier = 1;
+
+
+            if (
+                typeof getEnemyDefenseSpeedMultiplier ===
+                "function"
+            ) {
+
+                speedMultiplier =
+                    getEnemyDefenseSpeedMultiplier(
+                        enemy
+                    );
+            }
+
+
+            // ==================================
+            // AVANCE
+            // ==================================
+
             const movement =
                 enemy.speed *
+                speedMultiplier *
                 deltaTime;
+
 
             enemy.x +=
                 directionX *
@@ -528,6 +553,10 @@ function moveEnemies(deltaTime) {
                 directionY *
                 movement;
 
+
+            // ==================================
+            // POSITION VISUELLE
+            // ==================================
 
             updateEnemyPosition(
                 enemy
