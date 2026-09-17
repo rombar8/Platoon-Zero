@@ -408,6 +408,17 @@ function rotateEnemyTowards(
 
 function moveEnemies(deltaTime) {
 
+    // ======================================
+    // CHEAT — FREEZE ENNEMIS
+    // ======================================
+
+    if (
+        typeof cheatState !== "undefined" &&
+        cheatState.freezeEnemies
+    ) {
+        return;
+    }
+
     enemies.forEach(
         function (enemy) {
 

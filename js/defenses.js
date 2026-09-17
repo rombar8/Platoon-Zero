@@ -96,9 +96,12 @@ function activateDefensePlacement(
     }
 
     if (
+        (
+            typeof cheatState === "undefined" ||
+            !cheatState.infinitePoints
+        ) &&
         commandPoints < cost
     ) {
-
         console.log(
             "Pas assez de points."
         );
@@ -140,6 +143,13 @@ function cancelDefensePlacement() {
 // ==========================================
 
 function payDefense(cost) {
+
+    if (
+        typeof cheatState !== "undefined" &&
+        cheatState.infinitePoints
+    ) {
+        return true;
+    }
 
     if (
         commandPoints < cost

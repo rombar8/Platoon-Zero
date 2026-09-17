@@ -317,11 +317,15 @@ function buyTacticalOption(option) {
         )
     ) {
 
-        commandPoints -=
-            currentCost;
-
+        if (
+            typeof cheatState === "undefined" ||
+            !cheatState.infinitePoints
+        ) {
+            commandPoints -= currentCost;
+        }
 
         updatePoints();
+
 
 
         spawnReinforcement(

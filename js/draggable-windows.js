@@ -3,18 +3,25 @@
 // DRAGGABLE WINDOWS
 // ==========================================
 
+
+// ==========================================
+// REND UNE FENÊTRE DÉPLAÇABLE
+// ==========================================
+
 function makeDraggable(
     windowElement,
     handleElement
 ) {
 
-    if (!windowElement || !handleElement) {
+    if (
+        !windowElement ||
+        !handleElement
+    ) {
         return;
     }
 
 
     let dragging = false;
-
     let pointerId = null;
 
     let offsetX = 0;
@@ -27,10 +34,16 @@ function makeDraggable(
 
     handleElement.addEventListener(
         "pointerdown",
+
         function (event) {
 
+            // Empêche le drag lorsqu'on
+            // clique sur un bouton du header.
+
             if (
-                event.target.closest("button")
+                event.target.closest(
+                    "button"
+                )
             ) {
                 return;
             }
@@ -40,58 +53,94 @@ function makeDraggable(
             event.stopPropagation();
 
 
-            const parent =
-                windowElement.offsetParent;
-
-
-            if (!parent) {
-                return;
-            }
-
-
             const panelRect =
                 windowElement
                     .getBoundingClientRect();
 
 
-            const parentRect =
-                parent
-                    .getBoundingClientRect();
+            // ==================================
+            // FIX DU TRANSFORM CSS
+            // ==================================
+
+            // Le panneau tactique est centré
+            // initialement avec translateX(-50%).
+            //
+            // Au premier drag on convertit sa
+            // position actuelle en coordonnées
+            // fixes réelles.
+
+            const isFixed =
+                window
+                    .getComputedStyle(
+                        windowElement
+                    )
+                    .position ===
+                "fixed";
+
+
+            if (isFixed) {
+
+                windowElement.style.left =
+                    panelRect.left + "px";
+
+                windowElement.style.top =
+                    panelRect.top + "px";
+
+                windowElement.style.right =
+                    "auto";
+
+                windowElement.style.bottom =
+                    "auto";
+
+                windowElement.style.transform =
+                    "none";
+            }
+
+            else {
+
+                const parent =
+                    windowElement.offsetParent;
+
+
+                if (!parent) {
+                    return;
+                }
+
+
+                const parentRect =
+                    parent
+                        .getBoundingClientRect();
+
+
+                const currentLeft =
+                    panelRect.left -
+                    parentRect.left;
+
+
+                const currentTop =
+                    panelRect.top -
+                    parentRect.top;
+
+
+                windowElement.style.left =
+                    currentLeft + "px";
+
+                windowElement.style.top =
+                    currentTop + "px";
+
+                windowElement.style.right =
+                    "auto";
+
+                windowElement.style.bottom =
+                    "auto";
+
+                windowElement.style.transform =
+                    "none";
+            }
 
 
             // ==================================
-            // POSITION ACTUELLE
-            // RELATIVE AU PARENT
-            // ==================================
-
-            const currentLeft =
-                panelRect.left -
-                parentRect.left;
-
-
-            const currentTop =
-                panelRect.top -
-                parentRect.top;
-
-
-            // On passe proprement
-            // de bottom/right à top/left
-
-            windowElement.style.left =
-                currentLeft + "px";
-
-            windowElement.style.top =
-                currentTop + "px";
-
-            windowElement.style.right =
-                "auto";
-
-            windowElement.style.bottom =
-                "auto";
-
-
-            // ==================================
-            // OFFSET DE LA SOURIS
+            // OFFSET DU POINTEUR
             // ==================================
 
             offsetX =
@@ -115,10 +164,26 @@ function makeDraggable(
             );
 
 
-            handleElement.setPointerCapture(
-                pointerId
-            );
+            // ==================================
+            // CAPTURE DU POINTEUR
+            // ==================================
 
+            try {
+
+                handleElement
+                    .setPointerCapture(
+                        pointerId
+                    );
+
+            }
+
+            catch (error) {
+
+                console.warn(
+                    "Pointer capture impossible.",
+                    error
+                );
+            }
         }
     );
 
@@ -129,6 +194,7 @@ function makeDraggable(
 
     handleElement.addEventListener(
         "pointermove",
+
         function (event) {
 
             if (!dragging) {
@@ -148,6 +214,96 @@ function makeDraggable(
             event.stopPropagation();
 
 
+            const position =
+                window
+                    .getComputedStyle(
+                        windowElement
+                    )
+                    .position;
+
+
+            const panelWidth =
+                windowElement.offsetWidth;
+
+
+            const panelHeight =
+                windowElement.offsetHeight;
+
+
+            // ==================================
+            // FENÊTRE FIXED
+            // ==================================
+
+            if (
+                position === "fixed"
+            ) {
+
+                let newLeft =
+                    event.clientX -
+                    offsetX;
+
+
+                let newTop =
+                    event.clientY -
+                    offsetY;
+
+
+                // ==============================
+                // LIMITES DE L'ÉCRAN
+                // ==============================
+
+                const maxLeft =
+                    Math.max(
+                        0,
+                        window.innerWidth -
+                        panelWidth
+                    );
+
+
+                const maxTop =
+                    Math.max(
+                        0,
+                        window.innerHeight -
+                        panelHeight
+                    );
+
+
+                newLeft =
+                    Math.max(
+                        0,
+                        Math.min(
+                            maxLeft,
+                            newLeft
+                        )
+                    );
+
+
+                newTop =
+                    Math.max(
+                        0,
+                        Math.min(
+                            maxTop,
+                            newTop
+                        )
+                    );
+
+
+                windowElement.style.left =
+                    newLeft + "px";
+
+
+                windowElement.style.top =
+                    newTop + "px";
+
+
+                return;
+            }
+
+
+            // ==================================
+            // FENÊTRE ABSOLUTE
+            // ==================================
+
             const parent =
                 windowElement.offsetParent;
 
@@ -162,18 +318,6 @@ function makeDraggable(
                     .getBoundingClientRect();
 
 
-            const panelWidth =
-                windowElement.offsetWidth;
-
-
-            const panelHeight =
-                windowElement.offsetHeight;
-
-
-            // ==================================
-            // POSITION RELATIVE AU PARENT
-            // ==================================
-
             let newLeft =
                 event.clientX -
                 parentRect.left -
@@ -187,7 +331,7 @@ function makeDraggable(
 
 
             // ==================================
-            // LIMITES
+            // LIMITES DU PARENT
             // ==================================
 
             const maxLeft =
@@ -236,7 +380,6 @@ function makeDraggable(
 
             windowElement.style.top =
                 newTop + "px";
-
         }
     );
 
@@ -245,7 +388,9 @@ function makeDraggable(
     // FIN DU DRAG
     // ======================================
 
-    function stopDragging(event) {
+    function stopDragging(
+        event
+    ) {
 
         if (!dragging) {
             return;
@@ -271,21 +416,37 @@ function makeDraggable(
 
 
         if (
-            pointerId !== null &&
-            handleElement.hasPointerCapture(
-                pointerId
-            )
+            pointerId !== null
         ) {
 
-            handleElement.releasePointerCapture(
-                pointerId
-            );
+            try {
 
+                if (
+                    handleElement
+                        .hasPointerCapture(
+                            pointerId
+                        )
+                ) {
+
+                    handleElement
+                        .releasePointerCapture(
+                            pointerId
+                        );
+                }
+
+            }
+
+            catch (error) {
+
+                console.warn(
+                    "Pointer release impossible.",
+                    error
+                );
+            }
         }
 
 
         pointerId = null;
-
     }
 
 
@@ -303,6 +464,7 @@ function makeDraggable(
 
     handleElement.addEventListener(
         "lostpointercapture",
+
         function () {
 
             dragging = false;
@@ -313,10 +475,8 @@ function makeDraggable(
             windowElement.classList.remove(
                 "dragging"
             );
-
         }
     );
-
 }
 
 
@@ -339,4 +499,27 @@ const unitPanelHandle =
 makeDraggable(
     unitPanelWindow,
     unitPanelHandle
+);
+
+
+// ==========================================
+// FENÊTRE TACTIQUE
+// ==========================================
+
+const tacticalPanelWindow =
+    document.querySelector(
+        "#tactical-panel"
+    );
+
+
+const tacticalPanelHandle =
+    tacticalPanelWindow
+        ?.querySelector(
+            ".tactical-header"
+        );
+
+
+makeDraggable(
+    tacticalPanelWindow,
+    tacticalPanelHandle
 );

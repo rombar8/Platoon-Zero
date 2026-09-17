@@ -2210,9 +2210,9 @@ and (max-height: 500px) {
    ========================================== */
 
 #speed-button {
-    width: 70px;
-    height: 40px;
-    padding: 4px 8px;
+    width: 100px;
+    height: 60px;
+    padding: 8px 12px;
 
     display: flex;
     align-items: center;
@@ -2237,7 +2237,7 @@ and (max-height: 500px) {
 }
 
 .speed-icon {
-    font-size: 13px;
+    font-size: 20px;
 }
 
 .speed-info {
@@ -2248,7 +2248,7 @@ and (max-height: 500px) {
 }
 
 .speed-info small {
-    font-size: 6px;
+    font-size: 10px;
     font-weight: 800;
     letter-spacing: 0.5px;
     color: #aeb99d;
@@ -2256,7 +2256,7 @@ and (max-height: 500px) {
 
 .speed-info strong {
     margin-top: 3px;
-    font-size: 12px;
+    font-size: 20px;
     color: #ffffff;
 }
 

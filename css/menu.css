@@ -477,164 +477,165 @@ button[data-difficulty="impossible"].selected {
 }
 
 /* ==========================================
-   MENU TACTIQUE — VERSION COMPACTE
+   MENU TACTIQUE — FENÊTRE DÉPLAÇABLE v0.2.3
 ========================================== */
 
-/* Fenêtre tactique */
 #tactical-panel {
-    max-height: 34vh !important;
+    position: fixed !important;
+
+    width: min(520px, calc(100vw - 20px)) !important;
+    max-width: 520px !important;
+
+    height: auto !important;
+    max-height: 55vh !important;
+
+    left: 50%;
+    top: 70px;
+    right: auto;
+    bottom: auto;
+
+    transform: translateX(-50%);
+
     overflow: hidden !important;
+
+    box-sizing: border-box !important;
+
+    border: 1px solid #65705a;
+
+    z-index: 1000 !important;
 }
 
-
-/* Header RENFORTS / SOUTIEN / ETC. */
 .tactical-header {
-    height: 30px !important;
-    min-height: 30px !important;
+    width: 100% !important;
+    height: 36px !important;
+    min-height: 36px !important;
     padding: 0 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    box-sizing: border-box !important;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+}
+
+.tactical-header:active {
+    cursor: grabbing;
 }
 
 .tactical-header h2 {
     margin: 0 !important;
-    font-size: 11px !important;
-}
-
-
-/* Liste scrollable */
-#tactical-content {
-    max-height: calc(34vh - 30px) !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-}
-
-
-/* Chaque ligne */
-.tactical-option {
-    min-height: 30px !important;
-    padding: 3px 10px !important;
-    margin: 0 !important;
-}
-
-
-/* Icône */
-.tactical-option-icon {
     font-size: 12px !important;
+    line-height: 1 !important;
+    flex: 1;
 }
 
-
-/* Nom de l'unité */
-.tactical-option-name {
-    font-size: 9px !important;
-    line-height: 1.1 !important;
-}
-
-
-/* Description */
-.tactical-option-description {
-    margin-top: 1px !important;
-    font-size: 7px !important;
-    line-height: 1.1 !important;
-}
-
-
-/* Prix */
-.tactical-option-cost {
-    font-size: 9px !important;
-}
-
-
-/* Bouton fermeture */
-#close-tactical {
-    width: 30px !important;
-    height: 30px !important;
-    font-size: 14px !important;
-}
-
-/* ==========================================
-   MENU TACTIQUE — COMPACT
-========================================== */
-
-#tactical-panel {
-    max-height: 32vh !important;
-    overflow: hidden !important;
-}
-
-
-/* HEADER */
-.tactical-header {
-    height: 28px !important;
-    min-height: 28px !important;
-    padding: 0 8px !important;
-}
-
-.tactical-header h2 {
-    margin: 0 !important;
-    font-size: 10px !important;
-}
-
-
-/* LISTE */
 #tactical-content {
-    max-height: calc(32vh - 28px) !important;
+    width: 100% !important;
+    max-height: calc(55vh - 36px) !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
-}
-
-
-/* UNE LIGNE */
-.tactical-option {
-    min-height: 27px !important;
-    height: 27px !important;
-
-    padding: 2px 8px !important;
-    margin: 0 !important;
-
     box-sizing: border-box !important;
 }
 
-
-/* ICÔNE */
-.tactical-icon {
-    width: 24px !important;
-    min-width: 24px !important;
-
-    font-size: 11px !important;
+.tactical-option {
+    width: 100% !important;
+    min-height: 42px !important;
+    height: 42px !important;
+    padding: 5px 10px !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    box-sizing: border-box !important;
 }
 
+.tactical-icon {
+    width: 30px !important;
+    min-width: 30px !important;
+    font-size: 16px !important;
+    text-align: center !important;
+    flex-shrink: 0 !important;
+}
 
-/* NOM + DESCRIPTION */
 .tactical-info {
-    gap: 0 !important;
-    line-height: 1 !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    line-height: 1.1 !important;
 }
 
 .tactical-info strong {
-    font-size: 8px !important;
+    font-size: 11px !important;
     line-height: 1 !important;
 }
 
 .tactical-info small {
-    margin-top: 1px !important;
-
-    font-size: 6px !important;
-    line-height: 1 !important;
-}
-
-
-/* PRIX */
-.tactical-cost {
-    min-width: 22px !important;
-
+    margin: 0 !important;
     font-size: 8px !important;
-    text-align: right !important;
+    line-height: 1.1 !important;
+    opacity: 0.75;
 }
 
+.tactical-cost {
+    margin-left: auto !important;
+    min-width: 30px !important;
+    font-size: 11px !important;
+    text-align: right !important;
+    flex-shrink: 0 !important;
+}
 
-/* CROIX */
 #close-tactical {
-    width: 28px !important;
-    height: 28px !important;
+    width: 34px !important;
+    height: 34px !important;
     padding: 0 !important;
+    font-size: 15px !important;
+    flex-shrink: 0 !important;
+}
 
-    font-size: 13px !important;
+@media (max-width: 600px) {
+    #tactical-panel {
+        width: calc(100vw - 12px) !important;
+        max-width: none !important;
+        top: 50px !important;
+        max-height: 55vh !important;
+    }
+
+    #tactical-content {
+        max-height: calc(55vh - 34px) !important;
+    }
+
+    .tactical-header {
+        height: 34px !important;
+        min-height: 34px !important;
+        padding: 0 8px !important;
+    }
+
+    .tactical-option {
+        min-height: 40px !important;
+        height: 40px !important;
+        padding: 4px 8px !important;
+        gap: 7px !important;
+    }
+
+    .tactical-icon {
+        width: 26px !important;
+        min-width: 26px !important;
+        font-size: 14px !important;
+    }
+
+    .tactical-info strong {
+        font-size: 10px !important;
+    }
+
+    .tactical-info small {
+        font-size: 7px !important;
+    }
+
+    .tactical-cost {
+        font-size: 10px !important;
+    }
 }

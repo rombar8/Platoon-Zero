@@ -241,6 +241,21 @@ function damageUnit(
         return;
     }
 
+    // ======================================
+    // CHEAT — GOD MODE
+    // ======================================
+
+    const targetIsSoldier =
+        soldiers.includes(target);
+
+    if (
+        targetIsSoldier &&
+        typeof cheatState !== "undefined" &&
+        cheatState.godMode
+    ) {
+        return;
+    }
+
 
     // ======================================
     // SÉCURITÉ DÉGÂTS
@@ -1183,6 +1198,22 @@ function updateEnemyCombat(
     enemy,
     currentTime
 ) {
+
+    // ======================================
+    // CHEAT — FREEZE ENNEMIS
+    // ======================================
+
+    if (
+        typeof cheatState !== "undefined" &&
+        cheatState.freezeEnemies
+    ) {
+
+        if (enemy) {
+            enemy.isFiring = false;
+        }
+
+        return;
+    }
 
     if (
         !enemy ||
