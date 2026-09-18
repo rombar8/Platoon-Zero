@@ -93,14 +93,14 @@
         <div id="version-info">
 
     <div class="version-number">
-        M&B MOBILE — v0.2.3 ALPHA
+        M&B MOBILE — v0.2.4 ALPHA
     </div>
 
     <button
         id="patch-toggle"
         type="button"
     >
-        📋 VOIR LE PATCH v0.2.3
+        📋 VOIR LE PATCH v0.2.4
     </button>
 
     <div
@@ -109,36 +109,39 @@
     >
 
        <div class="patch-section">
-            <h3>🔧 PATCH v0.2.3 ALPHA</h3>
+            <h3>🔧 PATCH v0.2.4 ALPHA</h3>
 
-            <p>• Correction du système de grades</p>
-            <p>• Correction des correspondances entre grades et insignes</p>
-            <p>• Correction de plusieurs images de grades incorrectes ou manquantes</p>
-            <p>• Harmonisation des grades : PVT → PFC → SPC → CPL → SGT → SSG → SFC → WO1 → CW2 → 2LT</p>
+            <p>• Ajout de la mitrailleuse défensive</p>
+            <p>• La mitrailleuse nécessite un opérateur pour fonctionner</p>
+            <p>• Les soldats peuvent être assignés directement à une mitrailleuse</p>
+            <p>• La mitrailleuse vise et attaque automatiquement les ennemis à portée</p>
         </div>
 
         <div class="patch-section">
-            <h3>🎖️ UNITÉS</h3>
+            <h3>🔥 MITRAILLEUSE</h3>
 
-            <p>• Correction des valeurs décimales anormales après une promotion</p>
-            <p>• Les PV maximum sont maintenant correctement arrondis</p>
-            <p>• Les PV actuels sont maintenant correctement arrondis</p>
-            <p>• Les dégâts et la portée sont maintenant affichés proprement</p>
+            <p>• Augmentation des dégâts de la mitrailleuse</p>
+            <p>• Augmentation de sa cadence de tir</p>
+            <p>• Ajout d'une fiche de statistiques dédiée</p>
+            <p>• Affichage en temps réel de l'état, de l'opérateur et de la cible</p>
+            <p>• Limite de 3 mitrailleuses maximum sur le terrain</p>
+            <p>• Ajout du compteur 0/3 → 3/3 dans le menu Défenses</p>
         </div>
 
         <div class="patch-section">
-            <h3>🖥️ INTERFACE</h3>
+            <h3>🛠️ DÉFENSES</h3>
 
-            <p>• Ajout du défilement vertical au menu principal</p>
-            <p>• Les notes de patch peuvent maintenant être ouvertes et fermées</p>
-            <p>• Amélioration de l'affichage du menu sur les petits écrans</p>
+            <p>• Amélioration du système d'assignation des opérateurs</p>
+            <p>• La mitrailleuse cesse de fonctionner sans opérateur</p>
+            <p>• L'opérateur n'utilise plus son arme personnelle lorsqu'il contrôle la mitrailleuse</p>
+            <p>• Correction de l'orientation de l'opérateur pendant l'utilisation</p>
         </div>
 
         <div class="patch-section">
             <h3>🐛 CORRECTIONS</h3>
 
-            <p>• Correction d'une erreur JavaScript liée aux bonus de grades</p>
-            <p>• Correction de l'affichage de valeurs comme 140.00000000000003</p>
+            <p>• Correction d'un blocage du déplacement des soldats lié aux mitrailleuses</p>
+            <p>• Correction de la rotation de la mitrailleuse vers ses cibles</p>
             <p>• Divers correctifs de stabilité</p>
         </div>
 
@@ -647,6 +650,97 @@
 
                 </div>
 
+                <!-- =================================
+                    STATS MITRAILLEUSE
+                ================================= -->
+
+                <div
+                    id="machinegun-stats"
+                    class="hidden"
+                >
+
+                    <div class="unit-stat">
+
+                        <span class="unit-stat-label">
+                            ÉTAT
+                        </span>
+
+                        <span
+                            id="mg-panel-status"
+                            class="unit-stat-value"
+                        >
+                            SANS OPÉRATEUR
+                        </span>
+
+                    </div>
+
+
+                    <div class="unit-stat">
+
+                        <span class="unit-stat-label">
+                            OPÉRATEUR
+                        </span>
+
+                        <span
+                            id="mg-panel-operator"
+                            class="unit-stat-value"
+                        >
+                            AUCUN
+                        </span>
+
+                    </div>
+
+
+                    <div class="unit-stat">
+
+                        <span class="unit-stat-label">
+                            CADENCE
+                        </span>
+
+                        <span
+                            id="mg-panel-firerate"
+                            class="unit-stat-value"
+                        >
+                            180 ms
+                        </span>
+
+                    </div>
+
+
+                    <div class="unit-stat">
+
+                        <span class="unit-stat-label">
+                            PROTECTION
+                        </span>
+
+                        <span
+                            id="mg-panel-protection"
+                            class="unit-stat-value"
+                        >
+                            20 %
+                        </span>
+
+                    </div>
+
+
+                    <div class="unit-stat">
+
+                        <span class="unit-stat-label">
+                            CIBLE
+                        </span>
+
+                        <span
+                            id="mg-panel-target"
+                            class="unit-stat-value"
+                        >
+                            AUCUNE
+                        </span>
+
+                    </div>
+
+                </div>
+
+
             </div>
 
         </section>
@@ -963,7 +1057,7 @@
     ====================================== -->
 
     <div id="game-version">
-        M&B Mobile • v0.2.3 Alpha
+        M&B Mobile • v0.2.4 Alpha
     </div>
 
     <script>
@@ -992,7 +1086,7 @@
                 patchNotes.classList.add("hidden");
 
                 patchToggle.textContent =
-                    "📋 VOIR LE PATCH v0.2.3";
+                    "📋 VOIR LE PATCH v0.2.4";
             }
         }
     );

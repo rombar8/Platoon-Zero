@@ -1109,6 +1109,37 @@ function updateSoldierCombat(
         return;
     }
 
+        // ======================================
+        // OPÉRATEUR DE MITRAILLEUSE
+        // ======================================
+
+        /*
+            Un soldat assigné à une mitrailleuse
+            ne doit pas utiliser son arme personnelle
+            lorsqu'il est arrivé au poste.
+
+            La mitrailleuse est gérée séparément
+            par updateMachineGuns().
+        */
+
+        if (
+            soldier.machineGun &&
+            typeof isMachineGunOperatorReady ===
+                "function" &&
+            isMachineGunOperatorReady(
+                soldier.machineGun
+            )
+        ) {
+
+            soldier.target =
+                null;
+
+            soldier.isFiring =
+                false;
+
+            return;
+        }
+
 
     // ======================================
     // RECHERCHE D'UNE CIBLE

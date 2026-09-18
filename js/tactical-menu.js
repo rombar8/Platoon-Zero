@@ -164,7 +164,51 @@ function openTacticalMenu(menuName) {
             button.classList.add(
                 "tactical-option"
             );
+            
+            // ==================================
+            // COMPTEUR MITRAILLEUSES
+            // ==================================
 
+            let optionName =
+                option.name;
+
+            let machineGunLimitReached =
+                false;
+
+            if (
+                option.type === "machinegun"
+            ) {
+
+                const machineGunCount =
+                    defenses.filter(
+                        function (defense) {
+
+                            return (
+                                defense &&
+                                defense.type ===
+                                    "machinegun"
+                            );
+                        }
+                    ).length;
+
+
+                machineGunLimitReached =
+                    machineGunCount >= 3;
+
+
+                if (machineGunLimitReached) {
+
+                    optionName =
+                        "MITRAILLEUSE 3/3 — MAX";
+
+                } else {
+
+                    optionName =
+                        "MITRAILLEUSE " +
+                        machineGunCount +
+                        "/3";
+                }
+            }
 
             // ==================================
             // CONTENU DU BOUTON
@@ -179,7 +223,7 @@ function openTacticalMenu(menuName) {
                 <span class="tactical-info">
 
                     <strong>
-                        ${option.name}
+                        ${optionName}
                     </strong>
 
                     <small>
@@ -201,7 +245,8 @@ function openTacticalMenu(menuName) {
 
             if (
                 currentCost >
-                commandPoints
+                    commandPoints ||
+                machineGunLimitReached
             ) {
 
                 button.disabled =
@@ -289,7 +334,8 @@ function buyTacticalOption(option) {
         "trench",
         "sandbags",
         "barbedwire",
-        "mine"
+        "mine",
+        "machinegun"
     ].includes(
         option.type
     );

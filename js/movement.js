@@ -78,6 +78,7 @@ function clearSoldierSelection() {
 
 
     // Retire l'effet visuel de sélection
+
     if (selectedSoldier.element) {
 
         selectedSoldier.element.classList.remove(
@@ -87,6 +88,7 @@ function clearSoldierSelection() {
 
 
     // Ferme la fiche du soldat
+
     const unitPanel =
         document.querySelector(
             "#unit-panel"
@@ -101,7 +103,9 @@ function clearSoldierSelection() {
 
 
     // Plus aucun soldat sélectionné
-    selectedSoldier = null;
+
+    selectedSoldier =
+        null;
 }
 
 
@@ -114,7 +118,6 @@ battlefield.addEventListener(
 
     function (event) {
 
-
         // ==================================
         // AUCUN SOLDAT SÉLECTIONNÉ
         // ==================================
@@ -123,7 +126,6 @@ battlefield.addEventListener(
             !selectedSoldier ||
             selectedSoldier.alive === false
         ) {
-
             return;
         }
 
@@ -143,7 +145,6 @@ battlefield.addEventListener(
             soldier.order === "hold" ||
             soldier.order === "retreat"
         ) {
-
             return;
         }
 
@@ -188,36 +189,139 @@ battlefield.addEventListener(
 
 
         // ==================================
-        // TRANCHÉE
+        // MITRAILLEUSE DÉFENSIVE
+        // ==================================
+
+        if (
+            typeof getMachineGunAt ===
+                "function" &&
+            typeof assignSoldierToMachineGun ===
+                "function"
+        ) {
+
+            const machineGun =
+                getMachineGunAt(
+                    x,
+                    y
+                );
+
+
+            if (machineGun) {
+
+                // ==================================
+                // MG DÉJÀ OCCUPÉE
+                // ==================================
+
+                if (
+                    machineGun.operator &&
+                    machineGun.operator.alive &&
+                    machineGun.operator !==
+                        soldier
+                ) {
+
+                    console.log(
+                        "Mitrailleuse déjà occupée."
+                    );
+
+                    clearSoldierSelection();
+
+                    return;
+                }
+
+
+                // ==================================
+                // ASSIGNATION
+                // ==================================
+
+                const assigned =
+                    assignSoldierToMachineGun(
+                        soldier,
+                        machineGun
+                    );
+
+
+                if (assigned) {
+
+                    console.log(
+                        soldier.name +
+                        " rejoint la mitrailleuse."
+                    );
+
+                    clearSoldierSelection();
+
+                    return;
+                }
+            }
+        }
+
+
+        // ==================================
+        // COUVERTURE
         // ==================================
 
         if (
             typeof getTrenchSlotAt ===
-            "function"
+                "function"
         ) {
 
-            const trenchSlot =
+            const defenseSlot =
                 getTrenchSlotAt(
                     x,
                     y
                 );
 
-            if (trenchSlot) {
+
+            if (defenseSlot) {
+
+                // ==================================
+                // QUITTE SA MG SI NÉCESSAIRE
+                // ==================================
+
+                if (
+                    soldier.machineGun &&
+                    typeof releaseSoldierFromMachineGun ===
+                        "function"
+                ) {
+
+                    releaseSoldierFromMachineGun(
+                        soldier
+                    );
+                }
+
 
                 soldier.targetX =
-                    trenchSlot.x;
+                    defenseSlot.x;
 
                 soldier.targetY =
-                    trenchSlot.y;
+                    defenseSlot.y;
 
+                soldier.target =
+                    null;
 
-                // Ordre donné :
-                // désélection immédiate.
+                soldier.isFiring =
+                    false;
+
 
                 clearSoldierSelection();
 
                 return;
             }
+        }
+
+
+        // ==================================
+        // QUITTE LA MITRAILLEUSE
+        // ==================================
+
+        if (
+            soldier.machineGun &&
+            typeof releaseSoldierFromMachineGun ===
+                "function"
+        ) {
+
+            releaseSoldierFromMachineGun(
+                soldier
+            );
         }
 
 
@@ -231,146 +335,142 @@ battlefield.addEventListener(
         soldier.targetY =
             targetY;
 
+        soldier.target =
+            null;
+
+        soldier.isFiring =
+            false;
+
 
         // ==================================
         // ORDRE TERMINÉ
         // ==================================
 
-        // Le soldat continue son déplacement,
-        // mais le joueur doit le sélectionner
-        // à nouveau pour donner un autre ordre.
-
         clearSoldierSelection();
     }
 );
-
 
 // ==========================================
 // DÉPLACEMENT DES SOLDATS
 // ==========================================
 
 function moveSoldiers(
-    deltaTime
+deltaTime
 ) {
 
-    soldiers.forEach(
-        function (soldier) {
+soldiers.forEach(
+    function (soldier) {
 
-            if (
-                soldier.alive === false
-            ) {
-
-                return;
-            }
-
-
-            const dx =
-                soldier.targetX -
-                soldier.x;
-
-            const dy =
-                soldier.targetY -
-                soldier.y;
+        if (
+            soldier.alive === false
+        ) {
+            return;
+        }
 
 
-            const distance =
-                Math.sqrt(
-                    dx * dx +
-                    dy * dy
-                );
+        // ==================================
+        // DIRECTION VERS LA DESTINATION
+        // ==================================
+
+        const dx =
+            soldier.targetX -
+            soldier.x;
+
+        const dy =
+            soldier.targetY -
+            soldier.y;
 
 
-            // ==================================
-            // ORIENTATION
-            // ==================================
+        // ==================================
+        // DISTANCE
+        // ==================================
 
-            if (
-                soldier.target &&
-                soldier.target.alive
-            ) {
-
-                rotateUnitTowards(
-                    soldier,
-                    soldier.target.x,
-                    soldier.target.y
-                );
-
-            } else if (
-                distance > 1
-            ) {
-
-                rotateUnitTowards(
-                    soldier,
-                    soldier.targetX,
-                    soldier.targetY
-                );
-            }
+        const distance =
+            Math.sqrt(
+                dx * dx +
+                dy * dy
+            );
 
 
-            // ==================================
-            // ARRIVÉ À DESTINATION
-            // ==================================
+        // ==================================
+        // OPÉRATEUR DE MITRAILLEUSE
+        // ==================================
 
-            if (
-                distance < 0.5
-            ) {
+        /*
+            Si le soldat est arrivé au siège
+            de sa mitrailleuse :
 
-                soldier.x =
-                    soldier.targetX;
+            - il ne vise plus avec son arme
+            - il ne tourne plus vers les ennemis
+            - il reste à sa destination
+            - seule la MG s'oriente
+        */
 
-                soldier.y =
-                    soldier.targetY;
-
-
-                updateSoldierPosition(
-                    soldier
-                );
-
-                updateTrenchStatus(
-                    soldier
-                );
-
-                return;
-            }
+        const operatingMachineGun =
+            soldier.machineGun &&
+            typeof isMachineGunOperatorReady ===
+                "function" &&
+            isMachineGunOperatorReady(
+                soldier.machineGun
+            );
 
 
-            // ==================================
-            // VITESSE EN PIXELS / SECONDE
-            // ==================================
+        if (operatingMachineGun) {
 
-            const movement =
-                soldier.speed *
-                deltaTime;
+            soldier.target =
+                null;
 
-            const directionX =
-                dx /
-                distance;
-
-            const directionY =
-                dy /
-                distance;
+            soldier.isFiring =
+                false;
+        }
 
 
-            if (
-                movement < distance
-            ) {
+        // ==================================
+        // ORIENTATION NORMALE
+        // ==================================
 
-                soldier.x +=
-                    directionX *
-                    movement;
+        else if (
+            soldier.target &&
+            soldier.target.alive
+        ) {
 
-                soldier.y +=
-                    directionY *
-                    movement;
+            rotateUnitTowards(
+                soldier,
+                soldier.target.x,
+                soldier.target.y
+            );
+        }
 
-            } else {
 
-                soldier.x =
-                    soldier.targetX;
+        // ==================================
+        // ORIENTATION PENDANT DÉPLACEMENT
+        // ==================================
 
-                soldier.y =
-                    soldier.targetY;
-            }
+        else if (
+            distance > 1
+        ) {
+
+            rotateUnitTowards(
+                soldier,
+                soldier.targetX,
+                soldier.targetY
+            );
+        }
+
+
+        // ==================================
+        // ARRIVÉ À DESTINATION
+        // ==================================
+
+        if (
+            distance < 0.5
+        ) {
+
+            soldier.x =
+                soldier.targetX;
+
+            soldier.y =
+                soldier.targetY;
 
 
             updateSoldierPosition(
@@ -380,10 +480,103 @@ function moveSoldiers(
             updateTrenchStatus(
                 soldier
             );
-        }
-    );
-}
 
+
+            // ==================================
+            // ACTUALISE L'ÉTAT DE LA MG
+            // ==================================
+
+            if (
+                soldier.machineGun &&
+                typeof updateMachineGunVisual ===
+                    "function"
+            ) {
+
+                updateMachineGunVisual(
+                    soldier.machineGun
+                );
+            }
+
+
+            return;
+        }
+
+
+        // ==================================
+        // VITESSE EN PIXELS / SECONDE
+        // ==================================
+
+        const movement =
+            soldier.speed *
+            deltaTime;
+
+
+        const directionX =
+            dx /
+            distance;
+
+        const directionY =
+            dy /
+            distance;
+
+
+        // ==================================
+        // DÉPLACEMENT
+        // ==================================
+
+        if (
+            movement < distance
+        ) {
+
+            soldier.x +=
+                directionX *
+                movement;
+
+            soldier.y +=
+                directionY *
+                movement;
+        }
+
+        else {
+
+            soldier.x =
+                soldier.targetX;
+
+            soldier.y =
+                soldier.targetY;
+        }
+
+
+        // ==================================
+        // MISE À JOUR VISUELLE
+        // ==================================
+
+        updateSoldierPosition(
+            soldier
+        );
+
+        updateTrenchStatus(
+            soldier
+        );
+
+
+        // ==================================
+        // SOLDAT EN ROUTE VERS UNE MG
+        // ==================================
+
+        if (
+            soldier.machineGun &&
+            typeof updateMachineGunVisual ===
+                "function"
+        ) {
+
+            updateMachineGunVisual(
+                soldier.machineGun
+            );
+        }
+    }
+);
+}
 
 // ==========================================
 // ÉTAT DE COUVERTURE
@@ -395,9 +588,8 @@ function updateTrenchStatus(
 
     if (
         typeof isSoldierInTrench !==
-        "function"
+            "function"
     ) {
-
         return;
     }
 
@@ -433,21 +625,51 @@ function updateTrenchStatus(
 
 
         if (!coverIndicator) {
-
             return;
         }
 
 
-        if (inTrench) {
+        // ==================================
+        // NOM DE LA COUVERTURE
+        // ==================================
+
+        let coverName =
+            null;
+
+
+        if (
+            typeof getSoldierCoverName ===
+                "function"
+        ) {
+
+            coverName =
+                getSoldierCoverName(
+                    soldier
+                );
+        }
+
+
+        // ==================================
+        // SOLDAT À COUVERT
+        // ==================================
+
+        if (coverName) {
 
             coverIndicator.textContent =
-                "🛡️ COUVERT — TRANCHÉE";
+                "🛡️ COUVERT — " +
+                coverName;
 
             coverIndicator.classList.add(
                 "active"
             );
+        }
 
-        } else {
+
+        // ==================================
+        // AUCUNE COUVERTURE
+        // ==================================
+
+        else {
 
             coverIndicator.textContent =
                 "⚠ AUCUNE COUVERTURE";

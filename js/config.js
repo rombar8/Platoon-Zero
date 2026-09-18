@@ -209,6 +209,14 @@ const tacticalMenus = {
                 description: "Explosion • dégâts de zone",
                 cost: 7,
                 type: "mine"
+            },
+
+            {
+                icon: "🔥",
+                name: "MITRAILLEUSE",
+                description: "1 opérateur • tir automatique",
+                cost: 15,
+                type: "machinegun"
             }
         ]
     },

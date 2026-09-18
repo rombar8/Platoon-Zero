@@ -64,6 +64,21 @@ const defenseTypes = {
         triggerRadius: 24,
         explosionRadius: 85,
         damage: 100
+    },
+
+        machinegun: {
+        name: "MITRAILLEUSE",
+        width: 90,
+        height: 70,
+        protection: 0.20,
+        slots: 1,
+
+        range: 260,
+
+        damage: 30,
+        fireRate: 170,
+
+        operatorRequired: true
     }
 
 };
@@ -247,6 +262,17 @@ battlefield.addEventListener(
         ) {
 
             createMine(
+                x,
+                y,
+                cost
+            );
+        }
+
+        else if (
+            type === "machinegun"
+        ) {
+
+            createMachineGun(
                 x,
                 y,
                 cost
@@ -536,6 +562,845 @@ function createMine(
 
 
 // ==========================================
+// MITRAILLEUSE DÉFENSIVE
+// ==========================================
+
+function createMachineGun(
+    x,
+    y,
+    cost
+) {
+
+    // ======================================
+    // LIMITE DE MITRAILLEUSES
+    // ======================================
+
+    const machineGunCount =
+        defenses.filter(
+            defense =>
+                defense.type === "machinegun"
+        ).length;
+
+    if (machineGunCount >= 3) {
+
+        console.log(
+            "Limite de 3 mitrailleuses atteinte."
+        );
+
+        return;
+    }
+
+    if (!payDefense(cost)) {
+        return;
+    }
+
+
+    const element =
+        document.createElement(
+            "div"
+        );
+
+
+    element.className =
+        "defense-machinegun inactive";
+
+    element.style.left =
+        x + "px";
+
+    element.style.top =
+        y + "px";
+
+
+    element.innerHTML = `
+        <div class="mg-tripod"></div>
+        <div class="mg-body"></div>
+        <div class="mg-barrel"></div>
+        <div class="mg-seat"></div>
+        <div class="mg-status">
+            SANS OPÉRATEUR
+        </div>
+    `;
+
+
+    battlefield.appendChild(
+        element
+    );
+
+
+    const config =
+        defenseTypes.machinegun;
+
+
+    // ======================================
+    // OBJET MITRAILLEUSE
+    // ======================================
+
+    const machineGun = {
+
+        type:
+            "machinegun",
+
+        name:
+            config.name,
+
+        x: x,
+
+        y: y,
+
+        width:
+            config.width,
+
+        height:
+            config.height,
+
+        protection:
+            config.protection,
+
+        slots:
+            config.slots,
+
+        range:
+            config.range,
+
+        damage:
+            config.damage,
+
+        fireRate:
+            config.fireRate,
+
+        operatorRequired:
+            config.operatorRequired,
+
+        operator:
+            null,
+
+        lastShot:
+            0,
+
+        target:
+            null,
+
+        element:
+            element
+    };
+
+
+    // ======================================
+    // AJOUT AUX DÉFENSES
+    // ======================================
+
+    defenses.push(
+        machineGun
+    );
+
+
+    // ======================================
+    // CLIC SUR LA MITRAILLEUSE
+    // ======================================
+
+    element.addEventListener(
+        "click",
+
+        function (event) {
+
+            /*
+                IMPORTANT :
+
+                On ne bloque PAS la propagation
+                lorsqu'un soldat est sélectionné.
+
+                Le clic doit continuer jusqu'au
+                battlefield pour permettre à
+                movement.js d'assigner le soldat
+                à cette MG.
+            */
+
+            if (
+                typeof selectedSoldier !==
+                    "undefined" &&
+                selectedSoldier
+            ) {
+                return;
+            }
+
+
+            /*
+                Aucun soldat sélectionné :
+                le clic sert donc à consulter
+                la fiche de la MG.
+            */
+
+            event.stopPropagation();
+
+
+            if (
+                typeof showMachineGunPanel ===
+                    "function"
+            ) {
+
+                showMachineGunPanel(
+                    machineGun
+                );
+            }
+        }
+    );
+
+
+    // ======================================
+    // PREMIER RAFRAÎCHISSEMENT VISUEL
+    // ======================================
+
+    if (
+        typeof updateMachineGunVisual ===
+            "function"
+    ) {
+
+        updateMachineGunVisual(
+            machineGun
+        );
+    }
+}
+
+// ==========================================
+// SLOT OPÉRATEUR DE LA MITRAILLEUSE
+// ==========================================
+
+function getMachineGunOperatorSlot(
+    defense
+) {
+
+    if (
+        !defense ||
+        defense.type !==
+            "machinegun"
+    ) {
+        return null;
+    }
+
+    return {
+        x: defense.x,
+        y: defense.y + 24
+    };
+}
+
+
+// ==========================================
+// TROUVE LA MG CLIQUÉE
+// ==========================================
+
+function getMachineGunAt(
+    x,
+    y
+) {
+
+    for (
+        const defense
+        of defenses
+    ) {
+
+        if (
+            defense.type !==
+            "machinegun"
+        ) {
+            continue;
+        }
+
+        if (
+            isPointInsideDefense(
+                x,
+                y,
+                defense
+            )
+        ) {
+            return defense;
+        }
+    }
+
+    return null;
+}
+
+
+// ==========================================
+// ASSIGNE UN SOLDAT À LA MG
+// ==========================================
+
+function assignSoldierToMachineGun(
+    soldier,
+    defense
+) {
+
+    if (
+        !soldier ||
+        !soldier.alive ||
+        !defense ||
+        defense.type !==
+            "machinegun"
+    ) {
+        return false;
+    }
+
+    // Une MG ne peut avoir qu'un opérateur
+    if (
+        defense.operator &&
+        defense.operator.alive &&
+        defense.operator !== soldier
+    ) {
+        return false;
+    }
+
+    // Si le soldat utilisait déjà une autre MG,
+    // on le libère d'abord.
+    releaseSoldierFromMachineGun(
+        soldier
+    );
+
+    const slot =
+        getMachineGunOperatorSlot(
+            defense
+        );
+
+    if (!slot) {
+        return false;
+    }
+
+    defense.operator =
+        soldier;
+
+    soldier.machineGun =
+        defense;
+
+    // Le soldat reçoit l'ordre
+    // de rejoindre physiquement le siège.
+    soldier.targetX =
+        slot.x;
+
+    soldier.targetY =
+        slot.y;
+
+    soldier.target =
+        null;
+
+    soldier.isFiring =
+        false;
+
+    updateMachineGunVisual(
+        defense
+    );
+
+    return true;
+}
+
+
+// ==========================================
+// LIBÈRE UN SOLDAT DE SA MG
+// ==========================================
+
+function releaseSoldierFromMachineGun(
+    soldier
+) {
+
+    if (
+        !soldier ||
+        !soldier.machineGun
+    ) {
+        return;
+    }
+
+    const defense =
+        soldier.machineGun;
+
+    if (
+        defense.operator ===
+        soldier
+    ) {
+        defense.operator =
+            null;
+    }
+
+    soldier.machineGun =
+        null;
+
+    updateMachineGunVisual(
+        defense
+    );
+}
+
+
+// ==========================================
+// OPÉRATEUR PRÉSENT AU SIÈGE ?
+// ==========================================
+
+function isMachineGunOperatorReady(
+    defense
+) {
+
+    if (
+        !defense ||
+        defense.type !==
+            "machinegun"
+    ) {
+        return false;
+    }
+
+    const soldier =
+        defense.operator;
+
+    if (
+        !soldier ||
+        !soldier.alive ||
+        soldier.machineGun !==
+            defense
+    ) {
+        return false;
+    }
+
+    const slot =
+        getMachineGunOperatorSlot(
+            defense
+        );
+
+    if (!slot) {
+        return false;
+    }
+
+    const distance =
+        Math.hypot(
+            soldier.x - slot.x,
+            soldier.y - slot.y
+        );
+
+    return (
+        distance <= 10
+    );
+}
+
+
+// ==========================================
+// VISUEL ACTIF / INACTIF
+// ==========================================
+
+function updateMachineGunVisual(
+    defense
+) {
+
+    if (
+        !defense ||
+        !defense.element
+    ) {
+        return;
+    }
+
+    const ready =
+        isMachineGunOperatorReady(
+            defense
+        );
+
+    defense.element.classList.toggle(
+        "active",
+        ready
+    );
+
+    defense.element.classList.toggle(
+        "inactive",
+        !ready
+    );
+
+    const status =
+        defense.element.querySelector(
+            ".mg-status"
+        );
+
+    if (!status) {
+        return;
+    }
+
+    if (ready) {
+
+        status.textContent =
+            "ACTIVE";
+    }
+
+    else if (
+        defense.operator &&
+        defense.operator.alive
+    ) {
+
+        status.textContent =
+            "OPÉRATEUR EN ROUTE";
+    }
+
+    else {
+
+        status.textContent =
+            "SANS OPÉRATEUR";
+    }
+}
+
+
+// ==========================================
+// CIBLE LA PLUS PROCHE POUR UNE MG
+// ==========================================
+
+function findMachineGunTarget(
+    defense
+) {
+
+    let closestEnemy =
+        null;
+
+    let closestDistance =
+        Infinity;
+
+    enemies.forEach(
+        function (enemy) {
+
+            if (
+                !enemy ||
+                !enemy.alive
+            ) {
+                return;
+            }
+
+            const distance =
+                Math.hypot(
+                    enemy.x -
+                        defense.x,
+                    enemy.y -
+                        defense.y
+                );
+
+            if (
+                distance >
+                    defense.range ||
+                distance >=
+                    closestDistance
+            ) {
+                return;
+            }
+
+            closestDistance =
+                distance;
+
+            closestEnemy =
+                enemy;
+        }
+    );
+
+    return closestEnemy;
+}
+
+
+// ==========================================
+// TIR DE LA MITRAILLEUSE
+// ==========================================
+
+// ==========================================
+// ORIENTATION DE LA MITRAILLEUSE
+// ==========================================
+
+function rotateMachineGunTowards(
+            defense,
+            target
+        ) {
+
+            if (
+                !defense ||
+                !defense.element ||
+                !target
+            ) {
+                return;
+            }
+
+            const dx =
+                target.x - defense.x;
+
+            const dy =
+                target.y - defense.y;
+
+            const angle =
+                Math.atan2(
+                    dy,
+                    dx
+                ) * 180 / Math.PI;
+
+
+            const body =
+                defense.element.querySelector(
+                    ".mg-body"
+                );
+
+            const barrel =
+                defense.element.querySelector(
+                    ".mg-barrel"
+                );
+
+
+            if (body) {
+
+                body.style.transformOrigin =
+                    "center center";
+
+                body.style.transform =
+                    `rotate(${angle}deg)`;
+            }
+
+
+            if (barrel) {
+
+                barrel.style.transformOrigin =
+                    "left center";
+
+                barrel.style.transform =
+                    `rotate(${angle}deg)`;
+            }
+        }
+
+
+function fireMachineGun(
+    defense,
+    target
+) {
+
+    if (
+        !defense ||
+        !target ||
+        !target.alive
+    ) {
+        return;
+    }
+
+
+    const shooter =
+        defense.operator;
+
+
+    if (
+        !shooter ||
+        !shooter.alive
+    ) {
+        return;
+    }
+
+
+    // ======================================
+    // ORIENTATION DE LA MITRAILLEUSE
+    // ======================================
+
+    /*
+        IMPORTANT :
+
+        On ne fait PLUS de
+        rotateUnitTowards(shooter).
+
+        L'opérateur garde donc son
+        orientation lorsqu'il utilise
+        la mitrailleuse.
+
+        Seule la MG pivote vers l'ennemi.
+    */
+
+    if (
+        typeof rotateMachineGunTowards ===
+            "function"
+    ) {
+
+        rotateMachineGunTowards(
+            defense,
+            target
+        );
+    }
+
+
+    // ======================================
+    // TRACEUR
+    // ======================================
+
+    if (
+        typeof createTracer ===
+            "function"
+    ) {
+
+        const fakeShooter = {
+
+            x: defense.x,
+            y: defense.y,
+            alive: true
+        };
+
+
+        createTracer(
+            fakeShooter,
+            target,
+            false
+        );
+    }
+
+
+    // ======================================
+    // DÉGÂTS
+    // ======================================
+
+    if (
+        typeof damageUnit ===
+            "function"
+    ) {
+
+        /*
+            On garde le soldat opérateur
+            comme attacker.
+
+            Donc les kills et l'XP de
+            la mitrailleuse restent
+            attribués à son opérateur.
+        */
+
+        damageUnit(
+            target,
+            defense.damage,
+            shooter
+        );
+    }
+}
+
+
+// ==========================================
+// UPDATE DES MITRAILLEUSES
+// ==========================================
+
+function updateMachineGuns() {
+
+    const currentTime =
+        performance.now();
+
+
+    defenses.forEach(
+        function (defense) {
+
+            if (
+                defense.type !==
+                    "machinegun"
+            ) {
+                return;
+            }
+
+
+            // ==================================
+            // VÉRIFIE L'OPÉRATEUR
+            // ==================================
+
+            if (
+                defense.operator &&
+                (
+                    !defense.operator.alive ||
+                    defense.operator.machineGun !==
+                        defense
+                )
+            ) {
+
+                if (
+                    defense.operator
+                ) {
+
+                    defense.operator.machineGun =
+                        null;
+                }
+
+                defense.operator =
+                    null;
+            }
+
+
+            // ==================================
+            // ACTUALISE L'AFFICHAGE
+            // ==================================
+
+            updateMachineGunVisual(
+                defense
+            );
+
+
+            // ==================================
+            // PAS D'OPÉRATEUR AU SIÈGE
+            // ==================================
+
+            if (
+                !isMachineGunOperatorReady(
+                    defense
+                )
+            ) {
+
+                defense.target =
+                    null;
+
+                return;
+            }
+
+
+            /*
+                Tant que le soldat utilise
+                la mitrailleuse, on empêche
+                son arme personnelle de tirer.
+            */
+
+            defense.operator.isFiring =
+                false;
+
+
+            // ==================================
+            // CHERCHE UNE CIBLE
+            // ==================================
+
+            const target =
+                findMachineGunTarget(
+                    defense
+                );
+
+            if (target) {
+
+                rotateMachineGunTowards(
+                    defense,
+                    target
+                );
+            }
+
+            defense.target =
+                target;
+
+            if (!target) {
+                return;
+            }
+
+
+            // ==================================
+            // CADENCE
+            // ==================================
+
+            if (
+                currentTime -
+                    defense.lastShot <
+                defense.fireRate
+            ) {
+                return;
+            }
+
+            defense.lastShot =
+                currentTime;
+
+
+            // ==================================
+            // FEU
+            // ==================================
+
+            fireMachineGun(
+                defense,
+                target
+            );
+        }
+    );
+}
+
+
+// ==========================================
 // POINT DANS UNE DÉFENSE
 // ==========================================
 
@@ -608,7 +1473,7 @@ function getSoldierDefense(
             if (
                 !bestDefense ||
                 defense.protection >
-                bestDefense.protection
+                    bestDefense.protection
             ) {
 
                 bestDefense =
@@ -707,7 +1572,6 @@ function getSoldierCoverName(
     return defense.name;
 }
 
-
 // ==========================================
 // SLOTS DES COUVERTURES
 // ==========================================
@@ -761,6 +1625,22 @@ function getDefenseSlots(
                 y: defense.y + 5
             }
         ];
+    }
+
+
+    if (
+        defense.type ===
+        "machinegun"
+    ) {
+
+        const operatorSlot =
+            getMachineGunOperatorSlot(
+                defense
+            );
+
+        return operatorSlot
+            ? [operatorSlot]
+            : [];
     }
 
 
@@ -936,7 +1816,7 @@ function getEnemyDefenseSpeedMultiplier(
 
             if (
                 defense.type !==
-                "barbedwire"
+                    "barbedwire"
             ) {
                 return;
             }
@@ -1074,7 +1954,7 @@ function explodeMine(
 
             if (
                 distance >
-                mine.explosionRadius
+                    mine.explosionRadius
             ) {
                 return;
             }
@@ -1104,7 +1984,7 @@ function explodeMine(
 
             if (
                 typeof damageUnit ===
-                "function"
+                    "function"
             ) {
 
                 damageUnit(
@@ -1180,7 +2060,6 @@ function explodeMine(
     }
 }
 
-
 // ==========================================
 // MISE À JOUR DES MINES
 // ==========================================
@@ -1193,8 +2072,9 @@ function updateMines() {
 
                 return (
                     defense.type ===
-                    "mine" &&
-                    defense.triggered !== true
+                        "mine" &&
+                    defense.triggered !==
+                        true
                 );
             }
         );
@@ -1209,7 +2089,8 @@ function updateMines() {
 
                         if (
                             !enemy ||
-                            enemy.alive === false
+                            enemy.alive ===
+                                false
                         ) {
                             return false;
                         }
@@ -1224,7 +2105,7 @@ function updateMines() {
 
                         return (
                             distance <=
-                            mine.triggerRadius
+                                mine.triggerRadius
                         );
                     }
                 );
@@ -1242,12 +2123,14 @@ function updateMines() {
 
 
 // ==========================================
-// UPDATE GLOBAL
+// UPDATE GLOBAL DES DÉFENSES
 // ==========================================
 
 function updateDefenses() {
 
     updateMines();
+
+    updateMachineGuns();
 }
 
 
@@ -1268,6 +2151,28 @@ function resetDefenses() {
     defenses.forEach(
         function (defense) {
 
+            // ==================================
+            // LIBÈRE L'OPÉRATEUR DE LA MG
+            // ==================================
+
+            if (
+                defense.type ===
+                    "machinegun" &&
+                defense.operator
+            ) {
+
+                defense.operator.machineGun =
+                    null;
+
+                defense.operator =
+                    null;
+            }
+
+
+            // ==================================
+            // SUPPRIME LE VISUEL
+            // ==================================
+
             if (
                 defense.element
             ) {
@@ -1281,6 +2186,10 @@ function resetDefenses() {
     defenses.length =
         0;
 
+
+    // ======================================
+    // NETTOIE LES EXPLOSIONS RESTANTES
+    // ======================================
 
     document
         .querySelectorAll(

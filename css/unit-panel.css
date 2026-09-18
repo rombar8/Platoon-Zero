@@ -512,3 +512,82 @@
 
     background: rgba(100, 87, 45, .2);
 }
+
+/* =========================================
+   MODE MITRAILLEUSE
+========================================= */
+
+#machinegun-stats.hidden {
+    display: none;
+}
+
+
+/* =========================================
+   ÉTAT DE LA MITRAILLEUSE
+========================================= */
+
+#mg-panel-status {
+    text-transform: uppercase;
+}
+
+
+/* MG ACTIVE */
+
+#unit-panel.machinegun-active
+#mg-panel-status {
+    color: #b9ce91;
+}
+
+
+/* MG SANS OPÉRATEUR */
+
+#unit-panel.machinegun-inactive
+#mg-panel-status {
+    color: #c98d7e;
+}
+
+
+/* =========================================
+   OPÉRATEUR
+========================================= */
+
+#mg-panel-operator {
+    max-width: 120px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   CIBLE
+========================================= */
+
+#mg-panel-target {
+    max-width: 120px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   MODE FICHE MITRAILLEUSE
+========================================= */
+
+#unit-panel.machinegun-mode
+#unit-name {
+    color: #e4d8aa;
+}
+
+
+#unit-panel.machinegun-mode
+#unit-class {
+    color: #aaa68e;
+}
