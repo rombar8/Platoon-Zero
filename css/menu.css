@@ -957,3 +957,31 @@ button[data-difficulty="impossible"].selected {
             }
 
         }
+
+        
+        .main-game-logo {
+            display: block;
+
+            width: 550px;
+            max-width: 92vw;
+
+            height: auto;
+
+            margin:
+                -60px auto
+                -70px auto;
+
+            object-fit: contain;
+
+            user-select: none;
+            pointer-events: none;
+
+            transform:
+                translateX(-50px);
+
+            filter:
+                drop-shadow(
+                    0 8px 10px
+                    rgba(0, 0, 0, 0.45)
+                );
+        }

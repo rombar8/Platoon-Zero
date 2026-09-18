@@ -165,6 +165,10 @@ battlefield.appendChild(
 
         order: "fire",
 
+        
+        // Ordre de ciblage individuel
+        targetPriority: "closest",
+
         // Progression
         kills: 0,
         xp: 0

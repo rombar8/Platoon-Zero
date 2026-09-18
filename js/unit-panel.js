@@ -331,6 +331,112 @@ function showUnitPanel(soldier) {
     range.textContent =
         soldier.range;
 
+    
+        // ======================================
+        // ORDRE DE CIBLAGE
+        // ======================================
+
+        let targetingContainer =
+            document.querySelector(
+                "#unit-targeting"
+            );
+
+
+        if (!targetingContainer) {
+
+            targetingContainer =
+                document.createElement(
+                    "div"
+                );
+
+            targetingContainer.id =
+                "unit-targeting";
+
+            targetingContainer.innerHTML = `
+                <label for="unit-target-priority">
+                    🎯 CIBLAGE
+                </label>
+
+                <select id="unit-target-priority">
+
+                    <option value="closest">
+                        PLUS PROCHE
+                    </option>
+
+                    <option value="farthest">
+                        PLUS ÉLOIGNÉ
+                    </option>
+
+                    <option value="strongest">
+                        PLUS FORT
+                    </option>
+
+                    <option value="weakest">
+                        PLUS FAIBLE
+                    </option>
+
+                    <option value="last">
+                        DERNIER
+                    </option>
+
+                </select>
+            `;
+
+            
+        const coverElement =
+            document.querySelector(
+                "#unit-cover"
+            );
+
+
+        if (coverElement) {
+
+            panel.insertBefore(
+                targetingContainer,
+                coverElement
+            );
+        }
+
+        else {
+
+            panel.appendChild(
+                targetingContainer
+            );
+        }
+        }
+
+
+        targetingContainer.style.display =
+            "";
+
+
+        const targetingSelect =
+            document.querySelector(
+                "#unit-target-priority"
+            );
+
+
+        targetingSelect.value =
+            soldier.targetPriority ||
+            "closest";
+
+
+        targetingSelect.onchange =
+            function () {
+
+                soldier.targetPriority =
+                    targetingSelect.value;
+
+                soldier.target =
+                    null;
+
+                console.log(
+                    soldier.name,
+                    "ciblage :",
+                    soldier.targetPriority
+                );
+            };
+
 
     // ======================================
     // COUVERTURE
@@ -534,6 +640,19 @@ function showMachineGunPanel(
         coverIndicator.style.display =
             "none";
     }
+
+    
+        const targetingContainer =
+            document.querySelector(
+                "#unit-targeting"
+            );
+
+
+        if (targetingContainer) {
+
+            targetingContainer.style.display =
+                "none";
+        }
 
 
     // ======================================
@@ -984,3 +1103,511 @@ setInterval(
     },
     150
 );
+
+        // ==========================================
+        // AFFICHER LA FICHE MITRAILLEUSE
+        // ==========================================
+
+        function showMachineGunPanel(
+            defense
+        ) {
+
+            if (
+                !defense ||
+                defense.type !==
+                    "machinegun"
+            ) {
+
+                return;
+            }
+
+
+            displayedMachineGun =
+                defense;
+
+
+            const panel =
+                document.querySelector(
+                    "#unit-panel"
+                );
+
+            const name =
+                document.querySelector(
+                    "#unit-name"
+                );
+
+            const unitClass =
+                document.querySelector(
+                    "#unit-class"
+                );
+
+            const machineGunStats =
+                document.querySelector(
+                    "#machinegun-stats"
+                );
+
+
+            // ======================================
+            // MODE MITRAILLEUSE
+            // ======================================
+
+            panel.classList.add(
+                "machinegun-mode"
+            );
+
+
+            // ======================================
+            // MASQUE LES ÉLÉMENTS SOLDAT
+            // ======================================
+
+            const rankIcon =
+                document.querySelector(
+                    "#unit-rank-icon"
+                );
+
+
+            if (rankIcon) {
+
+                rankIcon.style.display =
+                    "none";
+            }
+
+
+            const hpContainer =
+                document.querySelector(
+                    ".unit-hp-container"
+                );
+
+
+            if (hpContainer) {
+
+                hpContainer.style.display =
+                    "none";
+            }
+
+
+            const xpContainer =
+                document.querySelector(
+                    "#unit-xp-container"
+                );
+
+
+            if (xpContainer) {
+
+                xpContainer.style.display =
+                    "none";
+            }
+
+
+            const kills =
+                document.querySelector(
+                    "#unit-kills"
+                );
+
+
+            if (
+                kills &&
+                kills.parentElement
+            ) {
+
+                kills.parentElement.style.display =
+                    "none";
+            }
+
+
+            const coverIndicator =
+                document.querySelector(
+                    "#unit-cover"
+                );
+
+
+            if (coverIndicator) {
+
+                coverIndicator.style.display =
+                    "none";
+            }
+
+
+            const targetingContainer =
+                document.querySelector(
+                    "#unit-targeting"
+                );
+
+
+            if (targetingContainer) {
+
+                targetingContainer.style.display =
+                    "none";
+            }
+
+
+            // ======================================
+            // IDENTITÉ MG
+            // ======================================
+
+            name.textContent =
+                "MITRAILLEUSE";
+
+
+            unitClass.textContent =
+                "DÉFENSE STATIQUE";
+
+
+            // ======================================
+            // RÉUTILISE DÉGÂTS + PORTÉE
+            // ======================================
+
+            const damage =
+                document.querySelector(
+                    "#unit-damage"
+                );
+
+            const range =
+                document.querySelector(
+                    "#unit-range"
+                );
+
+
+            if (damage) {
+
+                damage.textContent =
+                    defense.damage;
+            }
+
+
+            if (range) {
+
+                range.textContent =
+                    defense.range;
+            }
+
+
+            // ======================================
+            // AFFICHE LES STATS MG
+            // ======================================
+
+            if (machineGunStats) {
+
+                machineGunStats.classList.remove(
+                    "hidden"
+                );
+            }
+
+
+            // ======================================
+            // PREMIÈRE ACTUALISATION
+            // ======================================
+
+            updateMachineGunPanel();
+
+
+            // ======================================
+            // AFFICHAGE
+            // ======================================
+
+            panel.classList.remove(
+                "hidden"
+            );
+        }
+
+
+        // ==========================================
+        // ACTUALISATION DE LA FICHE MG
+        // ==========================================
+
+        function updateMachineGunPanel() {
+
+            if (!displayedMachineGun) {
+
+                return;
+            }
+
+
+            const defense =
+                displayedMachineGun;
+
+
+            const panel =
+                document.querySelector(
+                    "#unit-panel"
+                );
+
+
+            if (
+                !panel ||
+                panel.classList.contains(
+                    "hidden"
+                )
+            ) {
+
+                return;
+            }
+
+
+            // ======================================
+            // ÉLÉMENTS
+            // ======================================
+
+            const status =
+                document.querySelector(
+                    "#mg-panel-status"
+                );
+
+            const operator =
+                document.querySelector(
+                    "#mg-panel-operator"
+                );
+
+            const fireRate =
+                document.querySelector(
+                    "#mg-panel-firerate"
+                );
+
+            const protection =
+                document.querySelector(
+                    "#mg-panel-protection"
+                );
+
+            const target =
+                document.querySelector(
+                    "#mg-panel-target"
+                );
+
+            const damage =
+                document.querySelector(
+                    "#unit-damage"
+                );
+
+            const range =
+                document.querySelector(
+                    "#unit-range"
+                );
+
+
+            // ======================================
+            // DÉGÂTS / PORTÉE
+            // ======================================
+
+            if (damage) {
+
+                damage.textContent =
+                    defense.damage;
+            }
+
+
+            if (range) {
+
+                range.textContent =
+                    defense.range;
+            }
+
+
+            // ======================================
+            // CADENCE
+            // ======================================
+
+            if (fireRate) {
+
+                fireRate.textContent =
+                    defense.fireRate +
+                    " ms";
+            }
+
+
+            // ======================================
+            // PROTECTION
+            // ======================================
+
+            if (protection) {
+
+                protection.textContent =
+                    Math.round(
+                        (
+                            defense.protection ||
+                            0
+                        ) * 100
+                    ) +
+                    " %";
+            }
+
+
+            // ======================================
+            // OPÉRATEUR
+            // ======================================
+
+            const soldier =
+                defense.operator;
+
+
+            if (
+                operator &&
+                soldier &&
+                soldier.alive
+            ) {
+
+                operator.textContent =
+                    (
+                        soldier.rank
+                            ? soldier.rank +
+                                ". "
+                            : ""
+                    ) +
+                    soldier.name;
+            }
+
+            else if (operator) {
+
+                operator.textContent =
+                    "AUCUN";
+            }
+
+
+            // ======================================
+            // ÉTAT
+            // ======================================
+
+            let ready =
+                false;
+
+
+            if (
+                soldier &&
+                soldier.alive &&
+                typeof isMachineGunOperatorReady ===
+                    "function"
+            ) {
+
+                ready =
+                    isMachineGunOperatorReady(
+                        defense
+                    );
+            }
+
+
+            panel.classList.remove(
+                "machinegun-active",
+                "machinegun-inactive"
+            );
+
+
+            if (
+                soldier &&
+                soldier.alive &&
+                ready
+            ) {
+
+                if (status) {
+
+                    status.textContent =
+                        "ACTIVE";
+                }
+
+
+                panel.classList.add(
+                    "machinegun-active"
+                );
+            }
+
+            else if (
+                soldier &&
+                soldier.alive
+            ) {
+
+                if (status) {
+
+                    status.textContent =
+                        "OPÉRATEUR EN ROUTE";
+                }
+
+
+                panel.classList.add(
+                    "machinegun-inactive"
+                );
+            }
+
+            else {
+
+                if (status) {
+
+                    status.textContent =
+                        "SANS OPÉRATEUR";
+                }
+
+
+                panel.classList.add(
+                    "machinegun-inactive"
+                );
+            }
+
+
+            // ======================================
+            // CIBLE ACTUELLE
+            // ======================================
+
+            if (target) {
+
+                if (
+                    defense.target &&
+                    defense.target.alive
+                ) {
+
+                    target.textContent =
+                        defense.target.name ||
+                        defense.target.type ||
+                        "ENNEMI";
+                }
+
+                else {
+
+                    target.textContent =
+                        "AUCUNE";
+                }
+            }
+        }
+
+
+        // ==========================================
+        // CACHER LA FICHE
+        // ==========================================
+
+        function hideUnitPanel() {
+
+            const panel =
+                document.querySelector(
+                    "#unit-panel"
+                );
+
+
+            panel.classList.add(
+                "hidden"
+            );
+
+
+            panel.classList.remove(
+                "machinegun-mode",
+                "machinegun-active",
+                "machinegun-inactive"
+            );
+
+
+            displayedMachineGun =
+                null;
+        }
+
+        // ==========================================
+        // ACTUALISATION LIVE DE LA FICHE MG
+        // ==========================================
+
+        setInterval(
+            function () {
+
+                if (
+                    displayedMachineGun
+                ) {
+
+                    updateMachineGunPanel();
+                }
+
+            },
+            150
+        );

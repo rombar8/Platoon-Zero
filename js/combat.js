@@ -89,6 +89,221 @@ function findClosestTarget(
 }
 
 
+        // ==========================================
+        // CIBLAGE TACTIQUE DES SOLDATS
+        // ==========================================
+
+        function findSoldierTarget(
+            soldier,
+            possibleTargets
+        ) {
+
+            const validTargets =
+                possibleTargets.filter(
+                    function (target) {
+
+                        if (
+                            !target ||
+                            !target.alive
+                        ) {
+
+                            return false;
+                        }
+
+
+                        const distance =
+                            getDistance(
+                                soldier,
+                                target
+                            );
+
+
+                        if (
+                            distance >
+                            soldier.range
+                        ) {
+
+                            return false;
+                        }
+
+
+                        const lineBlocked =
+                            typeof isLineBlockedByObstacle ===
+                                "function" &&
+                            isLineBlockedByObstacle(
+                                soldier.x,
+                                soldier.y,
+                                target.x,
+                                target.y
+                            );
+
+
+                        return !lineBlocked;
+                    }
+                );
+
+
+            if (
+                validTargets.length === 0
+            ) {
+
+                return null;
+            }
+
+
+            const priority =
+                soldier.targetPriority ||
+                "closest";
+
+
+            // ======================================
+            // PLUS PROCHE
+            // ======================================
+
+            if (
+                priority === "closest"
+            ) {
+
+                return validTargets.reduce(
+                    function (
+                        best,
+                        target
+                    ) {
+
+                        return (
+                            getDistance(
+                                soldier,
+                                target
+                            ) <
+                            getDistance(
+                                soldier,
+                                best
+                            )
+                        )
+                            ? target
+                            : best;
+                    }
+                );
+            }
+
+
+            // ======================================
+            // PLUS ÉLOIGNÉ
+            // ======================================
+
+            if (
+                priority === "farthest"
+            ) {
+
+                return validTargets.reduce(
+                    function (
+                        best,
+                        target
+                    ) {
+
+                        return (
+                            getDistance(
+                                soldier,
+                                target
+                            ) >
+                            getDistance(
+                                soldier,
+                                best
+                            )
+                        )
+                            ? target
+                            : best;
+                    }
+                );
+            }
+
+
+            // ======================================
+            // PLUS FORT
+            // Plus de PV actuels
+            // ======================================
+
+            if (
+                priority === "strongest"
+            ) {
+
+                return validTargets.reduce(
+                    function (
+                        best,
+                        target
+                    ) {
+
+                        return (
+                            target.hp >
+                            best.hp
+                        )
+                            ? target
+                            : best;
+                    }
+                );
+            }
+
+
+            // ======================================
+            // PLUS FAIBLE
+            // Moins de PV actuels
+            // ======================================
+
+            if (
+                priority === "weakest"
+            ) {
+
+                return validTargets.reduce(
+                    function (
+                        best,
+                        target
+                    ) {
+
+                        return (
+                            target.hp <
+                            best.hp
+                        )
+                            ? target
+                            : best;
+                    }
+                );
+            }
+
+
+            // ======================================
+            // DERNIER
+            // Ennemi le plus haut sur la carte
+            // ======================================
+
+            if (
+                priority === "last"
+            ) {
+
+                return validTargets.reduce(
+                    function (
+                        best,
+                        target
+                    ) {
+
+                        return (
+                            target.y <
+                            best.y
+                        )
+                            ? target
+                            : best;
+                    }
+                );
+            }
+
+
+            // ======================================
+            // SÉCURITÉ
+            // ======================================
+
+            return validTargets[0];
+        }
+
+
 // ==========================================
 // EFFET VISUEL DU TIR
 // ==========================================
@@ -1211,8 +1426,9 @@ function updateSoldierCombat(
         soldier.range
     ) {
 
+        
         soldier.target =
-            findClosestTarget(
+            findSoldierTarget(
                 soldier,
                 enemies
             );
