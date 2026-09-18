@@ -1267,11 +1267,7 @@ function fireMachineGun(
 // UPDATE DES MITRAILLEUSES
 // ==========================================
 
-function updateMachineGuns() {
-
-    const currentTime =
-        performance.now();
-
+function updateMachineGuns(currentTime) {
 
     defenses.forEach(
         function (defense) {
@@ -2126,11 +2122,12 @@ function updateMines() {
 // UPDATE GLOBAL DES DÉFENSES
 // ==========================================
 
-function updateDefenses() {
+function updateDefenses(currentTime) {
 
     updateMines();
 
-    updateMachineGuns();
+    updateMachineGuns(currentTime);
+
 }
 
 

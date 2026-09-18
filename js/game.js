@@ -656,7 +656,9 @@ function gameLoop(currentTime) {
         "function"
     ) {
 
-        updateDefenses();
+        updateDefenses(
+            gameTime
+        );
     }
 
 
