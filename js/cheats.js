@@ -4,10 +4,13 @@
 // DEV / CHEAT MENU
 // ==========================================
 
+
 const cheatState = {
+
     infinitePoints: false,
     godMode: false,
     freezeEnemies: false
+
 };
 
 
@@ -25,7 +28,9 @@ cheatPanel.classList.add(
     "hidden"
 );
 
+
 cheatPanel.innerHTML = `
+
     <div class="cheat-header">
 
         <h2>
@@ -38,6 +43,7 @@ cheatPanel.innerHTML = `
 
     </div>
 
+
     <div class="cheat-content">
 
         <button
@@ -48,6 +54,7 @@ cheatPanel.innerHTML = `
             <span>OFF</span>
         </button>
 
+
         <button
             class="cheat-toggle"
             data-cheat="godMode"
@@ -55,6 +62,7 @@ cheatPanel.innerHTML = `
             GOD MODE
             <span>OFF</span>
         </button>
+
 
         <button
             class="cheat-toggle"
@@ -64,22 +72,28 @@ cheatPanel.innerHTML = `
             <span>OFF</span>
         </button>
 
+
         <hr>
+
 
         <button id="cheat-add-points">
             +100 POINTS
         </button>
 
+
         <button id="cheat-heal-all">
             SOIGNER TOUS
         </button>
+
 
         <button id="cheat-kill-all">
             TUER TOUS LES ENNEMIS
         </button>
 
     </div>
+
 `;
+
 
 document.body.appendChild(
     cheatPanel
@@ -95,6 +109,7 @@ function openCheatMenu() {
     cheatPanel.classList.remove(
         "hidden"
     );
+
 }
 
 
@@ -103,6 +118,7 @@ function closeCheatMenu() {
     cheatPanel.classList.add(
         "hidden"
     );
+
 }
 
 
@@ -111,6 +127,7 @@ function toggleCheatMenu() {
     cheatPanel.classList.toggle(
         "hidden"
     );
+
 }
 
 
@@ -126,10 +143,13 @@ function toggleCheat(name) {
         return;
     }
 
+
     cheatState[name] =
         !cheatState[name];
 
+
     refreshCheatMenu();
+
 }
 
 
@@ -157,17 +177,21 @@ function refreshCheatMenu() {
                         "span"
                     );
 
+
                 state.textContent =
                     enabled
                         ? "ON"
                         : "OFF";
 
+
                 button.classList.toggle(
                     "enabled",
                     enabled
                 );
+
             }
         );
+
 }
 
 
@@ -189,8 +213,10 @@ document
                     toggleCheat(
                         button.dataset.cheat
                     );
+
                 }
             );
+
         }
     );
 
@@ -210,6 +236,7 @@ document
             commandPoints += 100;
 
             updatePoints();
+
         }
     );
 
@@ -235,8 +262,10 @@ document
 
                     soldier.hp =
                         soldier.maxHp;
+
                 }
             );
+
 
             if (
                 selectedSoldier &&
@@ -247,7 +276,9 @@ document
                 showUnitPanel(
                     selectedSoldier
                 );
+
             }
+
         }
     );
 
@@ -273,13 +304,16 @@ document
                             return;
                         }
 
+
                         damageUnit(
                             enemy,
                             enemy.hp + 999999,
                             null
                         );
+
                     }
                 );
+
         }
     );
 
@@ -313,7 +347,9 @@ document.addEventListener(
             event.preventDefault();
 
             toggleCheatMenu();
+
         }
+
     }
 );
 
@@ -324,18 +360,32 @@ document.addEventListener(
 
 window.cheats = {
 
+
+    // Ouvre le menu
     open() {
+
         openCheatMenu();
+
     },
 
+
+    // Ferme le menu
     close() {
+
         closeCheatMenu();
+
     },
 
+
+    // Ouvre / ferme
     toggle() {
+
         toggleCheatMenu();
+
     },
 
+
+    // Points infinis
     points() {
 
         toggleCheat(
@@ -343,8 +393,11 @@ window.cheats = {
         );
 
         return cheatState.infinitePoints;
+
     },
 
+
+    // God mode
     god() {
 
         toggleCheat(
@@ -352,8 +405,11 @@ window.cheats = {
         );
 
         return cheatState.godMode;
+
     },
 
+
+    // Freeze ennemis
     freeze() {
 
         toggleCheat(
@@ -361,8 +417,11 @@ window.cheats = {
         );
 
         return cheatState.freezeEnemies;
+
     },
 
+
+    // Ajoute des points
     addPoints(amount = 100) {
 
         commandPoints +=
@@ -371,8 +430,11 @@ window.cheats = {
         updatePoints();
 
         return commandPoints;
+
     },
 
+
+    // Soigne tous les soldats
     healAll() {
 
         soldiers.forEach(
@@ -382,11 +444,29 @@ window.cheats = {
 
                     soldier.hp =
                         soldier.maxHp;
+
                 }
+
             }
         );
+
+
+        if (
+            selectedSoldier &&
+            typeof showUnitPanel ===
+                "function"
+        ) {
+
+            showUnitPanel(
+                selectedSoldier
+            );
+
+        }
+
     },
 
+
+    // Tue tous les ennemis
     killAll() {
 
         enemies
@@ -401,11 +481,91 @@ window.cheats = {
                             enemy.hp + 999999,
                             null
                         );
+
                     }
+
                 }
             );
+
     },
 
+
+    // ======================================
+    // XP DU SOLDAT SÉLECTIONNÉ
+    // ======================================
+
+    xp(amount = 500) {
+
+        if (!selectedSoldier) {
+
+            console.log(
+                "CHEAT XP : sélectionne d'abord un soldat."
+            );
+
+            return;
+
+        }
+
+
+        const xpAmount =
+            Number(amount);
+
+
+        if (
+            !Number.isFinite(xpAmount) ||
+            xpAmount < 0
+        ) {
+
+            console.log(
+                "CHEAT XP : valeur invalide."
+            );
+
+            return;
+
+        }
+
+
+        selectedSoldier.xp =
+            xpAmount;
+
+
+        // Vérifie le nouveau grade
+        if (
+            typeof updateSoldierRank ===
+                "function"
+        ) {
+
+            updateSoldierRank(
+                selectedSoldier
+            );
+
+        }
+
+
+        // Actualise le panneau
+        if (
+            typeof showUnitPanel ===
+                "function"
+        ) {
+
+            showUnitPanel(
+                selectedSoldier
+            );
+
+        }
+
+
+        console.log(
+            `CHEAT XP : ${selectedSoldier.name} → ${xpAmount} XP → ${selectedSoldier.rank}`
+        );
+
+
+        return selectedSoldier.rank;
+
+    },
+
+
+    // Affiche l'état des cheats
     status() {
 
         console.table(
@@ -413,13 +573,20 @@ window.cheats = {
         );
 
         return cheatState;
+
     }
+
 };
 
+
+// ==========================================
+// MESSAGE CONSOLE
+// ==========================================
 
 console.log(
     "🛠 M&B Cheat API chargée."
 );
+
 
 // ==========================================
 // CHEAT MENU DRAGGABLE
@@ -430,11 +597,15 @@ const cheatPanelHandle =
         ".cheat-header"
     );
 
+
 if (
-    typeof makeDraggable === "function"
+    typeof makeDraggable ===
+        "function"
 ) {
+
     makeDraggable(
         cheatPanel,
         cheatPanelHandle
     );
+
 }

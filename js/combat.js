@@ -59,9 +59,21 @@ function findClosestTarget(
                     target
                 );
 
+            const lineBlocked =
+            typeof isLineBlockedByObstacle ===
+                "function" &&
+            isLineBlockedByObstacle(
+                unit.x,
+                unit.y,
+                target.x,
+                target.y
+            );
+
+
             if (
                 distance <= unit.range &&
-                distance < closestDistance
+                distance < closestDistance &&
+                !lineBlocked
             ) {
 
                 closestTarget =
@@ -401,13 +413,38 @@ const rankCombatBonuses = {
         hp: 1.40,
         damage: 1.30,
         range: 1.12
+    },
+
+    "1LT": {
+        hp: 1.45,
+        damage: 1.34,
+        range: 1.14
+    },
+
+    CPT: {
+        hp: 1.50,
+        damage: 1.38,
+        range: 1.16
+    },
+
+    MAJ: {
+        hp: 1.55,
+        damage: 1.42,
+        range: 1.18
+    },
+
+    LTC: {
+        hp: 1.60,
+        damage: 1.46,
+        range: 1.20
+    },
+
+    COL: {
+        hp: 1.65,
+        damage: 1.50,
+        range: 1.22
     }
 };
-
-
-// ==========================================
-// APPLICATION BONUS DE GRADE
-// ==========================================
 
 // ==========================================
 // APPLICATION BONUS DE GRADE
@@ -984,6 +1021,25 @@ function shoot(
     ) {
         return;
     }
+
+        // ======================================
+        // OBSTACLE ENTRE LE TIREUR ET LA CIBLE
+        // ======================================
+
+        if (
+            typeof isLineBlockedByObstacle ===
+                "function" &&
+            isLineBlockedByObstacle(
+                shooter.x,
+                shooter.y,
+                target.x,
+                target.y
+            )
+        ) {
+
+            return;
+
+        }
 
 
     // ======================================

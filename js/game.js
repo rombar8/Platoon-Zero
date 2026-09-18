@@ -118,6 +118,16 @@ let gameTime = 0;
 const gameOverScreen =
     document.querySelector("#game-over");
 
+const gameOverTitle =
+    document.querySelector(
+        "#game-over-title"
+    );
+
+const gameOverSubtitle =
+    document.querySelector(
+        "#game-over-subtitle"
+    );
+
 const gameOverPlayer =
     document.querySelector(
         "#game-over-player"
@@ -211,82 +221,328 @@ closeHelpButton.addEventListener(
 );
 
 
-function createBattlefieldDecorations() {
+
+        function createBattlefieldDecorations() {
+
+            // ======================================
+            // NETTOYAGE
+            // ======================================
+
+            battlefield
+                .querySelectorAll(
+                    ".battlefield-grass, " +
+                    ".battlefield-rock, " +
+                    ".battlefield-log, " +
+                    ".battlefield-tree"
+                )
+                .forEach(
+                    function (element) {
+
+                        element.remove();
+
+                    }
+                );
 
 
-    // Supprime toutes les anciennes décorations
-    battlefield
-        .querySelectorAll(
-            ".battlefield-grass, .battlefield-rock, .battlefield-log"
-        )
-        .forEach(function (element) {
-            element.remove();
+            // ======================================
+            // 🌿 HERBES
+            // ======================================
+
+            for (
+                let i = 0;
+                i < 50;
+                i++
+            ) {
+
+                const grass =
+                    document.createElement(
+                        "div"
+                    );
+
+                grass.className =
+                    "battlefield-grass";
+
+                grass.style.left =
+                    (
+                        5 +
+                        Math.random() * 90
+                    ) +
+                    "%";
+
+                grass.style.top =
+                    (
+                        10 +
+                        Math.random() * 75
+                    ) +
+                    "%";
+
+                grass.style.transform =
+                    `rotate(${Math.random() * 360}deg)`;
+
+                battlefield.appendChild(
+                    grass
+                );
+
+            }
+
+
+            // ======================================
+            // 🪨 PETITS ROCHERS
+            // ======================================
+
+            for (
+                let i = 0;
+                i < 12;
+                i++
+            ) {
+
+                const rock =
+                    document.createElement(
+                        "div"
+                    );
+
+                rock.className =
+                    "battlefield-rock";
+
+                rock.style.left =
+                    (
+                        5 +
+                        Math.random() * 90
+                    ) +
+                    "%";
+
+                rock.style.top =
+                    (
+                        10 +
+                        Math.random() * 75
+                    ) +
+                    "%";
+
+                const scale =
+                    0.7 +
+                    Math.random() * 0.7;
+
+                rock.style.transform =
+                    `rotate(${Math.random() * 360}deg) scale(${scale})`;
+
+                battlefield.appendChild(
+                    rock
+                );
+
+            }
+
+
+            // ======================================
+            // 🪵 TRONCS COUCHÉS
+            // ======================================
+
+            for (
+                let i = 0;
+                i < 5;
+                i++
+            ) {
+
+                const log =
+                    document.createElement(
+                        "div"
+                    );
+
+                log.className =
+                    "battlefield-log";
+
+                log.style.left =
+                    (
+                        10 +
+                        Math.random() * 80
+                    ) +
+                    "%";
+
+                log.style.top =
+                    (
+                        15 +
+                        Math.random() * 60
+                    ) +
+                    "%";
+
+                log.style.transform =
+                    `rotate(${-35 + Math.random() * 70}deg)`;
+
+                battlefield.appendChild(
+                    log
+                );
+
+            }
+
+
+            // ======================================
+            // 🌲 ARBRES VISUELS
+            // ======================================
+
+            for (
+                let i = 0;
+                i < 22;
+                i++
+            ) {
+
+                let x;
+                let y;
+                let validPosition =
+                    false;
+
+
+                while (
+                    !validPosition
+                ) {
+
+                    x =
+                        5 +
+                        Math.random() * 90;
+
+                    y =
+                        8 +
+                        Math.random() * 78;
+
+
+                    // Zone de spawn alliée
+                    // laissée volontairement dégagée.
+
+                    const insideSpawnZone =
+                        x >= 34 &&
+                        x <= 66 &&
+                        y >= 78;
+
+
+                    if (
+                        !insideSpawnZone
+                    ) {
+
+                        validPosition =
+                            true;
+
+                    }
+
+                }
+
+
+                const tree =
+                    document.createElement(
+                        "div"
+                    );
+
+                tree.className =
+                    "battlefield-tree";
+
+                tree.style.left =
+                    x + "%";
+
+                tree.style.top =
+                    y + "%";
+
+
+                const scale =
+                    0.75 +
+                    Math.random() * 0.75;
+
+                const rotation =
+                    Math.random() * 360;
+
+
+                tree.style.transform =
+                    `translate(-50%, -50%) rotate(${rotation}deg) scale(${scale})`;
+
+
+                battlefield.appendChild(
+                    tree
+                );
+
+            }
+
+        }
+
+    // ======================================
+    // SÉLECTION DU MODE DE JEU
+    // ======================================
+
+    let selectedGameMode = "survival";
+
+    const gameModeButtons =
+        document.querySelectorAll(
+            ".gamemode-buttons button"
+        );
+
+    gameModeButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            selectedGameMode =
+                button.dataset.gamemode;
+
+            gameModeButtons.forEach(btn => {
+                btn.classList.remove("selected");
+            });
+
+            button.classList.add("selected");
+
+            console.log(
+                "Mode sélectionné :",
+                selectedGameMode
+            );
+
         });
 
+    });
 
-    // 🌿 Herbes
-    for (let i = 0; i < 50; i++) {
+        // ======================================
+        // SÉLECTION DE LA CARTE
+        // ======================================
 
-        const grass = document.createElement("div");
-
-        grass.className = "battlefield-grass";
-
-        grass.style.left =
-            (5 + Math.random() * 90) + "%";
-
-        grass.style.top =
-            (10 + Math.random() * 75) + "%";
-
-        grass.style.transform =
-            `rotate(${Math.random() * 360}deg)`;
-
-        battlefield.appendChild(grass);
-    }
+        let selectedMap =
+            "map1";
 
 
-    // 🪨 Petit rocher
-    for (let i = 0; i < 12; i++) {
-
-        const rock = document.createElement("div");
-
-        rock.className = "battlefield-rock";
-
-        rock.style.left =
-            (5 + Math.random() * 90) + "%";
-
-        rock.style.top =
-            (10 + Math.random() * 75) + "%";
-
-        const scale =
-            0.7 + Math.random() * 0.7;
-
-        rock.style.transform =
-            `rotate(${Math.random() * 360}deg) scale(${scale})`;
-
-        battlefield.appendChild(rock);
-    }
+        const mapButtons =
+            document.querySelectorAll(
+                ".map-buttons button"
+            );
 
 
-    // 🪵 Troncs d'arbres couchés
-    for (let i = 0; i < 5; i++) {
+        mapButtons.forEach(
+            function (button) {
 
-        const log = document.createElement("div");
+                button.addEventListener(
+                    "click",
+                    function () {
 
-        log.className = "battlefield-log";
+                        selectedMap =
+                            button.dataset.map;
 
-        log.style.left =
-            (10 + Math.random() * 80) + "%";
 
-        log.style.top =
-            (15 + Math.random() * 60) + "%";
+                        mapButtons.forEach(
+                            function (btn) {
 
-        log.style.transform =
-            `rotate(${-35 + Math.random() * 70}deg)`;
+                                btn.classList.remove(
+                                    "selected"
+                                );
 
-        battlefield.appendChild(log);
-    }
-}
+                            }
+                        );
 
+
+                        button.classList.add(
+                            "selected"
+                        );
+
+
+                        console.log(
+                            "Carte sélectionnée :",
+                            selectedMap
+                        );
+
+                    }
+                );
+
+            }
+        );
 
 // ======================================
 // SÉLECTION DE LA DIFFICULTÉ
@@ -361,6 +617,234 @@ difficultyButtons.forEach(button => {
 
 });
 
+
+        // ==========================================
+        // CHARGEMENT DES CARTES
+        // ==========================================
+
+        
+        function loadSelectedMap() {
+
+            // ======================================
+            // MAP 2 TEMPORAIREMENT DÉSACTIVÉE
+            // ======================================
+
+            selectedMap =
+                "map1";
+
+
+            // ======================================
+            // NETTOYAGE DES OBSTACLES
+            // ======================================
+
+            if (
+                typeof resetObstacles ===
+                    "function"
+            ) {
+
+                resetObstacles();
+
+            }
+
+
+            // ======================================
+            // CHARGEMENT MAP 1
+            // ======================================
+
+            loadMap1();
+
+        }
+
+
+        // ==========================================
+        // MAP 1 — CHAMP DE BATAILLE
+        // ==========================================
+
+        
+        
+        
+        function loadMap1() {
+
+            battlefield.classList.remove(
+                "map-urban"
+            );
+
+            battlefield.classList.add(
+                "map-battlefield"
+            );
+
+
+            // ======================================
+            // DÉCORATIONS VISUELLES
+            // ======================================
+
+            createBattlefieldDecorations();
+
+
+            // ======================================
+            // 🪨 GROS ROCHERS SOLIDES
+            // ======================================
+
+            if (
+                typeof createSolidRock ===
+                    "function"
+            ) {
+
+                createSolidRock(
+                    120,
+                    150,
+                    72
+                );
+
+                createSolidRock(
+                    340,
+                    330,
+                    64
+                );
+
+                createSolidRock(
+                    610,
+                    180,
+                    82
+                );
+
+                createSolidRock(
+                    820,
+                    310,
+                    68
+                );
+
+                createSolidRock(
+                    700,
+                    500,
+                    76
+                );
+
+                createSolidRock(
+                    210,
+                    500,
+                    62
+                );
+
+            }
+
+            
+        // ======================================
+        // 🪵 TRONCS SOLIDES
+        // ======================================
+
+        if (
+            typeof createSolidLog ===
+                "function"
+        ) {
+
+            
+        
+        createSolidLog(
+            260,
+            240,
+            110,
+            42
+        );
+
+        createSolidLog(
+            480,
+            410,
+            125,
+            46
+        );
+
+        createSolidLog(
+            730,
+            260,
+            105,
+            40
+        );
+
+        createSolidLog(
+            570,
+            550,
+            115,
+            43
+        );
+
+        }
+
+
+            console.log(
+                "Map chargée : Champ de bataille"
+            );
+
+        }
+
+
+        // ==========================================
+        // MAP 2 — ZONE URBAINE
+        // ==========================================
+
+            
+        function loadMap2() {
+
+            // ======================================
+            // STYLE DE LA MAP
+            // ======================================
+
+            battlefield.classList.remove(
+                "map-battlefield"
+            );
+
+            battlefield.classList.add(
+                "map-urban"
+            );
+
+
+            // ======================================
+            // SUPPRESSION DU DÉCOR MAP 1
+            // ======================================
+
+            battlefield
+                .querySelectorAll(
+                    ".battlefield-grass, " +
+                    ".battlefield-rock, " +
+                    ".battlefield-log"
+                )
+                .forEach(
+                    function (element) {
+
+                        element.remove();
+
+                    }
+                );
+
+
+            // ======================================
+            // CONSTRUCTION MAP 2
+            // ======================================
+
+            if (
+                typeof buildUrbanMap ===
+                "function"
+            ) {
+
+                
+        requestAnimationFrame(
+            function () {
+
+                buildUrbanMap();
+
+            }
+        );
+
+            }
+
+
+            console.log(
+                "Map chargée : Zone urbaine"
+            );
+
+        }
+
+
 // ==========================================
 // LANCEMENT D'UNE PARTIE
 // ==========================================
@@ -411,7 +895,7 @@ function startGame() {
 
     resetGameState();
 
-    createBattlefieldDecorations();
+    loadSelectedMap();
 
 
     // ======================================
@@ -477,10 +961,19 @@ function startGame() {
 
 
     // ======================================
-    // PREMIÈRE VAGUE
+    // LANCEMENT DU MODE DE JEU
     // ======================================
 
+    if (selectedGameMode === "domination") {
+
+        startDomination();
+        startNextWave();
+
+} else {
+
     startNextWave();
+
+}
 
 
     // ======================================
@@ -507,38 +1000,54 @@ function startGame() {
 // ESCOUADE DE DÉPART
 // ==========================================
 
-function createStartingSquad() {
 
-    createSoldier(
-        30,
-        75,
-        "rifleman"
-    );
+        
+        function createStartingSquad() {
 
+            const riflemanSpawn =
+                getAlliedSpawnPosition();
 
-    createSoldier(
-        70,
-        75,
-        "marksman"
-    );
+            const marksmanSpawn =
+                getAlliedSpawnPosition();
 
+            const scoutSpawn =
+                getAlliedSpawnPosition();
 
-    createSoldier(
-        40,
-        88,
-        "scout"
-    );
+            const gunnerSpawn =
+                getAlliedSpawnPosition();
 
 
-    createSoldier(
-        60,
-        88,
-        "gunner"
-    );
+            createSoldier(
+                riflemanSpawn.x,
+                riflemanSpawn.y,
+                "rifleman"
+            );
 
 
-    updateSoldiersCount();
-}
+            createSoldier(
+                marksmanSpawn.x,
+                marksmanSpawn.y,
+                "marksman"
+            );
+
+
+            createSoldier(
+                scoutSpawn.x,
+                scoutSpawn.y,
+                "scout"
+            );
+
+
+            createSoldier(
+                gunnerSpawn.x,
+                gunnerSpawn.y,
+                "gunner"
+            );
+
+
+            updateSoldiersCount();
+
+        }
 
 
 // ==========================================
@@ -721,6 +1230,18 @@ function gameLoop(currentTime) {
         );
     }
 
+    // ======================================
+    // DOMINATION
+    // ======================================
+
+    if (
+        selectedGameMode === "domination" &&
+        typeof updateDomination === "function"
+    ) {
+
+        updateDomination(deltaTime);
+    }
+
 
     // ======================================
     // GAME OVER
@@ -751,7 +1272,7 @@ function gameLoop(currentTime) {
 // FIN DE PARTIE
 // ==========================================
 
-function endGame() {
+function endGame(reason = "eliminated") {
 
     if (gameOver) {
         return;
@@ -763,6 +1284,47 @@ function endGame() {
     gameStarted = false;
 
     gamePaused = false;
+
+    // ======================================
+    // TYPE DE FIN
+    // ======================================
+
+    let endTitle = "☠ GAME OVER";
+    let endSubtitle = "ESCOUADE ÉLIMINÉE";
+
+    if (selectedGameMode === "domination") {
+
+        if (reason === "domination-victory") {
+
+            endTitle = "🚩 VICTOIRE";
+            endSubtitle = "POINT SÉCURISÉ";
+
+        } else if (reason === "domination-defeat") {
+
+            endTitle = "☠ DÉFAITE";
+            endSubtitle = "POSITION PERDUE";
+
+        }
+    }
+
+
+    // ======================================
+    // AFFICHAGE DU TYPE DE FIN
+    // ======================================
+
+    if (gameOverTitle) {
+        gameOverTitle.textContent = endTitle;
+    }
+
+    if (gameOverSubtitle) {
+
+        gameOverSubtitle.textContent =
+            endSubtitle;
+
+        gameOverSubtitle.classList.remove(
+            "hidden"
+        );
+    }
 
 
     game.classList.remove(
@@ -793,7 +1355,6 @@ function endGame() {
             kills,
             wave
         );
-
 
     // ======================================
     // AFFICHAGE
@@ -1115,6 +1676,16 @@ function resetGameState() {
     ) {
 
         resetWaves();
+    }
+
+    // ======================================
+    // DOMINATION
+    // ======================================
+
+    if (
+        typeof resetDomination === "function"
+    ) {
+        resetDomination();
     }
 
         resetTacticalCosts();

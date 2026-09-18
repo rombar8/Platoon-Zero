@@ -128,7 +128,10 @@ function getWaveReward() {
             bonusWaveReward;
     }
 
-    // La difficulté réduit les gains
+    // La difficulté modifie les gains
+    // Plus la difficulté est élevée,
+    // plus la récompense est importante
+    
     const finalReward =
         Math.max(
             1,

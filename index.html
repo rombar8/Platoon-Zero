@@ -87,67 +87,569 @@
 
 
         <!-- =================================
-             VERSION / PATCH NOTES
+            VERSION / PATCH NOTES
         ================================== -->
 
         <div id="version-info">
 
-    <div class="version-number">
-        M&B MOBILE — v0.2.5 ALPHA
+            <div class="version-number">
+                M&B MOBILE — v0.3.1 ALPHA
+            </div>
+
+            <button
+                id="patch-toggle"
+                type="button"
+            >
+                📋 PATCH NOTES
+            </button>
+
+
+            <div
+                id="patch-notes"
+                class="hidden"
+            >
+
+
+            
+        <!-- =================================
+            PATCH v0.3.1
+        ================================== -->
+
+        <div class="patch-entry">
+
+            <button
+                class="patch-version-toggle"
+                type="button"
+            >
+                <span>
+                    v0.3.1 ALPHA
+                </span>
+
+                <span class="patch-arrow">
+                    ▼
+                </span>
+            </button>
+
+
+            <div class="patch-version-content">
+
+
+                <div class="patch-section">
+
+                    <h3>
+                        🌲 REFONTE DU CHAMP DE BATAILLE
+                    </h3>
+
+                    <p>
+                        • Ajout de nombreux arbres sur le champ de bataille.
+                    </p>
+
+                    <p>
+                        • Les unités peuvent désormais passer sous les arbres.
+                    </p>
+
+                    <p>
+                        • Amélioration générale de la végétation et du décor.
+                    </p>
+
+                    <p>
+                        • Nouvelle zone d'apparition alliée plus compacte en bas du champ de bataille.
+                    </p>
+
+                    <p>
+                        • Les unités alliées apparaissent désormais orientées vers le champ de bataille.
+                    </p>
+
+                </div>
+
+
+                <div class="patch-section">
+
+                    <h3>
+                        🪨 NOUVEAUX OBSTACLES
+                    </h3>
+
+                    <p>
+                        • Ajout de gros rochers solides sur le champ de bataille.
+                    </p>
+
+                    <p>
+                        • Les rochers bloquent le déplacement des unités.
+                    </p>
+
+                    <p>
+                        • Les rochers bloquent également les tirs.
+                    </p>
+
+                    <p>
+                        • Ajout de troncs d'arbres couchés.
+                    </p>
+
+                    <p>
+                        • Les troncs bloquent le déplacement des unités mais permettent aux tirs de passer au-dessus.
+                    </p>
+
+                    <p>
+                        • Ajout de zones de collision adaptées à la taille des obstacles.
+                    </p>
+
+                </div>
+
+
+                <div class="patch-section">
+
+                    <h3>
+                        🤖 IA ENNEMIE
+                    </h3>
+
+                    <p>
+                        • Amélioration du système de contournement des obstacles.
+                    </p>
+
+                    <p>
+                        • Les ennemis détectent désormais les obstacles avant d'entrer en collision avec eux.
+                    </p>
+
+                    <p>
+                        • Les ennemis conservent temporairement leur direction de contournement.
+                    </p>
+
+                    <p>
+                        • Réduction des blocages contre les rochers et les troncs.
+                    </p>
+
+                </div>
+
+
+                <div class="patch-section">
+
+                    <h3>
+                        ⚙️ AMÉLIORATIONS
+                    </h3>
+
+                    <p>
+                        • Amélioration des collisions entre les unités et les éléments du terrain.
+                    </p>
+
+                    <p>
+                        • Distinction entre les obstacles bloquant les tirs et ceux bloquant uniquement les déplacements.
+                    </p>
+
+                    <p>
+                        • Divers ajustements visuels du champ de bataille.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+            <!-- =================================
+                PATCH v0.3.1
+            ================================== -->
+
+            <div class="patch-entry">
+
+                <button
+                    class="patch-version-toggle"
+                    type="button"
+                >
+                    <span>
+                        v0.3.0 ALPHA
+                    </span>
+
+                    <span class="patch-arrow">
+                        ▼
+                    </span>
+                </button>
+
+
+                <div class="patch-version-content">
+
+
+                    <div class="patch-section">
+
+                        <h3>
+                            🚩 NOUVEAU MODE : DOMINATION
+                        </h3>
+
+                        <p>
+                            • Ajout du nouveau mode de jeu DOMINATION.
+                        </p>
+
+                        <p>
+                            • Un point stratégique apparaît au centre du champ de bataille.
+                        </p>
+
+                        <p>
+                            • Les alliés et les ennemis peuvent prendre le contrôle de la zone.
+                        </p>
+
+                        <p>
+                            • Une zone contestée bloque la progression du score.
+                        </p>
+
+                        <p>
+                            • Le contrôle allié fait progresser votre score.
+                        </p>
+
+                        <p>
+                            • Le contrôle ennemi fait progresser le score adverse.
+                        </p>
+
+                        <p>
+                            • Le premier camp à atteindre 500 points remporte la bataille.
+                        </p>
+
+                    </div>
+
+
+                    <div class="patch-section">
+
+                        <h3>
+                            🤖 IA ENNEMIE
+                        </h3>
+
+                        <p>
+                            • Nouvelle logique de déplacement spécifique au mode Domination.
+                        </p>
+
+                        <p>
+                            • Les ennemis cherchent désormais à rejoindre et contrôler l'objectif.
+                        </p>
+
+                        <p>
+                            • Correction de mouvements anormaux autour du point de capture.
+                        </p>
+
+                        <p>
+                            • Amélioration du comportement en vitesse ×2 et ×4.
+                        </p>
+
+                    </div>
+
+
+                    <div class="patch-section">
+
+                        <h3>
+                            🏆 VICTOIRE & DÉFAITE
+                        </h3>
+
+                        <p>
+                            • Ajout d'une condition de victoire en Domination.
+                        </p>
+
+                        <p>
+                            • Ajout d'une condition de défaite lorsque l'ennemi atteint 500 points.
+                        </p>
+
+                        <p>
+                            • Nouveaux écrans de fin adaptés au résultat de la bataille.
+                        </p>
+
+                        <p>
+                            • Réinitialisation correcte du point de capture lors d'une nouvelle partie.
+                        </p>
+
+                    </div>
+
+
+                    <div class="patch-section">
+
+                        <h3>
+                            🎖️ GRADES
+                        </h3>
+
+                        <p>
+                            • Extension du système de grades jusqu'au grade COL.
+                        </p>
+
+                        <p>
+                            • 15 grades disponibles au total.
+                        </p>
+
+                        <p>
+                            • Nouveaux insignes pour les grades supérieurs.
+                        </p>
+
+                        <p>
+                            • Les promotions augmentent les PV, les dégâts et la portée.
+                        </p>
+
+                    </div>
+
+
+                    <div class="patch-section">
+
+                        <h3>
+                            💰 POINTS DE COMMANDEMENT
+                        </h3>
+
+                        <p>
+                            • Rééquilibrage des récompenses selon la difficulté.
+                        </p>
+
+                        <p>
+                            • Les difficultés élevées accordent désormais davantage de points.
+                        </p>
+
+                    </div>
+
+
+                    <div class="patch-section">
+
+                        <h3>
+                            ⚙️ AMÉLIORATIONS
+                        </h3>
+
+                        <p>
+                            • Le score de Domination respecte les vitesses ×1, ×2 et ×4.
+                        </p>
+
+                        <p>
+                            • Amélioration de la gestion des différents modes de jeu.
+                        </p>
+
+                        <p>
+                            • Amélioration de la gestion des fins de partie.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                ANCIENS PATCHS
+                On les ajoutera ici
+            ================================== -->
+
+            <!-- =================================
+                PATCH v0.2.4
+            ================================== -->
+
+            <div class="patch-entry">
+
+                <button
+                    class="patch-version-toggle"
+                    type="button"
+                >
+                    <span>
+                        v0.2.4 ALPHA
+                    </span>
+
+                    <span class="patch-arrow">
+                        ▶
+                    </span>
+                </button>
+
+
+                <div class="patch-version-content hidden">
+
+                    <div class="patch-section">
+
+                        <h3>
+                            🔥 MITRAILLEUSE DÉFENSIVE
+                        </h3>
+
+                        <p>
+                            • Ajout de la mitrailleuse défensive.
+                        </p>
+
+                        <p>
+                            • La mitrailleuse peut être placée directement sur le champ de bataille.
+                        </p>
+
+                        <p>
+                            • Un soldat est nécessaire pour utiliser la mitrailleuse.
+                        </p>
+
+                        <p>
+                            • L'opérateur cesse d'utiliser son arme personnelle lorsqu'il utilise la mitrailleuse.
+                        </p>
+
+                        <p>
+                            • Tir automatique sur les ennemis à portée.
+                        </p>
+
+                    </div>
+
+
+                    <div class="patch-section">
+
+                        <h3>
+                            🎯 INTERFACE
+                        </h3>
+
+                        <p>
+                            • Ajout d'une fiche dédiée à la mitrailleuse.
+                        </p>
+
+                        <p>
+                            • Affichage de l'état de la mitrailleuse.
+                        </p>
+
+                        <p>
+                            • Affichage de l'opérateur actuel.
+                        </p>
+
+                        <p>
+                            • Affichage de la cadence de tir.
+                        </p>
+
+                        <p>
+                            • Affichage de la protection.
+                        </p>
+
+                        <p>
+                            • Affichage de la cible actuelle.
+                        </p>
+
+                    </div>
+
+
+                    <div class="patch-section">
+
+                        <h3>
+                            ⚙️ ÉQUILIBRAGE
+                        </h3>
+
+                        <p>
+                            • Limite de 3 mitrailleuses défensives simultanément.
+                        </p>
+
+                        <p>
+                            • Coût fixé à 15 points de commandement.
+                        </p>
+
+                        <p>
+                            • Les statistiques de la mitrailleuse sont indépendantes de celles de son opérateur.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                PATCH v0.2.0
+            ================================== -->
+
+            <div class="patch-entry">
+
+                <button
+                    class="patch-version-toggle"
+                    type="button"
+                >
+                    <span>
+                        v0.2.0 ALPHA
+                    </span>
+
+                    <span class="patch-arrow">
+                        ▶
+                    </span>
+                </button>
+
+
+                <div class="patch-version-content hidden">
+
+                    <div class="patch-section">
+
+                        <h3>
+                            👹 NOUVEAUX ENNEMIS
+                        </h3>
+
+                        <p>
+                            • Ajout de plusieurs types d'ennemis.
+                        </p>
+
+                        <p>
+                            • Les ennemis disposent désormais de caractéristiques différentes.
+                        </p>
+
+                        <p>
+                            • Apparition progressive de nouveaux ennemis au fil des vagues.
+                        </p>
+
+                        <p>
+                            • Ajout des barres de vie ennemies.
+                        </p>
+
+                    </div>
+
+
+                    <div class="patch-section">
+
+                        <h3>
+                            🤖 IA & COMBAT
+                        </h3>
+
+                        <p>
+                            • Amélioration du comportement des ennemis.
+                        </p>
+
+                        <p>
+                            • Amélioration du système de ciblage.
+                        </p>
+
+                        <p>
+                            • Divers ajustements du système de combat.
+                        </p>
+
+                    </div>
+
+
+                    <div class="patch-section">
+
+                        <h3>
+                            🎖️ SOLDATS
+                        </h3>
+
+                        <p>
+                            • Développement du système de grades des soldats.
+                        </p>
+
+                        <p>
+                            • Les grades peuvent améliorer les caractéristiques de combat.
+                        </p>
+
+                        <p>
+                            • Ajout de nouvelles possibilités de gestion des unités.
+                        </p>
+
+                    </div>
+
+
+                    <div class="patch-section">
+
+                        <h3>
+                            ⏩ VITESSE DE JEU
+                        </h3>
+
+                        <p>
+                            • Ajout des vitesses ×1, ×2 et ×4.
+                        </p>
+
+                        <p>
+                            • Les combats et déplacements suivent la vitesse sélectionnée.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
     </div>
-
-    <button
-        id="patch-toggle"
-        type="button"
-    >
-        📋 VOIR LE PATCH v0.2.5
-    </button>
-
-    <div
-        id="patch-notes"
-        class="hidden"
-    >
-
-       <div class="patch-section">
-            <h3>🔧 PATCH v0.2.5 ALPHA</h3>
-
-            <p>• Ajout du MINIGUNNER</p>
-            <p>• Nouvelle unité lourde disponible dans les renforts</p>
-            <p>• Cadence de tir extrême : 90 ms</p>
-            <p>• Dégâts moyens compensés par une puissance de feu massive</p>
-            <p>• 200 PV et mobilité réduite</p>
-            <p>• Coût de base : 30 points de commandement</p>
-        </div>
-
-        <div class="patch-section">
-            <h3>🔥 MINIGUNNER</h3>
-
-            <p>• Nouveau skin lourd exclusif</p>
-            <p>• Casque renforcé et armure lourde</p>
-            <p>• Sac de munitions dorsal</p>
-            <p>• Minigun multi-canons dédié</p>
-            <p>• Bande de munitions visible</p>
-        </div>
-
-        <div class="patch-section">
-            <h3>⚖️ ÉQUILIBRAGE</h3>
-
-            <p>• MINIGUNNER : 200 PV</p>
-            <p>• MINIGUNNER : 14 dégâts</p>
-            <p>• MINIGUNNER : portée 175</p>
-            <p>• MINIGUNNER : vitesse 19</p>
-            <p>• MINIGUNNER : cadence 90 ms</p>
-        </div>
-
-        <div class="patch-section">
-            <h3>🐛 CORRECTIONS</h3>
-
-            <p>• Correction du déploiement du MINIGUNNER</p>
-            <p>• Correction du type de renfort minigun/minigunner</p>
-            <p>• Refonte du positionnement visuel du minigun</p>
-        </div>
-
-        </div>
 
 
         <!-- =================================
@@ -177,6 +679,36 @@
 
         <div class="menu-buttons">
 
+            <!-- =================================
+                MODE DE JEU
+            ================================= -->
+
+            <div id="gamemode-selector">
+
+                <div class="difficulty-title">
+                    MODE DE JEU
+                </div>
+
+                <div class="gamemode-buttons">
+
+                    <button
+                        type="button"
+                        data-gamemode="survival"
+                        class="selected"
+                    >
+                        ⚔️ SURVIE
+                    </button>
+
+                    <button
+                        type="button"
+                        data-gamemode="domination"
+                    >
+                        🚩 DOMINATION
+                    </button>
+
+                </div>
+
+            </div>
 
             <div id="difficulty-selector">
 
@@ -247,6 +779,38 @@
 
             </div>
 
+        <!-- =================================
+             CARTE
+        ================================= -->
+
+        <div id="map-selector">
+
+            <div class="difficulty-title">
+                CARTE
+            </div>
+
+            <div class="map-buttons">
+
+                <button
+                    type="button"
+                    data-map="map1"
+                    class="selected"
+                >
+                    🌲 CHAMP DE BATAILLE
+                </button>
+
+                <button
+                    type="button"
+                    data-map="map2"
+                    disabled
+                    hidden
+                >
+                    🏙️ ZONE URBAINE
+                </button>
+
+            </div>
+
+        </div>
 
             <button
                 id="play-button"
@@ -870,9 +1434,18 @@
 
             <div class="game-over-window">
 
-                <div class="game-over-small-title">
-                    MISSION TERMINÉE
-                </div>
+            <div
+                id="game-over-title"
+                class="game-over-small-title"
+            >
+                MISSION TERMINÉE
+            </div>
+
+            <div
+                id="game-over-subtitle"
+                class="game-over-subtitle hidden"
+            >
+            </div>
 
 
                 <h2 id="game-over-player">
@@ -991,6 +1564,16 @@
     <script src="js/game.js"></script>
 
 
+    <!-- OBSTACLES -->
+
+    <script src="js/obstacles.js"></script>
+
+
+    <!-- CARTES -->
+
+    <script src="js/maps.js"></script>
+
+
     <!-- DÉPLACEMENTS -->
 
     <script src="js/movement.js"></script>
@@ -1026,6 +1609,11 @@
     <script src="js/waves.js"></script>
 
 
+    <!-- DOMINATION -->
+
+    <script src="js/domination.js"></script>
+
+
     <!-- ORDRES -->
 
     <script src="js/orders.js"></script>
@@ -1057,39 +1645,112 @@
     ====================================== -->
 
     <div id="game-version">
-        M&B Mobile • v0.2.5 Alpha
+        M&B Mobile • v0.3.1 Alpha
     </div>
 
     <script>
-    const patchToggle =
-        document.querySelector("#patch-toggle");
 
-    const patchNotes =
-        document.querySelector("#patch-notes");
+const patchToggle =
+    document.querySelector(
+        "#patch-toggle"
+    );
 
-    patchToggle.addEventListener(
-        "click",
-        function () {
+const patchNotes =
+    document.querySelector(
+        "#patch-notes"
+    );
 
-            const isHidden =
-                patchNotes.classList.contains("hidden");
 
-            if (isHidden) {
+// ======================================
+// OUVRIR / FERMER PATCH NOTES
+// ======================================
 
-                patchNotes.classList.remove("hidden");
+patchToggle.addEventListener(
+    "click",
+    function () {
 
-                patchToggle.textContent =
-                    "✕ FERMER LE PATCH";
+        const isHidden =
+            patchNotes.classList.contains(
+                "hidden"
+            );
 
-            } else {
+        if (isHidden) {
 
-                patchNotes.classList.add("hidden");
+            patchNotes.classList.remove(
+                "hidden"
+            );
 
-                patchToggle.textContent =
-                    "📋 VOIR LE PATCH v0.2.5";
-            }
+            patchToggle.textContent =
+                "✕ FERMER PATCH NOTES";
+
+        } else {
+
+            patchNotes.classList.add(
+                "hidden"
+            );
+
+            patchToggle.textContent =
+                "📋 PATCH NOTES";
+
+        }
+
+    }
+);
+
+
+// ======================================
+// DÉROULER LES VERSIONS
+// ======================================
+
+document
+    .querySelectorAll(
+        ".patch-version-toggle"
+    )
+    .forEach(
+        function (button) {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    const entry =
+                        button.closest(
+                            ".patch-entry"
+                        );
+
+                    const content =
+                        entry.querySelector(
+                            ".patch-version-content"
+                        );
+
+                    const arrow =
+                        button.querySelector(
+                            ".patch-arrow"
+                        );
+
+
+                    content.classList.toggle(
+                        "hidden"
+                    );
+
+
+                    const closed =
+                        content.classList.contains(
+                            "hidden"
+                        );
+
+
+                    arrow.textContent =
+                        closed
+                            ? "▶"
+                            : "▼";
+
+                }
+            );
+
         }
     );
+
 </script>
 
 </body>

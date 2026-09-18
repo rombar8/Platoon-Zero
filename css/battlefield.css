@@ -726,3 +726,1523 @@
 .mg-barrel {
     transition: transform 0.12s linear;
 }
+
+/* =========================================
+   DOMINATION
+========================================= */
+
+.domination-flag {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 1px;
+    height: 1px;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 5;
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   GRANDE ZONE DE CAPTURE
+========================================= */
+
+.domination-zone {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 160px;
+    height: 160px;
+
+    transform: translate(-50%, -50%);
+
+    border: 2px dashed rgba(235, 238, 225, 0.7);
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,0.035) 0%,
+            rgba(255,255,255,0.015) 50%,
+            transparent 72%
+        );
+
+    box-sizing: border-box;
+
+    transition:
+        border-color 0.2s,
+        background 0.2s;
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   PETIT CERCLE CENTRAL
+========================================= */
+
+.domination-inner-zone {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 58px;
+    height: 58px;
+
+    transform: translate(-50%, -50%);
+
+    border: 3px dashed rgba(235, 238, 225, 0.75);
+    border-radius: 50%;
+
+    opacity: 0.75;
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   DRAPEAU
+========================================= */
+
+.flag-pole {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 5px;
+    height: 58px;
+
+    transform: translate(-50%, -85%);
+
+    background:
+        linear-gradient(
+            90deg,
+            #777 0%,
+            #ddd 45%,
+            #aaa 70%,
+            #555 100%
+        );
+
+    border: 1px solid #282828;
+    border-radius: 3px;
+
+    box-shadow:
+        1px 2px 3px rgba(0,0,0,0.4);
+
+    z-index: 3;
+
+    pointer-events: none;
+}
+
+
+/* TISSU */
+
+.flag-cloth {
+    position: absolute;
+
+    left: 4px;
+    top: 5px;
+
+    width: 31px;
+    height: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #777,
+            #4e4e4e
+        );
+
+    border: 2px solid #292929;
+
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        82% 50%,
+        100% 100%,
+        0 100%
+    );
+
+    box-sizing: border-box;
+
+    transition: background 0.2s;
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   BASE DU DRAPEAU
+========================================= */
+
+.flag-base {
+    position: absolute;
+
+    left: 50%;
+    bottom: -5px;
+
+    width: 30px;
+    height: 12px;
+
+    transform: translateX(-50%);
+
+    pointer-events: none;
+}
+
+.flag-base span {
+    position: absolute;
+
+    bottom: 0;
+
+    width: 10px;
+    height: 8px;
+
+    background: #666;
+
+    border: 1px solid #292929;
+    border-radius: 50% 50% 35% 35%;
+}
+
+.flag-base span:nth-child(1) {
+    left: 1px;
+    transform: rotate(-20deg);
+}
+
+.flag-base span:nth-child(2) {
+    left: 10px;
+    bottom: -2px;
+}
+
+.flag-base span:nth-child(3) {
+    right: 1px;
+    transform: rotate(20deg);
+}
+
+
+/* =========================================
+   HUD SCORE
+========================================= */
+
+.domination-score {
+    position: absolute;
+
+    left: 50%;
+    bottom: 91px;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 105px;
+    height: 28px;
+
+    padding: 0 15px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(30,32,29,0.96),
+            rgba(8,10,8,0.96)
+        );
+
+    border: 2px solid #d5d8d0;
+
+    clip-path: polygon(
+        8px 0,
+        calc(100% - 8px) 0,
+        100% 50%,
+        calc(100% - 8px) 100%,
+        8px 100%,
+        0 50%
+    );
+
+    box-shadow:
+        0 3px 6px rgba(0,0,0,0.5);
+
+    color: white;
+
+    font-size: 12px;
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+    white-space: nowrap;
+
+    z-index: 6;
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   FLÈCHES DU SCORE
+========================================= */
+
+.score-arrow {
+    position: absolute;
+
+    top: 50%;
+
+    width: 7px;
+    height: 7px;
+
+    border-top: 2px solid white;
+    border-right: 2px solid white;
+}
+
+.score-arrow.left {
+    left: 8px;
+
+    transform:
+        translateY(-50%)
+        rotate(-135deg);
+}
+
+.score-arrow.right {
+    right: 8px;
+
+    transform:
+        translateY(-50%)
+        rotate(45deg);
+}
+
+
+/* =========================================
+   PETIT POINTEUR SOUS LE SCORE
+========================================= */
+
+.domination-pointer {
+    position: absolute;
+
+    left: 50%;
+    bottom: 74px;
+
+    width: 0;
+    height: 0;
+
+    transform: translateX(-50%);
+
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 9px solid #eee;
+
+    filter:
+        drop-shadow(0 1px 1px rgba(0,0,0,0.8));
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   ÉTATS DU POINT
+========================================= */
+
+/* NEUTRE */
+
+.domination-flag.neutral .domination-zone {
+    border-color: rgba(235,238,225,0.7);
+}
+
+.domination-flag.neutral .flag-cloth {
+    background: #707070;
+}
+
+
+/* ALLIÉ */
+
+.domination-flag.allied .domination-zone {
+    border-color: rgba(80,220,100,0.95);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(80,220,100,0.13),
+            transparent 70%
+        );
+}
+
+.domination-flag.allied .domination-inner-zone {
+    border-color: rgba(80,220,100,0.85);
+}
+
+.domination-flag.allied .flag-cloth {
+    background: #4fd266;
+}
+
+
+/* ENNEMI */
+
+.domination-flag.enemy .domination-zone {
+    border-color: rgba(230,70,70,0.95);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(230,70,70,0.13),
+            transparent 70%
+        );
+}
+
+.domination-flag.enemy .domination-inner-zone {
+    border-color: rgba(230,70,70,0.85);
+}
+
+.domination-flag.enemy .flag-cloth {
+    background: #d94b4b;
+}
+
+
+/* CONTESTÉ */
+
+.domination-flag.contested .domination-zone {
+    border-color: rgba(255,170,50,0.95);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,170,50,0.14),
+            transparent 70%
+        );
+}
+
+.domination-flag.contested .domination-inner-zone {
+    border-color: rgba(255,170,50,0.9);
+}
+
+.domination-flag.contested .flag-cloth {
+    background: #e5a13a;
+}
+
+/* =========================================
+   PROPRIÉTAIRE DU SCORE
+========================================= */
+
+.domination-flag.score-allied .domination-score {
+    border-color: #50dc64;
+    color: #72ef83;
+}
+
+.domination-flag.score-enemy .domination-score {
+    border-color: #e64646;
+    color: #ff6868;
+}
+
+.domination-flag.score-neutral .domination-score {
+    border-color: #d5d8d0;
+    color: #ffffff;
+}
+
+        /* ==========================================
+           OBSTACLES
+        ========================================== */
+
+        .map-obstacle {
+            position: absolute;
+
+            z-index: 4;
+
+            box-sizing: border-box;
+
+            pointer-events: none;
+        }
+
+
+        /* ==========================================
+           BÂTIMENT
+        ========================================== */
+
+        .map-obstacle.building {
+            background:
+                repeating-linear-gradient(
+                    45deg,
+                    #363936 0px,
+                    #363936 12px,
+                    #2b2e2b 12px,
+                    #2b2e2b 24px
+                );
+
+            border: 4px solid #171917;
+
+            box-shadow:
+                inset 0 0 0 2px rgba(255, 255, 255, 0.06),
+                0 5px 10px rgba(0, 0, 0, 0.45);
+        }
+
+        
+        /* ==========================================
+           MAP 2 — ZONE URBAINE
+        ========================================== */
+
+        #battlefield.map-urban {
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 20% 25%,
+                    rgba(255, 255, 255, 0.025),
+                    transparent 18%
+                ),
+                radial-gradient(
+                    circle at 80% 70%,
+                    rgba(0, 0, 0, 0.08),
+                    transparent 25%
+                ),
+                #656760;
+        }
+
+
+        /* ==========================================
+           ÉLÉMENTS DE CARTE
+        ========================================== */
+
+        .map-decoration {
+            position: absolute;
+            box-sizing: border-box;
+            pointer-events: none;
+        }
+
+
+        /* ==========================================
+           ROUTES
+        ========================================== */
+
+        .urban-road {
+            z-index: 1;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.025),
+                    transparent 20%,
+                    rgba(0, 0, 0, 0.06) 50%,
+                    transparent 80%,
+                    rgba(255, 255, 255, 0.025)
+                ),
+                #303336;
+
+            box-shadow:
+                inset 0 0 8px
+                    rgba(0, 0, 0, 0.35);
+        }
+
+
+        /* ==========================================
+           TROTTOIRS
+        ========================================== */
+
+        .urban-sidewalk {
+            z-index: 2;
+
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    #858780 0px,
+                    #858780 24px,
+                    #777972 25px,
+                    #777972 26px
+                );
+
+            border:
+                1px solid #555750;
+
+            box-shadow:
+                inset 0 0 4px
+                    rgba(255, 255, 255, 0.08);
+        }
+
+
+        /* ==========================================
+           BÂTIMENTS
+        ========================================== */
+
+        #battlefield.map-urban
+        .map-obstacle.urban-building {
+            z-index: 5;
+
+            border:
+                4px solid #1c1e1f;
+
+            box-shadow:
+                0 6px 10px
+                    rgba(0, 0, 0, 0.55),
+                inset 0 0 0 2px
+                    rgba(255, 255, 255, 0.06);
+        }
+
+
+        /* IMMEUBLE BÉTON */
+
+        #battlefield.map-urban
+        .urban-building-1 {
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    transparent 0px,
+                    transparent 34px,
+                    rgba(0, 0, 0, 0.08) 35px,
+                    rgba(0, 0, 0, 0.08) 37px
+                ),
+                repeating-linear-gradient(
+                    0deg,
+                    #55595a 0px,
+                    #55595a 28px,
+                    #4b4f50 29px,
+                    #4b4f50 31px
+                );
+        }
+
+
+        /* TOIT INDUSTRIEL */
+
+        #battlefield.map-urban
+        .urban-building-2 {
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    #484b4d 0px,
+                    #484b4d 12px,
+                    #3e4143 13px,
+                    #3e4143 15px
+                );
+        }
+
+
+        /* PETIT BÂTIMENT */
+
+        #battlefield.map-urban
+        .urban-building-3 {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255, 255, 255, 0.06),
+                    transparent 35%
+                ),
+                #59534b;
+        }
+
+    
+        /* ==========================================
+           MARQUAGES ROUTIERS
+        ========================================== */
+
+        .urban-marking {
+            z-index: 2;
+            opacity: 0.65;
+
+            background:
+                #d5d0ad;
+        }
+
+
+        /* ==========================================
+           PASSAGES PIÉTONS
+        ========================================== */
+
+        .urban-crosswalk {
+            z-index: 3;
+            opacity: 0.55;
+        }
+
+
+        .urban-crosswalk.horizontal {
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    #d9d9d2 0px,
+                    #d9d9d2 7px,
+                    transparent 7px,
+                    transparent 14px
+                );
+        }
+
+
+        .urban-crosswalk.vertical {
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    #d9d9d2 0px,
+                    #d9d9d2 7px,
+                    transparent 7px,
+                    transparent 14px
+                );
+        }
+
+
+        /* ==========================================
+           PARKING
+        ========================================== */
+
+        .urban-parking {
+            z-index: 2;
+
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    transparent 0px,
+                    transparent 34px,
+                    rgba(
+                        230,
+                        230,
+                        215,
+                        0.45
+                    ) 35px,
+                    rgba(
+                        230,
+                        230,
+                        215,
+                        0.45
+                    ) 37px
+                ),
+                rgba(
+                    25,
+                    27,
+                    29,
+                    0.32
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.08
+                );
+        }
+
+
+        /* ==========================================
+           DÉTAILS DES TOITS
+        ========================================== */
+
+        .urban-roof-detail {
+            z-index: 6;
+
+            border:
+                2px solid #202223;
+
+            box-shadow:
+                2px 3px 4px
+                    rgba(
+                        0,
+                        0,
+                        0,
+                        0.45
+                    );
+        }
+
+
+        .urban-roof-detail.vent {
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    #777b7c 0px,
+                    #777b7c 3px,
+                    #4b4e50 4px,
+                    #4b4e50 6px
+                );
+        }
+
+
+        .urban-roof-detail.ac {
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    #686c6d 0px,
+                    #686c6d 4px,
+                    #3e4142 5px,
+                    #3e4142 7px
+                );
+        }
+
+    
+        /* ==========================================
+           OBSTACLES URBAINS
+        ========================================== */
+
+        #battlefield.map-urban
+        .urban-prop {
+            z-index: 5;
+
+            transform-origin: center;
+
+            box-shadow:
+                2px 4px 6px
+                    rgba(0, 0, 0, 0.55);
+        }
+
+
+        /* ==========================================
+           VOITURES ABANDONNÉES
+        ========================================== */
+
+        #battlefield.map-urban
+        .urban-car {
+            border:
+                2px solid #17191a;
+
+            border-radius:
+                8px 12px 8px 12px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #26292b 0%,
+                    #44494b 18%,
+                    #687074 28%,
+                    #687074 72%,
+                    #44494b 82%,
+                    #26292b 100%
+                );
+
+            box-shadow:
+                inset 0 0 0 2px
+                    rgba(255, 255, 255, 0.05),
+                3px 5px 7px
+                    rgba(0, 0, 0, 0.55);
+        }
+
+
+        #battlefield.map-urban
+        .urban-car::before {
+            content: "";
+
+            position: absolute;
+
+            left: 17%;
+            top: 20%;
+
+            width: 66%;
+            height: 60%;
+
+            border-radius: 4px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #182126,
+                    #34434a 45%,
+                    #182126
+                );
+
+            border:
+                1px solid
+                    rgba(0, 0, 0, 0.7);
+        }
+
+
+        #battlefield.map-urban
+        .urban-car::after {
+            content: "";
+
+            position: absolute;
+
+            left: 48%;
+            top: 18%;
+
+            width: 2px;
+            height: 64%;
+
+            background:
+                rgba(0, 0, 0, 0.55);
+        }
+
+
+        /* ==========================================
+           BARRICADES
+        ========================================== */
+
+        #battlefield.map-urban
+        .urban-barricade {
+            border:
+                2px solid #29200f;
+
+            background:
+                repeating-linear-gradient(
+                    135deg,
+                    #c99728 0px,
+                    #c99728 10px,
+                    #252525 10px,
+                    #252525 20px
+                );
+
+            box-shadow:
+                2px 4px 5px
+                    rgba(0, 0, 0, 0.5);
+        }
+
+
+        #battlefield.map-urban
+        .urban-barricade::before,
+        #battlefield.map-urban
+        .urban-barricade::after {
+            content: "";
+
+            position: absolute;
+
+            top: 100%;
+
+            width: 6px;
+            height: 8px;
+
+            background:
+                #242424;
+        }
+
+
+        #battlefield.map-urban
+        .urban-barricade::before {
+            left: 8px;
+        }
+
+
+        #battlefield.map-urban
+        .urban-barricade::after {
+            right: 8px;
+        }
+
+
+        /* ==========================================
+           BENNES
+        ========================================== */
+
+        #battlefield.map-urban
+        .urban-dumpster {
+            border:
+                3px solid #202522;
+
+            border-radius: 3px;
+
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    #39463f 0px,
+                    #39463f 8px,
+                    #303b35 9px,
+                    #303b35 11px
+                );
+
+            box-shadow:
+                inset 0 0 0 2px
+                    rgba(255, 255, 255, 0.04),
+                3px 5px 6px
+                    rgba(0, 0, 0, 0.55);
+        }
+
+
+        #battlefield.map-urban
+        .urban-dumpster::before {
+            content: "";
+
+            position: absolute;
+
+            left: 5px;
+            right: 5px;
+            top: 5px;
+
+            height: 5px;
+
+            background:
+                rgba(0, 0, 0, 0.35);
+        }
+
+
+        /* ==========================================
+           DÉBRIS URBAINS
+        ========================================== */
+
+        #battlefield.map-urban
+        .urban-debris {
+            z-index: 3;
+
+            background:
+                linear-gradient(
+                    35deg,
+                    transparent 0%,
+                    transparent 18%,
+                    #47433e 19%,
+                    #47433e 45%,
+                    transparent 46%
+                ),
+                linear-gradient(
+                    -25deg,
+                    transparent 0%,
+                    transparent 35%,
+                    #282b2c 36%,
+                    #282b2c 68%,
+                    transparent 69%
+                );
+
+            opacity: 0.85;
+        }
+
+
+        /* ==========================================
+           FISSURES DANS LA ROUTE
+        ========================================== */
+
+        #battlefield.map-urban
+        .urban-road-crack {
+            z-index: 2;
+
+            background:
+                #191b1c;
+
+            opacity: 0.75;
+
+            transform-origin:
+                left center;
+
+            box-shadow:
+                8px 3px 0 -1px
+                    rgba(
+                        20,
+                        22,
+                        23,
+                        0.55
+                    );
+        }
+
+    
+        /* ==========================================
+           DEBUG MAP 2
+        ========================================== */
+
+        #battlefield.map-urban
+        .map-decoration,
+        #battlefield.map-urban
+        .map-obstacle {
+            z-index: 999 !important;
+        }
+
+
+        /* ==========================================
+           COUCHES VISUELLES — MAP 2
+        ========================================== */
+
+        #battlefield.map-urban
+        .urban-road {
+            z-index: 1;
+        }
+
+
+        #battlefield.map-urban
+        .urban-marking,
+        #battlefield.map-urban
+        .urban-road-crack {
+            z-index: 2;
+        }
+
+
+        #battlefield.map-urban
+        .urban-sidewalk,
+        #battlefield.map-urban
+        .urban-crosswalk,
+        #battlefield.map-urban
+        .urban-parking {
+            z-index: 3;
+        }
+
+
+        #battlefield.map-urban
+        .urban-debris {
+            z-index: 4;
+        }
+
+
+        #battlefield.map-urban
+        .map-obstacle,
+        #battlefield.map-urban
+        .urban-building,
+        #battlefield.map-urban
+        .urban-prop {
+            z-index: 5;
+        }
+
+
+        #battlefield.map-urban
+        .urban-roof-detail {
+            z-index: 6;
+        }
+
+
+        #battlefield.map-urban
+        .soldier,
+        #battlefield.map-urban
+        .enemy {
+            z-index: 20 !important;
+        }
+
+
+        /* ==========================================
+           MAP 1 — ARBRES SOLIDES
+        ========================================== */
+
+        #battlefield.map-battlefield
+        .map1-tree {
+            z-index: 5;
+
+            border: none;
+
+            border-radius: 48%;
+
+            background:
+                radial-gradient(
+                    circle at 34% 31%,
+                    #68764c 0%,
+                    #68764c 18%,
+                    transparent 19%
+                ),
+                radial-gradient(
+                    circle at 66% 32%,
+                    #596942 0%,
+                    #596942 21%,
+                    transparent 22%
+                ),
+                radial-gradient(
+                    circle at 29% 63%,
+                    #4f603b 0%,
+                    #4f603b 23%,
+                    transparent 24%
+                ),
+                radial-gradient(
+                    circle at 68% 65%,
+                    #445537 0%,
+                    #445537 25%,
+                    transparent 26%
+                ),
+                radial-gradient(
+                    circle at 50% 48%,
+                    #5d6d45 0%,
+                    #5d6d45 39%,
+                    #3b4930 40%,
+                    #3b4930 48%,
+                    transparent 49%
+                );
+
+            box-shadow:
+                none;
+        }
+
+
+        #battlefield.map-battlefield
+        .map1-tree::before {
+            content: "";
+
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            width: 13px;
+            height: 13px;
+
+            transform:
+                translate(-50%, -50%);
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #6f5638 0%,
+                    #4b3827 65%,
+                    #30241a 100%
+                );
+
+            box-shadow:
+                2px 3px 4px
+                    rgba(0, 0, 0, 0.45);
+        }
+
+    
+        /* ==========================================
+           MAP 1 — ARBRES
+        ========================================== */
+
+        
+        /* ==========================================
+           MAP 1 — ARBRES
+        ========================================== */
+
+        .battlefield-tree {
+            position: absolute;
+
+            width: 82px;
+            height: 82px;
+
+            z-index: 30;
+
+            pointer-events: none;
+
+            border-radius: 45% 55% 48% 52%;
+
+            background:
+                radial-gradient(
+                    ellipse at 25% 28%,
+                    #718154 0%,
+                    #718154 17%,
+                    transparent 18%
+                ),
+                radial-gradient(
+                    ellipse at 52% 18%,
+                    #526a43 0%,
+                    #526a43 22%,
+                    transparent 23%
+                ),
+                radial-gradient(
+                    ellipse at 76% 32%,
+                    #61784a 0%,
+                    #61784a 19%,
+                    transparent 20%
+                ),
+                radial-gradient(
+                    ellipse at 20% 57%,
+                    #4b623d 0%,
+                    #4b623d 23%,
+                    transparent 24%
+                ),
+                radial-gradient(
+                    ellipse at 52% 52%,
+                    #5d7547 0%,
+                    #5d7547 31%,
+                    transparent 32%
+                ),
+                radial-gradient(
+                    ellipse at 82% 62%,
+                    #405537 0%,
+                    #405537 21%,
+                    transparent 22%
+                ),
+                radial-gradient(
+                    ellipse at 42% 82%,
+                    #455b39 0%,
+                    #455b39 23%,
+                    transparent 24%
+                ),
+                radial-gradient(
+                    ellipse at 69% 82%,
+                    #354b32 0%,
+                    #354b32 18%,
+                    transparent 19%
+                );
+
+            filter:
+                drop-shadow(
+                    6px
+                    8px
+                    4px
+                    rgba(0, 0, 0, 0.38)
+                );
+        }
+
+
+        .battlefield-tree::before {
+            content: "";
+
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            width: 10px;
+            height: 10px;
+
+            transform:
+                translate(-50%, -50%);
+
+            border-radius: 40%;
+
+            background:
+                #493725;
+
+            box-shadow:
+                8px 4px 0 -3px #59432d,
+                -7px 5px 0 -3px #59432d,
+                3px -8px 0 -3px #59432d;
+
+            z-index: -1;
+        }
+
+
+        .battlefield-tree::after {
+            content: "";
+
+            position: absolute;
+
+            left: 18%;
+            top: 14%;
+
+            width: 25%;
+            height: 18%;
+
+            border-radius: 50%;
+
+            background:
+                rgba(157, 171, 108, 0.25);
+
+            transform:
+                rotate(-25deg);
+
+            pointer-events: none;
+        }
+
+        
+        /* ==========================================
+           MAP 1 — GROS ROCHERS SOLIDES
+        ========================================== */
+
+        .map1-solid-rock {
+            position: absolute;
+
+            z-index: 12;
+
+            pointer-events: none;
+
+            border-radius:
+                48% 52%
+                43% 57%;
+
+            background:
+                radial-gradient(
+                    ellipse at 32% 27%,
+                    #85897c 0%,
+                    #85897c 16%,
+                    transparent 17%
+                ),
+                radial-gradient(
+                    ellipse at 42% 38%,
+                    #73786d 0%,
+                    #73786d 38%,
+                    transparent 39%
+                ),
+                radial-gradient(
+                    ellipse at 62% 60%,
+                    #565c53 0%,
+                    #565c53 50%,
+                    transparent 51%
+                ),
+                #646a60;
+
+            box-shadow:
+                inset 5px 5px 5px
+                    rgba(255, 255, 255, 0.08),
+                inset -7px -8px 6px
+                    rgba(0, 0, 0, 0.25),
+                5px 7px 5px
+                    rgba(0, 0, 0, 0.30);
+
+            transform:
+                rotate(-8deg);
+        }
+
+
+        .map1-solid-rock::after {
+            content: "";
+
+            position: absolute;
+
+            left: 18%;
+            top: 20%;
+
+            width: 30%;
+            height: 18%;
+
+            border-radius: 50%;
+
+            background:
+                rgba(190, 195, 175, 0.15);
+
+            transform:
+                rotate(-20deg);
+        }
+
+        
+
+
+        /* ==========================================
+           MAP 1 — TRONCS COUCHÉS
+        ========================================== */
+
+        .map1-solid-log {
+            position: absolute;
+
+            z-index: 14;
+
+            pointer-events: none;
+
+            box-sizing: border-box;
+
+            /* Silhouette irrégulière */
+            clip-path: polygon(
+                0% 38%,
+                5% 30%,
+                9% 34%,
+                15% 24%,
+                22% 29%,
+                31% 20%,
+                42% 27%,
+                53% 19%,
+                64% 26%,
+                74% 22%,
+                83% 31%,
+                91% 26%,
+                100% 38%,
+                96% 48%,
+                100% 60%,
+                91% 67%,
+                83% 62%,
+                74% 72%,
+                63% 65%,
+                52% 75%,
+                42% 67%,
+                31% 73%,
+                21% 65%,
+                12% 70%,
+                5% 60%,
+                0% 63%
+            );
+
+            background:
+                /* mousse */
+                radial-gradient(
+                    ellipse at 24% 35%,
+                    #65743d 0%,
+                    #65743d 10%,
+                    transparent 22%
+                ),
+
+                radial-gradient(
+                    ellipse at 67% 38%,
+                    #536638 0%,
+                    #536638 9%,
+                    transparent 20%
+                ),
+
+                radial-gradient(
+                    ellipse at 82% 56%,
+                    #6a7543 0%,
+                    #6a7543 7%,
+                    transparent 16%
+                ),
+
+                /* écorce claire */
+                linear-gradient(
+                    174deg,
+                    transparent 0%,
+                    transparent 22%,
+                    rgba(139, 107, 70, 0.65) 24%,
+                    rgba(139, 107, 70, 0.65) 37%,
+                    transparent 39%,
+                    transparent 100%
+                ),
+
+                /* écorce sombre */
+                linear-gradient(
+                    184deg,
+                    transparent 0%,
+                    transparent 48%,
+                    rgba(48, 34, 24, 0.65) 50%,
+                    rgba(48, 34, 24, 0.65) 68%,
+                    transparent 70%
+                ),
+
+                linear-gradient(
+                    180deg,
+                    #59442f 0%,
+                    #71573a 35%,
+                    #5a412d 58%,
+                    #3d2d22 100%
+                );
+
+            filter:
+                drop-shadow(
+                    4px
+                    5px
+                    3px
+                    rgba(0, 0, 0, 0.32)
+                );
+        }
+
+
+        /* ==========================================
+           BOIS CASSÉ À GAUCHE
+        ========================================== */
+
+        .map1-solid-log::before {
+            content: "";
+
+            position: absolute;
+
+            left: 1%;
+            top: 29%;
+
+            width: 18%;
+            height: 42%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #30231a,
+                    #75563a
+                );
+
+            clip-path: polygon(
+                0% 50%,
+                22% 10%,
+                35% 35%,
+                55% 0%,
+                68% 38%,
+                100% 28%,
+                100% 72%,
+                70% 62%,
+                50% 100%,
+                34% 67%,
+                15% 92%
+            );
+        }
+
+
+        /* ==========================================
+           PETITE BRANCHE CASSÉE
+        ========================================== */
+
+        .map1-solid-log::after {
+            content: "";
+
+            position: absolute;
+
+            left: 58%;
+            top: 22%;
+
+            width: 23%;
+            height: 18%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #4a3626,
+                    #684b31
+                );
+
+            clip-path: polygon(
+                0% 35%,
+                62% 35%,
+                100% 0%,
+                72% 48%,
+                100% 78%,
+                61% 62%,
+                0% 70%
+            );
+        }

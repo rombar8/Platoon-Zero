@@ -8,3 +8,8 @@
 [WO1]   Warrant Officer 1          /   Adjudant                       XP =         95
 [CW2]   Chief Warrant Officer 2    /   Adjudant-chef                  XP =        125
 [2LT]   Second Lieutenant          /   Sous-lieutenant                XP =        160
+[1LT]   First Lieutenant           /   Lieutenant                     XP =        205
+[CPT]   Captain                    /   Capitaine                      XP =        260
+[MAJ]   Major                      /   Commandant                     XP =        330
+[LTC]   Lieutenant Colonel         /   Lieutenant-colonel             XP =        410
+[COL]   Colonel                    /   Colonel                        XP =        500

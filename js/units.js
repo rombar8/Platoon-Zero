@@ -178,6 +178,26 @@ battlefield.appendChild(
     );
 
 
+    
+        // ======================================
+        // ORIENTATION DE DÉPART
+        // Face au haut du champ de bataille
+        // ======================================
+
+        const unitIcon =
+            soldier.element.querySelector(
+                ".unit-icon"
+            );
+
+
+        if (unitIcon) {
+
+            unitIcon.style.transform =
+                "translate(-50%, -50%) rotate(180deg)";
+
+        }
+
+
 // ======================================
 // SÉLECTION DU SOLDAT
 // ======================================
@@ -289,42 +309,63 @@ function updateSoldiersCount() {
 
 }
 
+        
+        // ==========================================
+        // POSITION ALÉATOIRE DANS LA ZONE ALLIÉE
+        // ==========================================
 
-// ==========================================
-// APPARITION D'UN RENFORT
-// ==========================================
+        function getAlliedSpawnPosition() {
 
-function spawnReinforcement(
-    type
-) {
+            // Rectangle invisible centré en bas
+            //
+            // X : 38% → 62%
+            // Y : 82% → 94%
 
-    // Zone de déploiement alliée
-    // X : 25% → 75%
-    // Y : 82% → 92%
-
-    const x =
-        25 +
-        Math.random() * 50;
-
-
-    const y =
-        82 +
-        Math.random() * 10;
+            const x =
+                38 +
+                Math.random() * 24;
 
 
-    const soldier =
-        createSoldier(
-            x,
-            y,
+            const y =
+                82 +
+                Math.random() * 12;
+
+
+            return {
+                x: x,
+                y: y
+            };
+
+        }
+
+
+        
+        // ==========================================
+        // APPARITION D'UN RENFORT
+        // ==========================================
+
+        function spawnReinforcement(
             type
-        );
+        ) {
+
+            const spawn =
+                getAlliedSpawnPosition();
 
 
-    console.log(
-        "Renfort arrivé :",
-        soldier.className
-    );
+            const soldier =
+                createSoldier(
+                    spawn.x,
+                    spawn.y,
+                    type
+                );
 
 
-    return soldier;
-}
+            console.log(
+                "Renfort arrivé :",
+                soldier.className
+            );
+
+
+            return soldier;
+
+        }

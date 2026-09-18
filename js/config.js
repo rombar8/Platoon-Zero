@@ -14,7 +14,7 @@ const soldierTypes = {
         hp: 100,
         speed: 28,
         damage: 20,
-        range: 160,
+        range: 200,
         fireRate: 900
     },
 
@@ -23,7 +23,7 @@ const soldierTypes = {
         hp: 85,
         speed: 40,
         damage: 9,
-        range: 115,
+        range: 170,
         fireRate: 800
     },
 
@@ -32,7 +32,7 @@ const soldierTypes = {
         hp: 110,
         speed: 48,
         damage: 15,
-        range: 95,
+        range: 210,
         fireRate: 420
     },
 
@@ -41,7 +41,7 @@ const soldierTypes = {
         hp: 180,
         speed: 25,
         damage: 35,
-        range: 125,
+        range: 180,
         fireRate: 550
     },
 
@@ -50,7 +50,7 @@ const soldierTypes = {
         hp: 80,
         speed: 22,
         damage: 50,
-        range: 280,
+        range: 300,
         fireRate: 1600
     },
 
@@ -59,7 +59,7 @@ const soldierTypes = {
         hp: 70,
         speed: 38,
         damage: 27,
-        range: 130,
+        range: 190,
         fireRate: 650
     },
 
@@ -68,7 +68,7 @@ const soldierTypes = {
         hp: 140,
         speed: 17,
         damage: 18,
-        range: 190,
+        range: 240,
         fireRate: 210
     },
 
@@ -76,10 +76,10 @@ const soldierTypes = {
         name: "MINIGUNNER",
 
         hp: 200,
-        speed: 19,
+        speed: 13,
 
         damage: 14,
-        range: 175,
+        range: 240,
 
         fireRate: 90
     }
@@ -290,7 +290,13 @@ const soldierRanks = [
     { rank: "SFC", xp: 70 },
     { rank: "WO1", xp: 95 },
     { rank: "CW2", xp: 125 },
-    { rank: "2LT", xp: 160 }
+    { rank: "2LT", xp: 160 },
+
+    { rank: "1LT", xp: 205 },
+    { rank: "CPT", xp: 260 },
+    { rank: "MAJ", xp: 330 },
+    { rank: "LTC", xp: 410 },
+    { rank: "COL", xp: 500 }
 ];
 
 // ... tout ton config.js actuel au-dessus
@@ -317,7 +323,7 @@ const difficulties = {
         enemyDamage: 1,
         enemySpeed: 1,
         enemyCount: 0.80,
-        pointGain: 0.50
+        pointGain: 1.00
     },
 
     hard: {
@@ -326,7 +332,7 @@ const difficulties = {
         enemyDamage: 1.20,
         enemySpeed: 1.05,
         enemyCount: 0.95,
-        pointGain: 0.40
+        pointGain: 1.20
     },
 
     extreme: {
@@ -335,7 +341,7 @@ const difficulties = {
         enemyDamage: 1.45,
         enemySpeed: 1.10,
         enemyCount: 1.10,
-        pointGain: 0.30
+        pointGain: 1.40
     },
 
     apocalypse: {
@@ -344,7 +350,7 @@ const difficulties = {
         enemyDamage: 1.75,
         enemySpeed: 1.15,
         enemyCount: 1.30,
-        pointGain: 0.25
+        pointGain: 1.65
     },
 
     ultimate: {
@@ -353,7 +359,7 @@ const difficulties = {
         enemyDamage: 2.15,
         enemySpeed: 1.20,
         enemyCount: 1.55,
-        pointGain: 0.20
+        pointGain: 2.00
     },
 
     impossible: {
@@ -362,7 +368,7 @@ const difficulties = {
         enemyDamage: 2.75,
         enemySpeed: 1.30,
         enemyCount: 1.85,
-        pointGain: 0.15
+        pointGain: 2.50
     }
 
 };

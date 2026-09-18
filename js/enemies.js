@@ -14,13 +14,13 @@ const enemies = [];
 const enemyTypes = {
 
     boss: {
-    name: "JUGGERNAUT",
-    hp: 650,
-    speed: 10,
-    damage: 30,
-    range: 145,
-    fireRate: 900
-},
+        name: "JUGGERNAUT",
+        hp: 650,
+        speed: 10,
+        damage: 30,
+        range: 145,
+        fireRate: 900
+    },
 
     rifleman: {
         name: "Fusilier",
@@ -91,14 +91,14 @@ function createEnemy(
 
     const difficulty =
         typeof getDifficulty === "function"
-        ? getDifficulty()
-        : {
-            enemyHp: 1,
-            enemyDamage: 1,
-            enemySpeed: 1,
-            enemyCount: 1,
-            pointGain: 1
-        };
+            ? getDifficulty()
+            : {
+                enemyHp: 1,
+                enemyDamage: 1,
+                enemySpeed: 1,
+                enemyCount: 1,
+                pointGain: 1
+            };
 
 
     // ======================================
@@ -181,7 +181,17 @@ function createEnemy(
 
         lastShot: 0,
 
-        alive: true
+        alive: true,
+
+        // ======================================
+        // MÉMOIRE D'ÉVITEMENT DES OBSTACLES
+        // ======================================
+
+        avoidingObstacle: false,
+
+        avoidanceDirection: 0,
+
+        avoidanceTimer: 0
     };
 
 
@@ -237,7 +247,6 @@ function getRandomEnemyType() {
 
     // ======================================
     // VAGUES 8 - 14
-    // Premiers éclaireurs
     //
     // 85% Fusiliers
     // 15% Éclaireurs
@@ -255,7 +264,6 @@ function getRandomEnemyType() {
 
     // ======================================
     // VAGUES 15 - 21
-    // Premiers mitrailleurs
     //
     // 70% Fusiliers
     // 20% Éclaireurs
@@ -278,7 +286,6 @@ function getRandomEnemyType() {
 
     // ======================================
     // VAGUES 22 - 29
-    // Premiers tireurs d'élite
     //
     // 60% Fusiliers
     // 20% Éclaireurs
@@ -306,7 +313,6 @@ function getRandomEnemyType() {
 
     // ======================================
     // VAGUES 30 - 39
-    // Toutes les classes
     //
     // 50% Fusiliers
     // 22% Éclaireurs
@@ -334,7 +340,6 @@ function getRandomEnemyType() {
 
     // ======================================
     // VAGUE 40+
-    // Composition ennemie avancée
     //
     // 40% Fusiliers
     // 25% Éclaireurs
@@ -368,7 +373,6 @@ function spawnEnemy() {
         10 +
         Math.random() * 80;
 
-    // Arrivée depuis le haut
     const y =
         5 +
         Math.random() * 5;
@@ -403,10 +407,697 @@ function rotateEnemyTowards(
 
 
 // ==========================================
+// RALENTISSEMENT DES DÉFENSES
+// ==========================================
+
+function getEnemyMovementMultiplier(
+    enemy
+) {
+
+    if (
+        typeof getEnemyDefenseSpeedMultiplier ===
+        "function"
+    ) {
+
+        return getEnemyDefenseSpeedMultiplier(
+            enemy
+        );
+    }
+
+    return 1;
+}
+
+
+// ==========================================
+// DÉPLACEMENT VERS UNE POSITION
+// ==========================================
+
+
+        function moveEnemyTowards(
+            enemy,
+            targetX,
+            targetY,
+            deltaTime
+        ) {
+
+            const dx =
+                targetX - enemy.x;
+
+            const dy =
+                targetY - enemy.y;
+
+            const distance =
+                Math.hypot(
+                    dx,
+                    dy
+                );
+
+
+            if (
+                distance <= 0.001
+            ) {
+
+                return;
+
+            }
+
+
+            rotateEnemyTowards(
+                enemy,
+                targetX,
+                targetY
+            );
+
+
+            const directionX =
+                dx / distance;
+
+            const directionY =
+                dy / distance;
+
+
+            const speedMultiplier =
+                getEnemyMovementMultiplier(
+                    enemy
+                );
+
+
+            const movement =
+                enemy.speed *
+                speedMultiplier *
+                deltaTime;
+
+
+            const step =
+                Math.min(
+                    movement,
+                    distance
+                );
+
+
+            // ======================================
+            // DIRECTION DIRECTE
+            // ======================================
+
+            const nextX =
+                enemy.x +
+                directionX *
+                step;
+
+            const nextY =
+                enemy.y +
+                directionY *
+                step;
+
+
+
+        const directBlocked =
+            typeof isEnemyPathNearObstacle ===
+                "function"
+                ? isEnemyPathNearObstacle(
+                    nextX,
+                    nextY
+                )
+                : (
+                    typeof isUnitBlockedByObstacle ===
+                        "function" &&
+                    isUnitBlockedByObstacle(
+                        nextX,
+                        nextY
+                    )
+                );
+
+
+            // ======================================
+            // CHEMIN DIRECT LIBRE
+            // ======================================
+
+            if (
+                !directBlocked &&
+                !enemy.avoidingObstacle
+            ) {
+
+                enemy.x =
+                    nextX;
+
+                enemy.y =
+                    nextY;
+
+                updateEnemyPosition(
+                    enemy
+                );
+
+                return;
+
+            }
+
+
+            // ======================================
+            // DÉBUT DU CONTOURNEMENT
+            // ======================================
+
+            if (
+                directBlocked &&
+                !enemy.avoidingObstacle
+            ) {
+
+                enemy.avoidingObstacle =
+                    true;
+
+                enemy.avoidanceTimer =
+                    0.75;
+
+
+                // Deux directions perpendiculaires
+                // possibles autour de l'obstacle.
+
+                const sideAX =
+                    -directionY;
+
+                const sideAY =
+                    directionX;
+
+                const sideBX =
+                    directionY;
+
+                const sideBY =
+                    -directionX;
+
+
+                const probeDistance =
+                    28;
+
+
+                const sideABlocked =
+                    isUnitBlockedByObstacle(
+                        enemy.x +
+                            sideAX *
+                            probeDistance,
+                        enemy.y +
+                            sideAY *
+                            probeDistance
+                    );
+
+
+                const sideBBlocked =
+                    isUnitBlockedByObstacle(
+                        enemy.x +
+                            sideBX *
+                            probeDistance,
+                        enemy.y +
+                            sideBY *
+                            probeDistance
+                    );
+
+
+                // ==================================
+                // CHOIX DU CÔTÉ
+                // ==================================
+
+                if (
+                    !sideABlocked &&
+                    sideBBlocked
+                ) {
+
+                    enemy.avoidanceDirection =
+                        1;
+
+                } else if (
+                    sideABlocked &&
+                    !sideBBlocked
+                ) {
+
+                    enemy.avoidanceDirection =
+                        -1;
+
+                } else {
+
+                    // Si les deux côtés sont libres,
+                    // choisit celui qui rapproche
+                    // le plus de la cible.
+
+                    const distanceA =
+                        Math.hypot(
+                            targetX -
+                                (
+                                    enemy.x +
+                                    sideAX *
+                                    probeDistance
+                                ),
+                            targetY -
+                                (
+                                    enemy.y +
+                                    sideAY *
+                                    probeDistance
+                                )
+                        );
+
+
+                    const distanceB =
+                        Math.hypot(
+                            targetX -
+                                (
+                                    enemy.x +
+                                    sideBX *
+                                    probeDistance
+                                ),
+                            targetY -
+                                (
+                                    enemy.y +
+                                    sideBY *
+                                    probeDistance
+                                )
+                        );
+
+
+                    enemy.avoidanceDirection =
+                        distanceA <= distanceB
+                            ? 1
+                            : -1;
+
+                }
+
+            }
+
+
+            // ======================================
+            // CONTOURNEMENT DE L'OBSTACLE
+            // ======================================
+
+            if (
+                enemy.avoidingObstacle
+            ) {
+
+                enemy.avoidanceTimer -=
+                    deltaTime;
+
+
+                const sideDirection =
+                    enemy.avoidanceDirection;
+
+
+                const avoidX =
+                    -directionY *
+                    sideDirection;
+
+                const avoidY =
+                    directionX *
+                    sideDirection;
+
+
+                // Mélange déplacement latéral +
+                // légère progression vers la cible.
+
+                let moveX =
+                    avoidX * 0.85 +
+                    directionX * 0.35;
+
+                let moveY =
+                    avoidY * 0.85 +
+                    directionY * 0.35;
+
+
+                const moveLength =
+                    Math.hypot(
+                        moveX,
+                        moveY
+                    );
+
+
+                if (
+                    moveLength > 0
+                ) {
+
+                    moveX /=
+                        moveLength;
+
+                    moveY /=
+                        moveLength;
+
+                }
+
+
+                const avoidNextX =
+                    enemy.x +
+                    moveX *
+                    step;
+
+                const avoidNextY =
+                    enemy.y +
+                    moveY *
+                    step;
+
+
+                const avoidBlocked =
+                    isUnitBlockedByObstacle(
+                        avoidNextX,
+                        avoidNextY
+                    );
+
+
+                // ==================================
+                // DÉPLACEMENT DE CONTOURNEMENT
+                // ==================================
+
+                if (
+                    !avoidBlocked
+                ) {
+
+                    enemy.x =
+                        avoidNextX;
+
+                    enemy.y =
+                        avoidNextY;
+
+                } else {
+
+                    // Le côté choisi est lui-même
+                    // bloqué : essaie l'autre côté.
+
+                    enemy.avoidanceDirection *=
+                        -1;
+
+
+                    const reverseX =
+                        directionY *
+                        sideDirection;
+
+                    const reverseY =
+                        -directionX *
+                        sideDirection;
+
+
+                    const reverseNextX =
+                        enemy.x +
+                        reverseX *
+                        step;
+
+                    const reverseNextY =
+                        enemy.y +
+                        reverseY *
+                        step;
+
+
+                    const reverseBlocked =
+                        isUnitBlockedByObstacle(
+                            reverseNextX,
+                            reverseNextY
+                        );
+
+
+                    if (
+                        !reverseBlocked
+                    ) {
+
+                        enemy.x =
+                            reverseNextX;
+
+                        enemy.y =
+                            reverseNextY;
+
+                    }
+
+                }
+
+
+                // ==================================
+                // PEUT-IL REPRENDRE SA ROUTE ?
+                // ==================================
+
+                const resumeX =
+                    enemy.x +
+                    directionX *
+                    24;
+
+                const resumeY =
+                    enemy.y +
+                    directionY *
+                    24;
+
+
+                const canResume =
+                    !isUnitBlockedByObstacle(
+                        resumeX,
+                        resumeY
+                    );
+
+
+                if (
+                    canResume &&
+                    enemy.avoidanceTimer <= 0
+                ) {
+
+                    enemy.avoidingObstacle =
+                        false;
+
+                    enemy.avoidanceTimer =
+                        0;
+
+                }
+
+            }
+
+
+            updateEnemyPosition(
+                enemy
+            );
+
+        }
+
+
+// ==========================================
+// SOLDAT ALLIÉ LE PLUS PROCHE
+// ==========================================
+
+function getClosestSoldier(
+    enemy
+) {
+
+    let closestSoldier = null;
+
+    let closestDistance =
+        Infinity;
+
+
+    soldiers.forEach(
+        function (soldier) {
+
+            if (!soldier.alive) {
+                return;
+            }
+
+
+            const dx =
+                soldier.x -
+                enemy.x;
+
+            const dy =
+                soldier.y -
+                enemy.y;
+
+            const distance =
+                Math.hypot(
+                    dx,
+                    dy
+                );
+
+
+            if (
+                distance <
+                closestDistance
+            ) {
+
+                closestDistance =
+                    distance;
+
+                closestSoldier =
+                    soldier;
+            }
+        }
+    );
+
+
+    return {
+        soldier: closestSoldier,
+        distance: closestDistance
+    };
+}
+
+
+// ==========================================
+// IA SURVIE
+// ==========================================
+
+function moveEnemySurvival(
+    enemy,
+    deltaTime
+) {
+
+    const closest =
+        getClosestSoldier(
+            enemy
+        );
+
+    const closestSoldier =
+        closest.soldier;
+
+    const closestDistance =
+        closest.distance;
+
+
+    if (!closestSoldier) {
+        return;
+    }
+
+
+    // Regarde sa cible
+
+    rotateEnemyTowards(
+        enemy,
+        closestSoldier.x,
+        closestSoldier.y
+    );
+
+
+    // À portée :
+    // ne bouge plus.
+
+    if (
+        closestDistance <=
+        enemy.range * 0.90
+    ) {
+
+        return;
+    }
+
+
+    moveEnemyTowards(
+        enemy,
+        closestSoldier.x,
+        closestSoldier.y,
+        deltaTime
+    );
+}
+
+
+// ==========================================
+// IA DOMINATION
+// ==========================================
+
+function moveEnemyDomination(
+    enemy,
+    deltaTime
+) {
+
+    const battlefieldRect =
+        battlefield.getBoundingClientRect();
+
+
+    const flagX =
+        battlefieldRect.width / 2;
+
+    const flagY =
+        battlefieldRect.height / 2;
+
+
+    const dx =
+        flagX -
+        enemy.x;
+
+    const dy =
+        flagY -
+        enemy.y;
+
+
+    const distanceToFlag =
+        Math.hypot(
+            dx,
+            dy
+        );
+
+
+    // ======================================
+    // ZONE DE CAPTURE
+    // ======================================
+
+    const dominationRadius = 60;
+
+
+    // ======================================
+    // PAS ENCORE DANS LE POINT
+    // ======================================
+
+    if (
+        distanceToFlag >
+        dominationRadius
+    ) {
+
+        moveEnemyTowards(
+            enemy,
+            flagX,
+            flagY,
+            deltaTime
+        );
+
+        return;
+    }
+
+
+    // ======================================
+    // DANS LE POINT
+    // ======================================
+    //
+    // IMPORTANT :
+    // aucune IA de déplacement vers les
+    // soldats ne s'exécute ici.
+    //
+    // L'ennemi conserve donc le point.
+    // Le système de combat peut toujours
+    // gérer ses tirs indépendamment.
+    // ======================================
+
+    const closest =
+        getClosestSoldier(
+            enemy
+        );
+
+
+    // Il peut regarder un soldat proche
+    // sans se déplacer vers lui.
+
+    if (
+        closest.soldier &&
+        closest.distance <= enemy.range
+    ) {
+
+        rotateEnemyTowards(
+            enemy,
+            closest.soldier.x,
+            closest.soldier.y
+        );
+
+        return;
+    }
+
+
+    // Aucun soldat à portée :
+    // regarde vers le centre du point.
+
+    rotateEnemyTowards(
+        enemy,
+        flagX,
+        flagY
+    );
+}
+
+
+// ==========================================
 // DÉPLACEMENT DES ENNEMIS
 // ==========================================
 
-function moveEnemies(deltaTime) {
+function moveEnemies(
+    deltaTime
+) {
 
     // ======================================
     // CHEAT — FREEZE ENNEMIS
@@ -416,8 +1107,10 @@ function moveEnemies(deltaTime) {
         typeof cheatState !== "undefined" &&
         cheatState.freezeEnemies
     ) {
+
         return;
     }
+
 
     enemies.forEach(
         function (enemy) {
@@ -428,149 +1121,32 @@ function moveEnemies(deltaTime) {
 
 
             // ==================================
-            // CHERCHE L'ALLIÉ LE PLUS PROCHE
+            // DOMINATION
             // ==================================
 
-            let closestSoldier = null;
+            if (
+                typeof selectedGameMode !==
+                    "undefined" &&
+                selectedGameMode ===
+                    "domination"
+            ) {
 
-            let closestDistance =
-                Infinity;
+                moveEnemyDomination(
+                    enemy,
+                    deltaTime
+                );
 
-
-            soldiers.forEach(
-                function (soldier) {
-
-                    if (
-                        soldier.alive === false
-                    ) {
-                        return;
-                    }
-
-
-                    const dx =
-                        soldier.x -
-                        enemy.x;
-
-                    const dy =
-                        soldier.y -
-                        enemy.y;
-
-                    const distance =
-                        Math.sqrt(
-                            dx * dx +
-                            dy * dy
-                        );
-
-
-                    if (
-                        distance <
-                        closestDistance
-                    ) {
-
-                        closestDistance =
-                            distance;
-
-                        closestSoldier =
-                            soldier;
-                    }
-                }
-            );
-
-
-            if (!closestSoldier) {
                 return;
             }
 
 
             // ==================================
-            // REGARDE L'ALLIÉ
+            // SURVIE
             // ==================================
 
-            rotateUnitTowards(
+            moveEnemySurvival(
                 enemy,
-                closestSoldier.x,
-                closestSoldier.y
-            );
-
-
-            // ==================================
-            // À PORTÉE = ARRÊTE D'AVANCER
-            // ==================================
-
-            if (
-                closestDistance <=
-                enemy.range * 0.90
-            ) {
-                return;
-            }
-
-
-            // ==================================
-            // DIRECTION
-            // ==================================
-
-            const dx =
-                closestSoldier.x -
-                enemy.x;
-
-            const dy =
-                closestSoldier.y -
-                enemy.y;
-
-
-            const directionX =
-                dx /
-                closestDistance;
-
-            const directionY =
-                dy /
-                closestDistance;
-
-
-            // ==================================
-            // BARBELÉS
-            // ==================================
-
-            let speedMultiplier = 1;
-
-
-            if (
-                typeof getEnemyDefenseSpeedMultiplier ===
-                "function"
-            ) {
-
-                speedMultiplier =
-                    getEnemyDefenseSpeedMultiplier(
-                        enemy
-                    );
-            }
-
-
-            // ==================================
-            // AVANCE
-            // ==================================
-
-            const movement =
-                enemy.speed *
-                speedMultiplier *
-                deltaTime;
-
-
-            enemy.x +=
-                directionX *
-                movement;
-
-            enemy.y +=
-                directionY *
-                movement;
-
-
-            // ==================================
-            // POSITION VISUELLE
-            // ==================================
-
-            updateEnemyPosition(
-                enemy
+                deltaTime
             );
         }
     );

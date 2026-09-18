@@ -524,26 +524,150 @@ soldiers.forEach(
         // DÉPLACEMENT
         // ==================================
 
-        if (
-            movement < distance
-        ) {
+        let nextX;
+        let nextY;
 
-            soldier.x +=
-                directionX *
-                movement;
+        if (movement < distance) {
 
-            soldier.y +=
-                directionY *
-                movement;
-        }
+            nextX =
+                soldier.x +
+                directionX * movement;
 
-        else {
+            nextY =
+                soldier.y +
+                directionY * movement;
 
-            soldier.x =
+        } else {
+
+            nextX =
                 soldier.targetX;
 
-            soldier.y =
+            nextY =
                 soldier.targetY;
+        }
+
+
+        // ==================================
+        // COLLISION AVEC LES OBSTACLES
+        // ==================================
+
+        const blocked =
+            typeof isUnitBlockedByObstacle ===
+                "function" &&
+            isUnitBlockedByObstacle(
+                nextX,
+                nextY
+            );
+
+
+                if (!blocked) {
+
+            // ==============================
+            // CHEMIN DIRECT LIBRE
+            // ==============================
+
+            soldier.x =
+                nextX;
+
+            soldier.y =
+                nextY;
+
+        } else {
+
+            // ==============================
+            // OBSTACLE :
+            // ESSAIE DE GLISSER SUR LES CÔTÉS
+            // ==============================
+
+            const horizontalBlocked =
+                typeof isUnitBlockedByObstacle ===
+                    "function" &&
+                isUnitBlockedByObstacle(
+                    nextX,
+                    soldier.y
+                );
+
+
+            const verticalBlocked =
+                typeof isUnitBlockedByObstacle ===
+                    "function" &&
+                isUnitBlockedByObstacle(
+                    soldier.x,
+                    nextY
+                );
+
+
+            // ==============================
+            // DISTANCE RESTANTE
+            // POUR CHAQUE OPTION
+            // ==============================
+
+            const horizontalDistance =
+                Math.hypot(
+                    soldier.targetX - nextX,
+                    soldier.targetY - soldier.y
+                );
+
+
+            const verticalDistance =
+                Math.hypot(
+                    soldier.targetX - soldier.x,
+                    soldier.targetY - nextY
+                );
+
+
+            // ==============================
+            // LES DEUX DIRECTIONS LIBRES
+            // ==============================
+
+            if (
+                !horizontalBlocked &&
+                !verticalBlocked
+            ) {
+
+                if (
+                    horizontalDistance <
+                    verticalDistance
+                ) {
+
+                    soldier.x =
+                        nextX;
+
+                } else {
+
+                    soldier.y =
+                        nextY;
+
+                }
+
+            }
+
+            // ==============================
+            // HORIZONTAL LIBRE
+            // ==============================
+
+            else if (
+                !horizontalBlocked
+            ) {
+
+                soldier.x =
+                    nextX;
+
+            }
+
+            // ==============================
+            // VERTICAL LIBRE
+            // ==============================
+
+            else if (
+                !verticalBlocked
+            ) {
+
+                soldier.y =
+                    nextY;
+
+            }
+
         }
 
 

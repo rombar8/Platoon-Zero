@@ -165,7 +165,12 @@ function showUnitPanel(soldier) {
         SFC: "sergeant-first-class.png",
         WO1: "warrant-officer-1.png",
         CW2: "chief-warrant-officer-2.png",
-        "2LT": "second-lieutenant.png"
+        "2LT": "second-lieutenant.png",
+        "1LT": "1lt.png",
+        CPT: "cpt.png",
+        MAJ: "maj.png",
+        LTC: "ltc.png",
+        COL: "col.png"
     };
 
 
