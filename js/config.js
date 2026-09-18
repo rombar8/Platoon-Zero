@@ -70,6 +70,18 @@ const soldierTypes = {
         damage: 18,
         range: 190,
         fireRate: 210
+    },
+
+    minigunner: {
+        name: "MINIGUNNER",
+
+        hp: 200,
+        speed: 19,
+
+        damage: 14,
+        range: 175,
+
+        fireRate: 90
     }
 };
 
@@ -140,6 +152,14 @@ const tacticalMenus = {
             description: "Très résistant • puissance de feu élevée",
             cost: 14,
             type: "heavy"
+        },
+
+        {
+            icon: "⛓️",
+            name: "MINIGUN",
+            description: "Mega cadence de tir, super OP",
+            cost: 30,
+            type: "minigunner"
         }
 
     ]

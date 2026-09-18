@@ -525,3 +525,301 @@
             scale(1.3);
     }
 }
+
+/* =========================================
+   MINIGUNNER V2
+   Heavy gunner
+========================================= */
+
+.soldier.minigunner {
+    width: 36px;
+    height: 36px;
+}
+
+
+/* CONTENEUR */
+
+.soldier.minigunner .unit-icon {
+    width: 34px;
+    height: 34px;
+}
+
+
+/* =========================================
+   CORPS / ARMURE LOURDE
+========================================= */
+
+.soldier.minigunner .unit-body {
+    left: 50%;
+    top: 10px;
+
+    width: 22px;
+    height: 17px;
+
+    transform: translateX(-50%);
+
+    background:
+        linear-gradient(
+            90deg,
+            #30362f 0%,
+            #626a5c 45%,
+            #454c42 100%
+        );
+
+    border: 2px solid #1b201b;
+
+    border-radius: 5px 5px 4px 4px;
+
+    z-index: 3;
+}
+
+
+/* Plaque centrale */
+
+.soldier.minigunner .unit-body::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 4px;
+
+    width: 11px;
+    height: 10px;
+
+    transform: translateX(-50%);
+
+    background: #737b69;
+
+    border: 1px solid #252a24;
+
+    border-radius: 2px;
+}
+
+
+/* =========================================
+   CASQUE LOURD
+========================================= */
+
+.soldier.minigunner .unit-helmet {
+    left: 50%;
+    top: 0;
+
+    width: 19px;
+    height: 13px;
+
+    transform: translateX(-50%);
+
+    background:
+        linear-gradient(
+            #737b69,
+            #464d42
+        );
+
+    border: 2px solid #20251f;
+
+    border-radius:
+        9px 9px 4px 4px;
+
+    z-index: 7;
+}
+
+
+/* Visière */
+
+.soldier.minigunner .unit-helmet::after {
+    content: "";
+
+    position: absolute;
+
+    left: 2px;
+    bottom: 1px;
+
+    width: 15px;
+    height: 4px;
+
+    background: #171b18;
+
+    border-radius: 2px;
+
+    box-shadow:
+        inset 0 1px 0 #899183;
+}
+
+
+/* =========================================
+   SAC DE MUNITIONS
+========================================= */
+
+.soldier.minigunner .minigun-backpack {
+    position: absolute;
+
+    left: -1px;
+    top: 11px;
+
+    width: 12px;
+    height: 18px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #20251f,
+            #50574b
+        );
+
+    border: 2px solid #171b17;
+
+    border-radius: 3px;
+
+    z-index: 1;
+}
+
+
+/* =========================================
+   MINIGUN
+========================================= */
+
+.soldier.minigunner .unit-gun.minigun {
+    position: absolute;
+
+    /*
+       Le soldat entier tourne déjà vers sa cible.
+       L'arme reste donc fixe par rapport au corps.
+    */
+
+    left: 19px;
+    top: 14px;
+
+    width: 15px;
+    height: 10px;
+
+    transform: rotate(90deg);
+
+    transform-origin:
+        left center;
+
+    background:
+        linear-gradient(
+            #777d74,
+            #292e2a
+        );
+
+    border: 2px solid #151815;
+
+    border-radius: 4px;
+
+    z-index: 8;
+}
+
+
+/* Supprime la poignée du fusil standard */
+
+.soldier.minigunner
+.unit-gun.minigun::after {
+    display: none;
+}
+
+
+/* =========================================
+   BLOC ROTATIF DES CANONS
+========================================= */
+
+.soldier.minigunner
+.minigun-barrels {
+    position: absolute;
+
+    left: 12px;
+    top: 1px;
+
+    width: 28px;
+    height: 8px;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            #111411 0px,
+            #111411 1px,
+            #777d74 1px,
+            #777d74 2px
+        );
+
+    border:
+        1px solid #101210;
+
+    border-radius:
+        2px 5px 5px 2px;
+
+    z-index: 9;
+}
+
+
+/* Anneau avant des canons */
+
+.soldier.minigunner
+.minigun-barrels::after {
+    content: "";
+
+    position: absolute;
+
+    right: -3px;
+    top: -2px;
+
+    width: 5px;
+    height: 12px;
+
+    background: #202420;
+
+    border:
+        1px solid #0c0e0c;
+
+    border-radius: 2px;
+}
+
+
+/* =========================================
+   BOUCHE
+========================================= */
+
+.soldier.minigunner
+.minigun-muzzle {
+    position: absolute;
+
+    left: 39px;
+    top: 1px;
+
+    width: 5px;
+    height: 8px;
+
+    background: #0d100e;
+
+    border-radius: 1px;
+
+    z-index: 10;
+}
+
+
+/* =========================================
+   BANDE DE MUNITIONS
+========================================= */
+
+.soldier.minigunner
+.minigun-ammo-belt {
+    position: absolute;
+
+    left: 7px;
+    top: 24px;
+
+    width: 22px;
+    height: 9px;
+
+    border-bottom:
+        3px dotted #b3a05d;
+
+    transform:
+        rotate(-15deg);
+
+    transform-origin:
+        left center;
+
+    z-index: 6;
+}

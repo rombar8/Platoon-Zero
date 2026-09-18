@@ -86,13 +86,37 @@ element.classList.add(
     type
 );
 
-element.innerHTML = `
-    <span class="unit-icon">
-        <span class="unit-helmet"></span>
-        <span class="unit-body"></span>
-        <span class="unit-gun"></span>
-    </span>
-`;
+        if (type === "minigunner") {
+
+            element.innerHTML = `
+                <span class="unit-icon">
+
+                    <span class="unit-helmet"></span>
+                    <span class="unit-body"></span>
+
+                    <span class="minigun-backpack"></span>
+                    <span class="minigun-ammo-belt"></span>
+
+                    <span class="unit-gun minigun">
+                        <span class="minigun-barrels"></span>
+                        <span class="minigun-muzzle"></span>
+                    </span>
+
+                </span>
+            `;
+
+        } else {
+
+            element.innerHTML = `
+                <span class="unit-icon">
+
+                    <span class="unit-helmet"></span>
+                    <span class="unit-body"></span>
+                    <span class="unit-gun"></span>
+
+                </span>
+            `;
+        }
 
 battlefield.appendChild(
     element
