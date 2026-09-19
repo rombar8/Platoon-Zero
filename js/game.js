@@ -171,6 +171,46 @@ const pauseMenuButton =
     );
 
 
+        // ==========================================
+        // ÉLÉMENTS PARAMÈTRES
+        // ==========================================
+
+        const settingsButton =
+            document.querySelector(
+                "#settings-button"
+            );
+
+        const pauseSettingsButton =
+            document.querySelector(
+                "#pause-settings-button"
+            );
+
+        const settingsPanel =
+            document.querySelector(
+                "#settings-panel"
+            );
+
+        const closeSettingsButton =
+            document.querySelector(
+                "#close-settings"
+            );
+
+
+        let settingsOpenedFrom =
+            "main";
+
+        
+        const visualEffectsToggle =
+            document.querySelector(
+                "#visual-effects-toggle"
+            );
+
+        const rangeIndicatorsToggle =
+            document.querySelector(
+                "#range-indicators-toggle"
+            );
+
+
 // ==========================================
 // INITIALISATION PROFIL
 // ==========================================
@@ -681,52 +721,60 @@ difficultyButtons.forEach(button => {
             createBattlefieldDecorations();
 
 
-            // ======================================
-            // 🪨 GROS ROCHERS SOLIDES
-            // ======================================
 
-            if (
-                typeof createSolidRock ===
-                    "function"
+        // ======================================
+        // 🪨 GROS ROCHERS — DÉCOR ALÉATOIRE
+        // ======================================
+
+        if (
+            typeof createSolidRock ===
+                "function"
+        ) {
+
+            const mapWidth =
+                battlefield.clientWidth ||
+                window.innerWidth;
+
+            const mapHeight =
+                battlefield.clientHeight ||
+                (
+                    window.innerHeight -
+                    120
+                );
+
+            for (
+                let i = 0;
+                i < 6;
+                i++
             ) {
 
-                createSolidRock(
-                    120,
-                    150,
-                    72
-                );
+                const rockSize =
+                    60 +
+                    Math.random() * 22;
+
+                const rockX =
+                    mapWidth *
+                    (
+                        0.08 +
+                        Math.random() * 0.84
+                    );
+
+                const rockY =
+                    mapHeight *
+                    (
+                        0.10 +
+                        Math.random() * 0.60
+                    );
 
                 createSolidRock(
-                    340,
-                    330,
-                    64
-                );
-
-                createSolidRock(
-                    610,
-                    180,
-                    82
-                );
-
-                createSolidRock(
-                    820,
-                    310,
-                    68
-                );
-
-                createSolidRock(
-                    700,
-                    500,
-                    76
-                );
-
-                createSolidRock(
-                    210,
-                    500,
-                    62
+                    rockX,
+                    rockY,
+                    rockSize
                 );
 
             }
+
+        }
 
             
         // ======================================
@@ -1050,21 +1098,37 @@ function startGame() {
         }
 
 
-// ==========================================
-// POINTS
-// ==========================================
 
-function updatePoints() {
+    // ==========================================
+    // POINTS
+    // ==========================================
 
-    if (!pointsDisplay) {
-        return;
+    function updatePoints() {
+
+        if (!pointsDisplay) {
+
+            return;
+
+        }
+
+        pointsDisplay.textContent =
+            commandPoints;
+
+
+        // ======================================
+        // ACTUALISATION DU MENU TACTIQUE
+        // ======================================
+
+        if (
+            typeof refreshTacticalMenu ===
+                "function"
+        ) {
+
+            refreshTacticalMenu();
+
+        }
+
     }
-
-
-    pointsDisplay.textContent =
-        commandPoints;
-}
-
 
 // ==========================================
 // GAME LOOP
@@ -2019,13 +2083,451 @@ if (pauseMenuButton) {
 }
 
 
+
+    
+        // ==========================================
+        // RACCOURCI CLAVIER - PAUSE / PARAMÈTRES
+        // ==========================================
+
+        document.addEventListener(
+            "keydown",
+
+            function (event) {
+
+                if (
+                    event.code !==
+                        "Escape"
+                ) {
+
+                    return;
+
+                }
+
+
+                // ==================================
+                // PARAMÈTRES OUVERTS DEPUIS PAUSE
+                // ==================================
+
+                if (
+                    settingsPanel &&
+                    !settingsPanel.classList.contains(
+                        "hidden"
+                    ) &&
+                    settingsOpenedFrom ===
+                        "pause"
+                ) {
+
+                    event.preventDefault();
+
+                    closeSettings();
+
+                    return;
+
+                }
+
+
+                // ==================================
+                // PAUSE NORMALE
+                // ==================================
+
+                if (
+                    !gameStarted ||
+                    gameOver
+                ) {
+
+                    return;
+
+                }
+
+                event.preventDefault();
+
+
+                if (gamePaused) {
+
+                    resumeGame();
+
+                    return;
+
+                }
+
+
+                pauseGame();
+
+            }
+        );
+
+
+        // ==========================================
+        // PARAMÈTRES
+        // OUVERTURE / FERMETURE
+        // ==========================================
+
+        function openSettings(
+            source
+        ) {
+
+            settingsOpenedFrom =
+                source;
+
+
+            // ======================================
+            // OUVERT DEPUIS LE MENU PRINCIPAL
+            // ======================================
+
+            if (
+                source ===
+                    "main"
+            ) {
+
+                mainMenu.classList.add(
+                    "hidden"
+                );
+
+            }
+
+
+            // ======================================
+            // OUVERT DEPUIS LA PAUSE
+            // ======================================
+
+            if (
+                source ===
+                    "pause"
+            ) {
+
+                pauseMenu.classList.add(
+                    "hidden"
+                );
+
+            }
+
+
+            settingsPanel.classList.remove(
+                "hidden"
+            );
+
+        }
+
+
+        function closeSettings() {
+
+            settingsPanel.classList.add(
+                "hidden"
+            );
+
+
+            // ======================================
+            // RETOUR AU MENU PRINCIPAL
+            // ======================================
+
+            if (
+                settingsOpenedFrom ===
+                    "main"
+            ) {
+
+                mainMenu.classList.remove(
+                    "hidden"
+                );
+
+                return;
+
+            }
+
+
+            // ======================================
+            // RETOUR AU MENU PAUSE
+            // ======================================
+
+            if (
+                settingsOpenedFrom ===
+                    "pause"
+            ) {
+
+                pauseMenu.classList.remove(
+                    "hidden"
+                );
+
+            }
+
+        }
+
+
+        // ==========================================
+        // BOUTON PARAMÈTRES — MENU PRINCIPAL
+        // ==========================================
+
+        if (settingsButton) {
+
+            settingsButton.addEventListener(
+                "click",
+
+                function () {
+
+                    openSettings(
+                        "main"
+                    );
+
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // BOUTON PARAMÈTRES — MENU PAUSE
+        // ==========================================
+
+        if (pauseSettingsButton) {
+
+            pauseSettingsButton.addEventListener(
+                "click",
+
+                function () {
+
+                    openSettings(
+                        "pause"
+                    );
+
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // BOUTON RETOUR
+        // ==========================================
+
+        if (closeSettingsButton) {
+
+            closeSettingsButton.addEventListener(
+                "click",
+                closeSettings
+            );
+
+        }
+
+
+        
+        // ==========================================
+        // SAUVEGARDE DES PARAMÈTRES
+        // ==========================================
+
+        const gameSettings = {
+
+            visualEffects:
+                true,
+
+            rangeIndicators:
+                true
+
+        };
+
+
+        function saveSettings() {
+
+            localStorage.setItem(
+                "platoonZeroSettings",
+                JSON.stringify(
+                    gameSettings
+                )
+            );
+
+        }
+
+
+        function loadSettings() {
+
+            const savedSettings =
+                localStorage.getItem(
+                    "platoonZeroSettings"
+                );
+
+
+            if (!savedSettings) {
+
+                updateSettingsInterface();
+
+                return;
+
+            }
+
+
+            try {
+
+                const parsedSettings =
+                    JSON.parse(
+                        savedSettings
+                    );
+
+
+                if (
+                    typeof parsedSettings
+                        .visualEffects ===
+                    "boolean"
+                ) {
+
+                    gameSettings
+                        .visualEffects =
+                        parsedSettings
+                            .visualEffects;
+
+                }
+
+
+                if (
+                    typeof parsedSettings
+                        .rangeIndicators ===
+                    "boolean"
+                ) {
+
+                    gameSettings
+                        .rangeIndicators =
+                        parsedSettings
+                            .rangeIndicators;
+
+                }
+
+            } catch (error) {
+
+                console.warn(
+                    "Impossible de charger les paramètres.",
+                    error
+                );
+
+            }
+
+
+            updateSettingsInterface();
+
+        }
+
+
+        // ==========================================
+        // MISE À JOUR DE L'INTERFACE
+        // ==========================================
+
+        function updateSettingsInterface() {
+
+            if (visualEffectsToggle) {
+
+                visualEffectsToggle
+                    .classList.toggle(
+                        "active",
+                        gameSettings
+                            .visualEffects
+                    );
+
+                visualEffectsToggle
+                    .textContent =
+                        gameSettings
+                            .visualEffects
+                            ? "ACTIVÉS"
+                            : "DÉSACTIVÉS";
+
+            }
+
+
+            if (rangeIndicatorsToggle) {
+
+                rangeIndicatorsToggle
+                    .classList.toggle(
+                        "active",
+                        gameSettings
+                            .rangeIndicators
+                    );
+
+                rangeIndicatorsToggle
+                    .textContent =
+                        gameSettings
+                            .rangeIndicators
+                            ? "ACTIVÉS"
+                            : "DÉSACTIVÉS";
+
+            }
+
+
+            document.body
+                .classList.toggle(
+                    "visual-effects-disabled",
+                    !gameSettings
+                        .visualEffects
+                );
+
+
+            document.body
+                .classList.toggle(
+                    "range-indicators-disabled",
+                    !gameSettings
+                        .rangeIndicators
+                );
+
+        }
+
+
+        // ==========================================
+        // EFFETS VISUELS
+        // ==========================================
+
+        if (visualEffectsToggle) {
+
+            visualEffectsToggle
+                .addEventListener(
+                    "click",
+
+                    function () {
+
+                        gameSettings
+                            .visualEffects =
+                            !gameSettings
+                                .visualEffects;
+
+                        updateSettingsInterface();
+
+                        saveSettings();
+
+                    }
+                );
+
+        }
+
+
+        // ==========================================
+        // INDICATEURS DE PORTÉE
+        // ==========================================
+
+        if (rangeIndicatorsToggle) {
+
+            rangeIndicatorsToggle
+                .addEventListener(
+                    "click",
+
+                    function () {
+
+                        gameSettings
+                            .rangeIndicators =
+                            !gameSettings
+                                .rangeIndicators;
+
+                        updateSettingsInterface();
+
+                        saveSettings();
+
+                    }
+                );
+
+        }
+
+
 // ==========================================
 // INITIALISATION
 // ==========================================
 
+
+loadSettings();
+
 updatePoints();
 
-
 console.log(
-    "M&B Mobile prêt."
+    "PLATOON ZERO prêt. — v0.3.2 ALPHA"
 );

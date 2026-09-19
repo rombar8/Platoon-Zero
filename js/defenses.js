@@ -14,6 +14,10 @@ let activeDefense = null;
 const defenses = [];
 
 
+let defensePreview =
+    null;
+
+
 // ==========================================
 // CONFIGURATION
 // ==========================================
@@ -84,6 +88,122 @@ const defenseTypes = {
 };
 
 
+    // ==========================================
+    // NIVEAUX DES DÉFENSES
+    // ==========================================
+
+    
+        const defenseUpgrades = {
+
+            trench: {
+
+                1: {
+                    protection: 0.10
+                },
+
+                2: {
+                    protection: 0.25,
+                    upgradeCost: 10
+                },
+
+                3: {
+                    protection: 0.50,
+                    upgradeCost: 25
+                }
+
+            },
+
+
+            sandbags: {
+
+                1: {
+                    protection: 0.10
+                },
+
+                2: {
+                    protection: 0.20,
+                    upgradeCost: 10
+                },
+
+                3: {
+                    protection: 0.30,
+                    upgradeCost: 15
+                }
+
+            },
+
+
+            barbedwire: {
+
+                1: {
+                    slow: 0.10,
+                    enemySpeedMultiplier: 0.90
+                },
+
+                2: {
+                    slow: 0.20,
+                    enemySpeedMultiplier: 0.80,
+                    upgradeCost: 10
+                },
+
+                3: {
+                    slow: 0.35,
+                    enemySpeedMultiplier: 0.65,
+                    upgradeCost: 15
+                }
+
+            },
+
+
+            mine: {
+
+                1: {
+                    hpDamagePercent: 0.25,
+                    radiusBonus: 0.02
+                },
+
+                2: {
+                    hpDamagePercent: 0.50,
+                    radiusBonus: 0.04,
+                    upgradeCost: 8
+                },
+
+                3: {
+                    hpDamagePercent: 0.70,
+                    radiusBonus: 0.06,
+                    upgradeCost: 15
+                }
+
+            },
+
+
+            machinegun: {
+
+                1: {
+                    fireRate: 170,
+                    damage: 30,
+                    operatorProtection: 0.05
+                },
+
+                2: {
+                    fireRate: 145,
+                    damage: 34,
+                    operatorProtection: 0.10,
+                    upgradeCost: 20
+                },
+
+                3: {
+                    fireRate: 120,
+                    damage: 39,
+                    operatorProtection: 0.20,
+                    upgradeCost: 35
+                }
+
+            }
+
+        };
+
+
 // ==========================================
 // ACTIVE LE MODE PLACEMENT
 // ==========================================
@@ -129,6 +249,110 @@ function activateDefensePlacement(
         cost: cost
     };
 
+    
+        // ======================================
+        // APERÇU DE PLACEMENT
+        // ======================================
+
+        if (defensePreview) {
+
+            defensePreview.remove();
+
+        }
+
+        defensePreview =
+            document.createElement(
+                "div"
+            );
+
+        defensePreview.className =
+            "defense-placement-preview";
+
+        defensePreview.dataset.type =
+            type;
+
+            
+        // ======================================
+        // APPARENCE DE LA DÉFENSE
+        // ======================================
+
+        if (
+            type === "trench"
+        ) {
+
+            defensePreview.innerHTML = `
+                <div class="trench-dirt"></div>
+                <div class="trench-hole"></div>
+                <div class="trench-plank"></div>
+                <div class="trench-front"></div>
+            `;
+
+        }
+
+        else if (
+            type === "sandbags"
+        ) {
+
+            defensePreview.innerHTML = `
+                <div class="sandbag sandbag-1"></div>
+                <div class="sandbag sandbag-2"></div>
+                <div class="sandbag sandbag-3"></div>
+                <div class="sandbag sandbag-4"></div>
+                <div class="sandbag sandbag-5"></div>
+            `;
+
+        }
+
+        else if (
+            type === "barbedwire"
+        ) {
+
+            defensePreview.innerHTML = `
+                <div class="wire-line wire-line-1"></div>
+                <div class="wire-line wire-line-2"></div>
+                <div class="wire-post wire-post-1"></div>
+                <div class="wire-post wire-post-2"></div>
+                <div class="wire-post wire-post-3"></div>
+            `;
+
+        }
+
+        else if (
+            type === "mine"
+        ) {
+
+            defensePreview.innerHTML = `
+                <div class="landmine-body"></div>
+                <div class="landmine-center"></div>
+            `;
+
+        }
+
+        else if (
+            type === "machinegun"
+        ) {
+
+            defensePreview.innerHTML = `
+                <div class="mg-tripod"></div>
+                <div class="mg-body"></div>
+                <div class="mg-barrel"></div>
+                <div class="mg-seat"></div>
+            `;
+
+        }
+
+        defensePreview.style.width =
+            defenseTypes[type].width +
+            "px";
+
+        defensePreview.style.height =
+            defenseTypes[type].height +
+            "px";
+
+        battlefield.appendChild(
+            defensePreview
+        );
+
     battlefield.classList.add(
         "defense-targeting"
     );
@@ -146,6 +370,16 @@ function activateDefensePlacement(
 function cancelDefensePlacement() {
 
     activeDefense = null;
+
+
+        if (defensePreview) {
+
+            defensePreview.remove();
+
+            defensePreview =
+                null;
+
+        }
 
     battlefield.classList.remove(
         "defense-targeting"
@@ -180,6 +414,41 @@ function payDefense(cost) {
 }
 
 
+    
+    battlefield.addEventListener(
+        "mousemove",
+
+        function (event) {
+
+            if (
+                !activeDefense ||
+                !defensePreview
+            ) {
+
+                return;
+
+            }
+
+            const rect =
+                battlefield
+                    .getBoundingClientRect();
+
+            defensePreview.style.left =
+                (
+                    event.clientX -
+                    rect.left
+                ) + "px";
+
+            defensePreview.style.top =
+                (
+                    event.clientY -
+                    rect.top
+                ) + "px";
+
+        }
+    );
+
+
 // ==========================================
 // CLIC SUR LE TERRAIN
 // ==========================================
@@ -188,6 +457,17 @@ battlefield.addEventListener(
     "click",
 
     function (event) {
+
+        
+        if (
+            event.target.closest(
+                ".trench, .sandbags, .barbed-wire, .landmine"
+            )
+        ) {
+
+            return;
+
+        }
 
         if (!activeDefense) {
             return;
@@ -291,274 +571,452 @@ battlefield.addEventListener(
 // TRANCHÉE
 // ==========================================
 
-function createTrench(
-    x,
-    y,
-    cost
-) {
 
-    if (!payDefense(cost)) {
-        return;
-    }
+        function createTrench(
+            x,
+            y,
+            cost
+        ) {
 
-    const element =
-        document.createElement(
-            "div"
-        );
+            if (!payDefense(cost)) {
+                return;
+            }
 
-    element.className =
-        "trench";
+            const element =
+                document.createElement(
+                    "div"
+                );
 
-    element.style.left =
-        x + "px";
+            element.className =
+                "trench";
 
-    element.style.top =
-        y + "px";
+            element.classList.add(
+                "defense-level-1"
+            );
 
-    element.innerHTML = `
-        <div class="trench-dirt"></div>
-        <div class="trench-hole"></div>
-        <div class="trench-plank"></div>
-        <div class="trench-front"></div>
-    `;
+            element.dataset.level =
+                1;
 
-    battlefield.appendChild(
-        element
-    );
+            element.style.left =
+                x + "px";
 
-    defenses.push({
+            element.style.top =
+                y + "px";
 
-        type: "trench",
+            element.innerHTML = `
+                <div class="trench-dirt"></div>
+                <div class="trench-hole"></div>
+                <div class="trench-plank"></div>
+                <div class="trench-front"></div>
+            `;
 
-        name:
-            defenseTypes.trench.name,
+            battlefield.appendChild(
+                element
+            );
 
-        x: x,
-        y: y,
 
-        width:
-            defenseTypes.trench.width,
+            const defense = {
 
-        height:
-            defenseTypes.trench.height,
+                type: "trench",
 
-        protection:
-            defenseTypes.trench.protection,
+                name:
+                    defenseTypes.trench.name,
 
-        slots:
-            defenseTypes.trench.slots,
+                level: 1,
 
-        element: element
-    });
-}
+                x: x,
+
+                y: y,
+
+                width:
+                    defenseTypes.trench.width,
+
+                height:
+                    defenseTypes.trench.height,
+
+                protection:
+                    defenseUpgrades
+                        .trench[1]
+                        .protection,
+
+                slots:
+                    defenseTypes.trench.slots,
+
+                element: element
+
+            };
+
+
+            defenses.push(
+                defense
+            );
+
+
+            element.addEventListener(
+                "click",
+                function (event) {
+
+                    event.stopPropagation();
+
+                    if (
+                        typeof showDefensePanel ===
+                        "function"
+                    ) {
+
+                        showDefensePanel(
+                            defense
+                        );
+
+                    }
+
+                }
+            );
+
+        }
 
 
 // ==========================================
 // SACS DE SABLE
 // ==========================================
 
-function createSandbags(
-    x,
-    y,
-    cost
-) {
 
-    if (!payDefense(cost)) {
-        return;
-    }
+        function createSandbags(
+            x,
+            y,
+            cost
+        ) {
 
-    const element =
-        document.createElement(
-            "div"
-        );
+            if (!payDefense(cost)) {
+                return;
+            }
 
-    element.className =
-        "sandbags";
+            const element =
+                document.createElement(
+                    "div"
+                );
 
-    element.style.left =
-        x + "px";
+            element.className =
+                "sandbags";
 
-    element.style.top =
-        y + "px";
+            element.classList.add(
+                "defense-level-1"
+            );
 
-    element.innerHTML = `
-        <div class="sandbag sandbag-1"></div>
-        <div class="sandbag sandbag-2"></div>
-        <div class="sandbag sandbag-3"></div>
-        <div class="sandbag sandbag-4"></div>
-        <div class="sandbag sandbag-5"></div>
-    `;
+            element.dataset.level =
+                1;
 
-    battlefield.appendChild(
-        element
-    );
+            element.style.left =
+                x + "px";
 
-    defenses.push({
+            element.style.top =
+                y + "px";
 
-        type: "sandbags",
+            
+        element.innerHTML = `
+            <div class="sandbag sandbag-1"></div>
+            <div class="sandbag sandbag-2"></div>
+            <div class="sandbag sandbag-3"></div>
+            <div class="sandbag sandbag-4"></div>
+            <div class="sandbag sandbag-5"></div>
+            <div class="sandbag sandbag-6"></div>
+            <div class="sandbag sandbag-7"></div>
+            <div class="sandbag sandbag-8"></div>
+            <div class="sandbag sandbag-9"></div>
+        `;
 
-        name:
-            defenseTypes.sandbags.name,
+            battlefield.appendChild(
+                element
+            );
 
-        x: x,
-        y: y,
 
-        width:
-            defenseTypes.sandbags.width,
+            const defense = {
 
-        height:
-            defenseTypes.sandbags.height,
+                type: "sandbags",
 
-        protection:
-            defenseTypes.sandbags.protection,
+                name:
+                    defenseTypes.sandbags.name,
 
-        slots:
-            defenseTypes.sandbags.slots,
+                level: 1,
 
-        element: element
-    });
-}
+                x: x,
+
+                y: y,
+
+                width:
+                    defenseTypes.sandbags.width,
+
+                height:
+                    defenseTypes.sandbags.height,
+
+                protection:
+                    defenseUpgrades
+                        .sandbags[1]
+                        .protection,
+
+                slots:
+                    defenseTypes.sandbags.slots,
+
+                element: element
+
+            };
+
+
+            defenses.push(
+                defense
+            );
+
+
+            element.addEventListener(
+                "click",
+                function (event) {
+
+                    event.stopPropagation();
+
+                    if (
+                        typeof showDefensePanel ===
+                        "function"
+                    ) {
+
+                        showDefensePanel(
+                            defense
+                        );
+
+                    }
+
+                }
+            );
+
+        }
 
 
 // ==========================================
 // BARBELÉS
 // ==========================================
 
-function createBarbedWire(
-    x,
-    y,
-    cost
-) {
 
-    if (!payDefense(cost)) {
-        return;
-    }
+        function createBarbedWire(
+            x,
+            y,
+            cost
+        ) {
 
-    const element =
-        document.createElement(
-            "div"
-        );
+            if (!payDefense(cost)) {
+                return;
+            }
 
-    element.className =
-        "barbed-wire";
+            const element =
+                document.createElement(
+                    "div"
+                );
 
-    element.style.left =
-        x + "px";
+            element.className =
+                "barbed-wire";
 
-    element.style.top =
-        y + "px";
+            element.classList.add(
+                "defense-level-1"
+            );
 
-    element.innerHTML = `
-        <div class="wire-line wire-line-1"></div>
-        <div class="wire-line wire-line-2"></div>
-        <div class="wire-post wire-post-1"></div>
-        <div class="wire-post wire-post-2"></div>
-        <div class="wire-post wire-post-3"></div>
-    `;
+            element.dataset.level =
+                1;
 
-    battlefield.appendChild(
-        element
-    );
+            element.style.left =
+                x + "px";
 
-    defenses.push({
+            element.style.top =
+                y + "px";
 
-        type: "barbedwire",
+            element.innerHTML = `
+                <div class="wire-line wire-line-1"></div>
+                <div class="wire-line wire-line-2"></div>
+                <div class="wire-post wire-post-1"></div>
+                <div class="wire-post wire-post-2"></div>
+                <div class="wire-post wire-post-3"></div>
+            `;
 
-        name:
-            defenseTypes.barbedwire.name,
+            battlefield.appendChild(
+                element
+            );
 
-        x: x,
-        y: y,
 
-        width:
-            defenseTypes.barbedwire.width,
+            const defense = {
 
-        height:
-            defenseTypes.barbedwire.height,
+                type: "barbedwire",
 
-        protection: 0,
-        slots: 0,
+                name:
+                    defenseTypes.barbedwire.name,
 
-        enemySpeedMultiplier:
-            defenseTypes
-                .barbedwire
-                .enemySpeedMultiplier,
+                level: 1,
 
-        element: element
-    });
-}
+                x: x,
+
+                y: y,
+
+                width:
+                    defenseTypes.barbedwire.width,
+
+                height:
+                    defenseTypes.barbedwire.height,
+
+                protection: 0,
+
+                slots: 0,
+
+                enemySpeedMultiplier:
+                    defenseUpgrades
+                        .barbedwire[1]
+                        .enemySpeedMultiplier,
+
+                element: element
+
+            };
+
+
+            defenses.push(
+                defense
+            );
+
+
+            element.addEventListener(
+                "click",
+                function (event) {
+
+                    event.stopPropagation();
+
+                    if (
+                        typeof showDefensePanel ===
+                        "function"
+                    ) {
+
+                        showDefensePanel(
+                            defense
+                        );
+
+                    }
+
+                }
+            );
+
+        }
 
 
 // ==========================================
 // MINE
 // ==========================================
 
-function createMine(
-    x,
-    y,
-    cost
-) {
 
-    if (!payDefense(cost)) {
-        return;
-    }
+        function createMine(
+            x,
+            y,
+            cost
+        ) {
 
-    const element =
-        document.createElement(
-            "div"
-        );
+            if (!payDefense(cost)) {
+                return;
+            }
 
-    element.className =
-        "landmine";
+            const element =
+                document.createElement(
+                    "div"
+                );
 
-    element.style.left =
-        x + "px";
+            element.className =
+                "landmine";
 
-    element.style.top =
-        y + "px";
+            element.classList.add(
+                "defense-level-1"
+            );
 
-    element.innerHTML = `
-        <div class="landmine-body"></div>
-        <div class="landmine-center"></div>
-    `;
+            element.dataset.level =
+                1;
 
-    battlefield.appendChild(
-        element
-    );
+            element.style.left =
+                x + "px";
 
-    defenses.push({
+            element.style.top =
+                y + "px";
 
-        type: "mine",
+            element.innerHTML = `
+                <div class="landmine-body"></div>
+                <div class="landmine-center"></div>
+            `;
 
-        name:
-            defenseTypes.mine.name,
+            battlefield.appendChild(
+                element
+            );
 
-        x: x,
-        y: y,
 
-        width:
-            defenseTypes.mine.width,
+            const defense = {
 
-        height:
-            defenseTypes.mine.height,
+                type: "mine",
 
-        protection: 0,
-        slots: 0,
+                name:
+                    defenseTypes.mine.name,
 
-        triggerRadius:
-            defenseTypes.mine.triggerRadius,
+                level: 1,
 
-        explosionRadius:
-            defenseTypes.mine.explosionRadius,
+                x: x,
 
-        damage:
-            defenseTypes.mine.damage,
+                y: y,
 
-        triggered: false,
+                width:
+                    defenseTypes.mine.width,
 
-        element: element
-    });
-}
+                height:
+                    defenseTypes.mine.height,
+
+                protection: 0,
+
+                slots: 0,
+
+                triggerRadius:
+                    defenseTypes.mine.triggerRadius,
+
+                explosionRadius:
+                    defenseTypes.mine.explosionRadius,
+
+                hpDamagePercent:
+                    defenseUpgrades
+                        .mine[1]
+                        .hpDamagePercent,
+
+                radiusBonus:
+                    defenseUpgrades
+                        .mine[1]
+                        .radiusBonus,
+
+                triggered: false,
+
+                element: element
+
+            };
+
+
+            defenses.push(
+                defense
+            );
+
+
+            element.addEventListener(
+                "click",
+                function (event) {
+
+                    event.stopPropagation();
+
+                    if (
+                        typeof showDefensePanel ===
+                        "function"
+                    ) {
+
+                        showDefensePanel(
+                            defense
+                        );
+
+                    }
+
+                }
+            );
+
+        }
 
 
 // ==========================================
@@ -603,6 +1061,13 @@ function createMachineGun(
 
     element.className =
         "defense-machinegun inactive";
+    
+        element.classList.add(
+            "defense-level-1"
+        );
+
+        element.dataset.level =
+            1;
 
     element.style.left =
         x + "px";
@@ -611,20 +1076,64 @@ function createMachineGun(
         y + "px";
 
 
-    element.innerHTML = `
-        <div class="mg-tripod"></div>
-        <div class="mg-body"></div>
-        <div class="mg-barrel"></div>
-        <div class="mg-seat"></div>
-        <div class="mg-status">
-            SANS OPÉRATEUR
-        </div>
-    `;
+    
+        
+        element.innerHTML = `
+            <div class="mg-weapon">
+
+                <div class="mg-tripod"></div>
+                <div class="mg-body"></div>
+                <div class="mg-barrel"></div>
+                <div class="mg-seat"></div>
+
+                <div class="mg-upgrade-ammo-box mg-ammo-box-1"></div>
+                <div class="mg-upgrade-ammo-box mg-ammo-box-2"></div>
+
+                <div class="mg-ammo-belt">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+            </div>
+
+            <div class="mg-status">
+                SANS OPÉRATEUR
+            </div>
+        `;
 
 
     battlefield.appendChild(
         element
     );
+
+    
+        // ======================================
+        // ZONE VISUELLE DE PORTÉE MG
+        // ======================================
+
+        const rangeIndicator =
+            document.createElement(
+                "div"
+            );
+
+        rangeIndicator.classList.add(
+            "machinegun-range-indicator"
+        );
+
+        rangeIndicator.style.width =
+            defenseTypes.machinegun.range *
+            2 + "px";
+
+        rangeIndicator.style.height =
+            defenseTypes.machinegun.range *
+            2 + "px";
+
+        element.appendChild(
+            rangeIndicator
+        );
 
 
     const config =
@@ -635,6 +1144,7 @@ function createMachineGun(
     // OBJET MITRAILLEUSE
     // ======================================
 
+    
     const machineGun = {
 
         type:
@@ -642,6 +1152,8 @@ function createMachineGun(
 
         name:
             config.name,
+
+        level: 1,
 
         x: x,
 
@@ -654,7 +1166,14 @@ function createMachineGun(
             config.height,
 
         protection:
-            config.protection,
+            defenseUpgrades
+                .machinegun[1]
+                .operatorProtection,
+
+        operatorProtection:
+            defenseUpgrades
+                .machinegun[1]
+                .operatorProtection,
 
         slots:
             config.slots,
@@ -663,10 +1182,14 @@ function createMachineGun(
             config.range,
 
         damage:
-            config.damage,
+            defenseUpgrades
+                .machinegun[1]
+                .damage,
 
         fireRate:
-            config.fireRate,
+            defenseUpgrades
+                .machinegun[1]
+                .fireRate,
 
         operatorRequired:
             config.operatorRequired,
@@ -682,6 +1205,7 @@ function createMachineGun(
 
         element:
             element
+
     };
 
 
@@ -702,6 +1226,41 @@ function createMachineGun(
         "click",
 
         function (event) {
+
+            
+                // ==================================
+                // PRIORITÉ À L'OPÉRATEUR
+                // ==================================
+
+                if (
+                    machineGun.operator &&
+                    machineGun.operator.alive &&
+                    machineGun.operator.element
+                ) {
+
+                    const operatorRect =
+                        machineGun.operator.element
+                            .getBoundingClientRect();
+
+                    const operatorClicked =
+                        event.clientX >=
+                            operatorRect.left &&
+                        event.clientX <=
+                            operatorRect.right &&
+                        event.clientY >=
+                            operatorRect.top &&
+                        event.clientY <=
+                            operatorRect.bottom;
+
+                    if (operatorClicked) {
+
+                        machineGun.operator.element.click();
+
+                        return;
+
+                    }
+
+                }
 
             /*
                 IMPORTANT :
@@ -738,6 +1297,25 @@ function createMachineGun(
                     "function"
             ) {
 
+                
+        document
+            .querySelectorAll(
+                ".machinegun-range-indicator"
+            )
+            .forEach(
+                function (indicator) {
+
+                    indicator.classList.remove(
+                        "visible"
+                    );
+
+                }
+            );
+
+        rangeIndicator.classList.add(
+            "visible"
+        );
+
                 showMachineGunPanel(
                     machineGun
                 );
@@ -761,27 +1339,166 @@ function createMachineGun(
     }
 }
 
-// ==========================================
-// SLOT OPÉRATEUR DE LA MITRAILLEUSE
-// ==========================================
 
-function getMachineGunOperatorSlot(
-    defense
-) {
+        // ==========================================
+        // AMÉLIORATION DES DÉFENSES
+        // ==========================================
 
-    if (
-        !defense ||
-        defense.type !==
-            "machinegun"
-    ) {
-        return null;
-    }
+        function upgradeDefense(
+            defense
+        ) {
 
-    return {
-        x: defense.x,
-        y: defense.y + 24
-    };
-}
+            if (
+                !defense ||
+                !defense.type
+            ) {
+
+                return false;
+
+            }
+
+
+            // ======================================
+            // NIVEAU MAX
+            // ======================================
+
+            if (
+                defense.level >= 3
+            ) {
+
+                return false;
+
+            }
+
+
+            const newLevel =
+                defense.level + 1;
+
+            const upgrade =
+                defenseUpgrades[
+                    defense.type
+                ][
+                    newLevel
+                ];
+
+
+            if (
+                !upgrade
+            ) {
+
+                return false;
+
+            }
+
+
+            // ======================================
+            // TRANCHÉE / SACS DE SABLE
+            // ======================================
+
+            if (
+                defense.type === "trench" ||
+                defense.type === "sandbags"
+            ) {
+
+                defense.protection =
+                    upgrade.protection;
+
+            }
+
+
+            // ======================================
+            // BARBELÉS
+            // ======================================
+
+            else if (
+                defense.type ===
+                    "barbedwire"
+            ) {
+
+                defense.enemySpeedMultiplier =
+                    upgrade.enemySpeedMultiplier;
+
+            }
+
+
+            // ======================================
+            // MINE
+            // ======================================
+
+            else if (
+                defense.type ===
+                    "mine"
+            ) {
+
+                defense.hpDamagePercent =
+                    upgrade.hpDamagePercent;
+
+                defense.radiusBonus =
+                    upgrade.radiusBonus;
+
+            }
+
+
+            // ======================================
+            // MITRAILLEUSE
+            // ======================================
+
+            else if (
+                defense.type ===
+                    "machinegun"
+            ) {
+
+                defense.fireRate =
+                    upgrade.fireRate;
+
+                defense.damage =
+                    upgrade.damage;
+
+                defense.operatorProtection =
+                    upgrade.operatorProtection;
+
+                defense.protection =
+                    upgrade.operatorProtection;
+
+            }
+
+
+            // ======================================
+            // APPLIQUE LE NOUVEAU NIVEAU
+            // ======================================
+
+            defense.level =
+                newLevel;
+
+
+            // ======================================
+            // CLASSE VISUELLE
+            // ======================================
+
+            if (
+                defense.element
+            ) {
+
+                defense.element.classList.remove(
+                    "defense-level-1",
+                    "defense-level-2",
+                    "defense-level-3"
+                );
+
+                defense.element.classList.add(
+                    "defense-level-" +
+                    defense.level
+                );
+
+                defense.element.dataset.level =
+                    defense.level;
+
+            }
+
+
+            return true;
+
+        }
 
 
 // ==========================================
@@ -818,6 +1535,38 @@ function getMachineGunAt(
 
     return null;
 }
+
+
+
+        // ==========================================
+        // SLOT OPÉRATEUR DE LA MITRAILLEUSE
+        // ==========================================
+
+        function getMachineGunOperatorSlot(
+            defense
+        ) {
+
+            if (
+                !defense ||
+                defense.type !==
+                    "machinegun"
+            ) {
+
+                return null;
+
+            }
+
+            return {
+
+                x:
+                    defense.x - 28,
+
+                y:
+                    defense.y
+
+            };
+
+        }
 
 
 // ==========================================
@@ -916,6 +1665,10 @@ function releaseSoldierFromMachineGun(
         defense.operator =
             null;
     }
+    
+    soldier.element.classList.remove(
+        "machinegun-operator"
+    );
 
     soldier.machineGun =
         null;
@@ -1090,6 +1843,57 @@ function findMachineGunTarget(
 }
 
 
+        // ==========================================
+        // POSITION VISUELLE DE L'OPÉRATEUR MG
+        // ==========================================
+
+        function updateMachineGunOperatorPosition(
+            defense
+        ) {
+
+            if (
+                !defense ||
+                !defense.operator ||
+                !defense.operator.alive ||
+                !defense.operator.element
+            ) {
+
+                return;
+
+            }
+
+            const angle =
+                defense.angle ?? 0;
+
+            const radians =
+                angle *
+                Math.PI / 180;
+
+            const stockDistance =
+                38;
+
+            const visualX =
+                defense.x -
+                Math.cos(
+                    radians
+                ) *
+                stockDistance;
+
+            const visualY =
+                defense.y -
+                Math.sin(
+                    radians
+                ) *
+                stockDistance;
+
+            defense.operator.element.style.left =
+                visualX + "px";
+
+            defense.operator.element.style.top =
+                visualY + "px";
+
+        }
+
 // ==========================================
 // TIR DE LA MITRAILLEUSE
 // ==========================================
@@ -1098,7 +1902,8 @@ function findMachineGunTarget(
 // ORIENTATION DE LA MITRAILLEUSE
 // ==========================================
 
-function rotateMachineGunTowards(
+
+        function rotateMachineGunTowards(
             defense,
             target
         ) {
@@ -1108,7 +1913,9 @@ function rotateMachineGunTowards(
                 !defense.element ||
                 !target
             ) {
+
                 return;
+
             }
 
             const dx =
@@ -1122,37 +1929,34 @@ function rotateMachineGunTowards(
                     dy,
                     dx
                 ) * 180 / Math.PI;
+                
+                defense.angle =
+                angle;
 
 
-            const body =
+            const weapon =
                 defense.element.querySelector(
-                    ".mg-body"
+                    ".mg-weapon"
                 );
 
-            const barrel =
-                defense.element.querySelector(
-                    ".mg-barrel"
-                );
 
+            if (!weapon) {
 
-            if (body) {
+                return;
 
-                body.style.transformOrigin =
-                    "center center";
-
-                body.style.transform =
-                    `rotate(${angle}deg)`;
             }
 
 
-            if (barrel) {
+            weapon.style.transformOrigin =
+                "45px 35px";
 
-                barrel.style.transformOrigin =
-                    "left center";
+            weapon.style.transform =
+                `rotate(${angle}deg)`;
+               
+            updateMachineGunOperatorPosition(
+                defense
+            );
 
-                barrel.style.transform =
-                    `rotate(${angle}deg)`;
-            }
         }
 
 
@@ -1923,6 +2727,7 @@ function explodeMine(
     );
 
 
+    
     // ======================================
     // DÉGÂTS DE ZONE
     // ======================================
@@ -1930,15 +2735,26 @@ function explodeMine(
     const enemySnapshot =
         enemies.slice();
 
+    const upgradedExplosionRadius =
+        mine.explosionRadius *
+        (
+            1 +
+            mine.radiusBonus
+        );
+
     enemySnapshot.forEach(
+
         function (enemy) {
 
             if (
                 !enemy ||
                 enemy.alive === false
             ) {
+
                 return;
+
             }
+
 
             const distance =
                 getDefenseDistance(
@@ -1948,35 +2764,40 @@ function explodeMine(
                     enemy.y
                 );
 
+
+            // ==================================
+            // HORS DU RAYON D'EXPLOSION
+            // ==================================
+
             if (
                 distance >
-                    mine.explosionRadius
+                    upgradedExplosionRadius
             ) {
+
                 return;
+
             }
 
 
-            // Plus proche = plus de dégâts
+            // ==================================
+            // DÉGÂTS = % DES HP MAX
+            // ==================================
 
-            const distanceRatio =
-                1 -
-                (
-                    distance /
-                    mine.explosionRadius
-                );
+            const maxEnemyHp =
+                enemy.maxHp ??
+                enemy.maxHP ??
+                enemy.hp;
 
             const damage =
-                Math.max(
-                    20,
-                    Math.round(
-                        mine.damage *
-                        distanceRatio
-                    )
+                Math.round(
+                    maxEnemyHp *
+                    mine.hpDamagePercent
                 );
 
 
-            // Utilise le système de combat
-            // existant si disponible.
+            // ==================================
+            // SYSTÈME DE COMBAT EXISTANT
+            // ==================================
 
             if (
                 typeof damageUnit ===
@@ -1987,6 +2808,7 @@ function explodeMine(
                     enemy,
                     damage
                 );
+
             }
 
             else {
@@ -1999,14 +2821,18 @@ function explodeMine(
                 ) {
 
                     enemy.hp = 0;
-                    enemy.alive = false;
+
+                    enemy.alive =
+                        false;
 
                     if (
                         enemy.element
                     ) {
 
                         enemy.element.remove();
+
                     }
+
 
                     const index =
                         enemies.indexOf(
@@ -2021,10 +2847,15 @@ function explodeMine(
                             index,
                             1
                         );
+
                     }
+
                 }
+
             }
+
         }
+
     );
 
 

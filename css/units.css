@@ -823,3 +823,50 @@
 
     z-index: 6;
 }
+
+
+        /* ==========================================
+           ZONE DE PORTÉE DU SOLDAT
+        ========================================== */
+
+        .soldier-range-indicator {
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            transform:
+                translate(-50%, -50%);
+
+            border:
+                1px solid
+                rgba(210, 230, 180, 0.38);
+
+            border-radius: 50%;
+
+            background:
+                rgba(170, 200, 130, 0.055);
+
+            box-shadow:
+                inset 0 0 18px
+                rgba(170, 200, 130, 0.035);
+
+            pointer-events: none;
+
+            opacity: 0;
+
+            transition:
+                opacity 0.15s ease;
+
+            z-index: -1;
+        }
+
+
+        .soldier-range-indicator.visible {
+            opacity: 1;
+        }
+
+        .soldier.machinegun-operator
+        .unit-gun {
+            display: none;
+        }

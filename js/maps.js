@@ -602,6 +602,13 @@
                     "rock"
                 );
 
+            
+        obstacle.blocksMovement =
+            false;
+
+        obstacle.blocksShots =
+            false;
+
 
             const element =
                 createObstacleElement(

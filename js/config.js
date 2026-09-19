@@ -22,8 +22,8 @@ const soldierTypes = {
         name: "MÉDECIN",
         hp: 85,
         speed: 40,
-        damage: 9,
-        range: 170,
+        damage: 7,
+        range: 150,
         fireRate: 800
     },
 
@@ -55,7 +55,7 @@ const soldierTypes = {
     },
 
     scout: {
-        name: "COMMANDO",
+        name: "scout",
         hp: 70,
         speed: 38,
         damage: 27,
@@ -74,13 +74,10 @@ const soldierTypes = {
 
     minigunner: {
         name: "MINIGUNNER",
-
         hp: 200,
         speed: 13,
-
         damage: 14,
         range: 240,
-
         fireRate: 90
     }
 };

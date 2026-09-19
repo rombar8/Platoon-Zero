@@ -86,6 +86,20 @@ function clearSoldierSelection() {
         );
     }
 
+        const rangeIndicator =
+            selectedSoldier.element
+                .querySelector(
+                    ".soldier-range-indicator"
+                );
+
+        if (rangeIndicator) {
+
+            rangeIndicator.classList.remove(
+                "visible"
+            );
+
+        }
+
 
     // Ferme la fiche du soldat
 
@@ -415,6 +429,8 @@ soldiers.forEach(
             );
 
 
+
+
         if (operatingMachineGun) {
 
             soldier.target =
@@ -422,6 +438,74 @@ soldiers.forEach(
 
             soldier.isFiring =
                 false;
+            
+            soldier.element.classList.add(
+                "machinegun-operator"
+            );
+
+
+            
+        // ==================================
+        // POSITION VISUELLE DERRIÈRE LA CROSSE
+        // ==================================
+
+        const machineGun =
+            soldier.machineGun;
+
+        const angle =
+            machineGun.angle ?? 0;
+
+        
+        const radians =
+            angle *
+            Math.PI / 180;
+
+        const stockDistance =
+            38;
+
+        const visualX =
+            machineGun.x -
+            Math.cos(
+                radians
+            ) *
+            stockDistance;
+
+        const visualY =
+            machineGun.y -
+            Math.sin(
+                radians
+            ) *
+            stockDistance;
+
+        soldier.element.style.left =
+            visualX + "px";
+
+        soldier.element.style.top =
+            visualY + "px";
+
+
+            // ==================================
+            // ORIENTATION DE L'OPÉRATEUR
+            // ==================================
+
+            const unitIcon =
+                soldier.element.querySelector(
+                    ".unit-icon"
+                );
+
+            if (unitIcon) {
+
+                const operatorAngle =
+                    angle - 90;
+
+                unitIcon.style.transform =
+                    `translate(-50%, -50%) rotate(${operatorAngle}deg)`;
+
+            }
+
+
+            return;
+
         }
 
 

@@ -548,119 +548,296 @@
     z-index: 7;
 }
 
+       
+        /* ==========================================
+           ENSEMBLE ROTATIF DE LA MG
+           ========================================== */
 
-/* ==========================================
-   TRÉPIED
-   ========================================== */
+        .mg-weapon {
+            position: absolute;
 
-.mg-tripod {
-    position: absolute;
+            left: 0;
+            top: 0;
 
-    left: 45px;
-    top: 35px;
+            width: 90px;
+            height: 70px;
 
-    width: 4px;
-    height: 30px;
+            transform-origin:
+                45px 35px;
 
-    background: #36382f;
-
-    transform:
-        translate(-50%, -50%);
-}
-
-.mg-tripod::before,
-.mg-tripod::after {
-    content: "";
-
-    position: absolute;
-
-    left: 1px;
-    top: 12px;
-
-    width: 4px;
-    height: 25px;
-
-    background: #36382f;
-
-    transform-origin:
-        top center;
-}
-
-.mg-tripod::before {
-    transform:
-        rotate(45deg);
-}
-
-.mg-tripod::after {
-    transform:
-        rotate(-45deg);
-}
+            pointer-events: none;
+        }
 
 
-/* ==========================================
-   CORPS DE L'ARME
-   ========================================== */
 
-.mg-body {
-    position: absolute;
+        /* ==========================================
+           MACHINE GUN — NOUVEAU DESIGN
+           ========================================== */
 
-    left: 37px;
-    top: 18px;
-
-    width: 25px;
-    height: 11px;
-
-    background: #292d27;
-
-    border: 2px solid #111;
-
-    border-radius: 3px;
-
-    box-sizing: border-box;
-}
+        .defense-machinegun {
+            overflow: visible;
+        }
 
 
-/* ==========================================
-   CANON
-   ========================================== */
+        /* ==========================================
+           CORPS PRINCIPAL
+           ========================================== */
 
-.mg-barrel {
-    position: absolute;
+        .defense-machinegun
+        .mg-body {
+            position: absolute;
 
-    left: 58px;
-    top: 22px;
+            left: 30px;
+            top: 30px;
 
-    width: 29px;
-    height: 4px;
+            width: 31px;
+            height: 11px;
 
-    background: #1d201c;
+            z-index: 4;
 
-    border-radius: 0 3px 3px 0;
+            box-sizing: border-box;
 
-    transform-origin:
-        left center;
-}
+            border:
+                1px solid
+                #171a18;
+
+            border-radius:
+                2px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #626761 0%,
+                    #444944 45%,
+                    #292d2a 100%
+                );
+
+            box-shadow:
+                inset 0 2px 0
+                rgba(255, 255, 255, 0.13),
+
+                inset 0 -2px 0
+                rgba(0, 0, 0, 0.3),
+
+                1px 2px 2px
+                rgba(0, 0, 0, 0.45);
+        }
 
 
-/* ==========================================
-   SIÈGE OPÉRATEUR
-   ========================================== */
+        /* ==========================================
+           DÉTAIL MÉCANIQUE
+           ========================================== */
 
-.mg-seat {
-    position: absolute;
+        .defense-machinegun
+        .mg-body::before {
+            content: "";
 
-    left: 36px;
-    top: 49px;
+            position: absolute;
 
-    width: 18px;
-    height: 11px;
+            left: 5px;
+            top: 3px;
 
-    background: #554a35;
+            width: 13px;
+            height: 3px;
 
-    border: 2px solid #27231c;
+            border-radius:
+                1px;
 
-    border-radius: 3px;
-}
+            background:
+                #777d76;
+
+            box-shadow:
+                0 1px 0
+                rgba(0, 0, 0, 0.45);
+        }
+
+
+        /* ==========================================
+           BLOC DE CHAMBRE
+           ========================================== */
+
+        .defense-machinegun
+        .mg-body::after {
+            content: "";
+
+            position: absolute;
+
+            right: -6px;
+            top: 2px;
+
+            width: 7px;
+            height: 7px;
+
+            border-radius:
+                1px;
+
+            background:
+                #363b37;
+
+            border:
+                1px solid
+                #191c19;
+        }
+
+
+        /* ==========================================
+           CANON
+           ========================================== */
+
+        .defense-machinegun
+        .mg-barrel {
+            position: absolute;
+
+            left: 58px;
+            top: 33px;
+
+            width: 29px;
+            height: 4px;
+
+            z-index: 3;
+
+            border-radius:
+                0 2px 2px 0;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #555a55,
+                    #252925
+                );
+
+            border-top:
+                1px solid
+                #696e69;
+
+            border-bottom:
+                1px solid
+                #151815;
+
+            box-shadow:
+                0 2px 2px
+                rgba(0, 0, 0, 0.4);
+        }
+
+
+        /* ==========================================
+           BOUCHE DU CANON
+           ========================================== */
+
+        .defense-machinegun
+        .mg-barrel::after {
+            content: "";
+
+            position: absolute;
+
+            right: -6px;
+            top: 50%;
+
+            width: 7px;
+            height: 6px;
+
+            transform:
+                translateY(-50%);
+
+            border-radius:
+                1px 3px 3px 1px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #414641,
+                    #181b18
+                );
+
+            border:
+                1px solid
+                #101210;
+
+            box-sizing:
+                border-box;
+
+            box-shadow:
+                inset 1px 1px 1px
+                rgba(255, 255, 255, 0.08);
+        }
+
+
+        /* ==========================================
+           POIGNÉE ARRIÈRE
+           ========================================== */
+
+        .defense-machinegun
+        .mg-seat {
+            position: absolute;
+
+            left: 18px;
+            top: 31px;
+
+            width: 14px;
+            height: 8px;
+
+            z-index: 3;
+
+            border-radius:
+                4px 1px 1px 4px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #55442f,
+                    #30271d
+                );
+
+            border:
+                1px solid
+                #211a13;
+
+            box-sizing:
+                border-box;
+
+            box-shadow:
+                0 2px 2px
+                rgba(0, 0, 0, 0.4);
+        }
+
+
+        /* ==========================================
+           BIPIED
+           ========================================== */
+
+        .defense-machinegun
+        .mg-tripod {
+            position: absolute;
+
+            left: 51px;
+            top: 37px;
+
+            width: 17px;
+            height: 11px;
+
+            z-index: 2;
+
+            background:
+                linear-gradient(
+                    67deg,
+                    transparent 0%,
+                    transparent 45%,
+                    #343934 46%,
+                    #343934 52%,
+                    transparent 53%
+                ),
+
+                linear-gradient(
+                    -67deg,
+                    transparent 0%,
+                    transparent 45%,
+                    #343934 46%,
+                    #343934 52%,
+                    transparent 53%
+                );
+
+            pointer-events: none;
+        }
 
 
 /* ==========================================
@@ -2246,3 +2423,677 @@
                 0% 70%
             );
         }
+
+        
+        /* ==========================================
+           ZONE DE PORTÉE — MITRAILLEUSE
+        ========================================== */
+
+        .machinegun-range-indicator {
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            width: 520px;
+            height: 520px;
+
+            transform:
+                translate(-50%, -50%);
+
+            border:
+                1px solid
+                rgba(210, 230, 180, 0.38);
+
+            border-radius: 50%;
+
+            background:
+                rgba(170, 200, 130, 0.055);
+
+            box-shadow:
+                inset 0 0 18px
+                rgba(170, 200, 130, 0.035);
+
+            pointer-events: none;
+
+            opacity: 0;
+
+            transition:
+                opacity 0.15s ease;
+
+            z-index: -1;
+        }
+
+        .machinegun-range-indicator.visible {
+            opacity: 1;
+        }
+
+
+
+        /* ==========================================
+           APERÇU PLACEMENT DÉFENSE
+        ========================================== */
+
+        .defense-placement-preview {
+            position: absolute;
+
+            transform:
+                translate(-50%, -50%);
+
+            box-sizing:
+                border-box;
+
+            pointer-events: none;
+
+            z-index: 50;
+
+            opacity: 0.55;
+
+            filter:
+                saturate(0.75)
+                brightness(1.15);
+
+            outline:
+                2px dashed
+                rgba(220, 235, 190, 0.65);
+
+            background:
+                rgba(180, 210, 150, 0.06);
+        }
+
+        .defense-placement-preview * {
+            pointer-events: none;
+        }
+
+        
+        .trench,
+        .sandbags,
+        .barbed-wire,
+        .landmine {
+            pointer-events: auto;
+            cursor: pointer;
+        }
+
+        .trench *,
+        .sandbags *,
+        .barbed-wire *,
+        .landmine * {
+            pointer-events: none;
+        }
+
+        
+        /* ==========================================
+           TRANCHÉE — NIVEAUX
+           ========================================== */
+
+
+        /* ==========================================
+           NIVEAU 1
+           Tranchée basique
+           ========================================== */
+
+        .trench.defense-level-1 {
+            filter:
+                brightness(0.95);
+        }
+
+
+        /* ==========================================
+           NIVEAU 2
+           Renforcement bois
+           ========================================== */
+
+        .trench.defense-level-2 {
+            filter:
+                brightness(1.02)
+                contrast(1.08);
+
+            box-shadow:
+                inset 0 0 0 2px
+                rgba(82, 58, 35, 0.55);
+        }
+
+
+        .trench.defense-level-2::before,
+        .trench.defense-level-2::after {
+            content: "";
+
+            position: absolute;
+
+            left: 12px;
+
+            width:
+                calc(100% - 24px);
+
+            height: 5px;
+
+            z-index: 5;
+
+            border:
+                1px solid
+                rgba(38, 26, 16, 0.85);
+
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    #62472d 0px,
+                    #62472d 22px,
+                    #4b3421 23px,
+                    #4b3421 25px
+                );
+
+            box-shadow:
+                0 2px 3px
+                rgba(0, 0, 0, 0.55);
+        }
+
+
+        .trench.defense-level-2::before {
+            top: 5px;
+        }
+
+
+        .trench.defense-level-2::after {
+            bottom: 5px;
+        }
+
+
+        /* ==========================================
+           NIVEAU 3
+           Position fortifiée
+           ========================================== */
+
+        .trench.defense-level-3 {
+            filter:
+                brightness(1.06)
+                contrast(1.14);
+
+            box-shadow:
+                inset 0 0 0 3px
+                rgba(55, 58, 47, 0.85),
+
+                0 0 8px
+                rgba(0, 0, 0, 0.65);
+        }
+
+
+        .trench.defense-level-3::before,
+        .trench.defense-level-3::after {
+            content: "";
+
+            position: absolute;
+
+            left: 7px;
+
+            width:
+                calc(100% - 14px);
+
+            height: 8px;
+
+            z-index: 5;
+
+            border:
+                1px solid
+                rgba(28, 29, 25, 0.95);
+
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    #73766a 0px,
+                    #73766a 26px,
+                    #51544b 27px,
+                    #51544b 30px
+                );
+
+            box-shadow:
+                0 2px 4px
+                rgba(0, 0, 0, 0.7);
+        }
+
+
+        .trench.defense-level-3::before {
+            top: 3px;
+        }
+
+
+        .trench.defense-level-3::after {
+            bottom: 3px;
+        }
+
+
+        /* ==========================================
+           PLAQUE CENTRALE — NIVEAU 3
+           ========================================== */
+
+        .trench.defense-level-3
+        .trench-plank {
+            height: 8px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #85887c,
+                    #4c4f47
+                );
+
+            border:
+                1px solid
+                rgba(25, 26, 23, 0.9);
+
+            box-shadow:
+                0 2px 4px
+                rgba(0, 0, 0, 0.65);
+        }
+
+        
+
+
+        /* =========================================================
+           PLATOON ZERO
+           DEFENSE UPGRADES — VERSION 2
+           ========================================================= */
+
+
+
+
+        /* ==========================================
+           SACS DE SABLE — NIVEAUX
+           L1 = 3 / L2 = 5 / L3 = 9
+           ========================================== */
+
+
+        /* Tous cachés par défaut */
+
+        .sandbags .sandbag {
+            display: none;
+        }
+
+
+        /* ==========================================
+           NIVEAU 1 — 3 SACS
+           ========================================== */
+
+        .sandbags.defense-level-1
+        .sandbag-1,
+
+        .sandbags.defense-level-1
+        .sandbag-2,
+
+        .sandbags.defense-level-1
+        .sandbag-3 {
+            display: block;
+        }
+
+
+        /* ==========================================
+           NIVEAU 2 — 5 SACS
+           ========================================== */
+
+        .sandbags.defense-level-2
+        .sandbag-1,
+
+        .sandbags.defense-level-2
+        .sandbag-2,
+
+        .sandbags.defense-level-2
+        .sandbag-3,
+
+        .sandbags.defense-level-2
+        .sandbag-4,
+
+        .sandbags.defense-level-2
+        .sandbag-5 {
+            display: block;
+        }
+
+
+        /* ==========================================
+           NIVEAU 3 — 9 SACS
+           ========================================== */
+
+        .sandbags.defense-level-3
+        .sandbag {
+            display: block;
+        }
+
+
+        /* ==========================================
+           L1
+           3 sacs alignés
+           ========================================== */
+
+        .sandbags.defense-level-1
+        .sandbag-1 {
+            left: 18px;
+            top: 17px;
+        }
+
+
+        .sandbags.defense-level-1
+        .sandbag-2 {
+            left: 45px;
+            top: 17px;
+        }
+
+
+        .sandbags.defense-level-1
+        .sandbag-3 {
+            left: 72px;
+            top: 17px;
+        }
+
+
+        /* ==========================================
+           L2
+           3 en bas + 2 au-dessus
+           ========================================== */
+
+        .sandbags.defense-level-2
+        .sandbag-1 {
+            left: 18px;
+            top: 23px;
+        }
+
+
+        .sandbags.defense-level-2
+        .sandbag-2 {
+            left: 45px;
+            top: 23px;
+        }
+
+
+        .sandbags.defense-level-2
+        .sandbag-3 {
+            left: 72px;
+            top: 23px;
+        }
+
+
+        .sandbags.defense-level-2
+        .sandbag-4 {
+            left: 31px;
+            top: 8px;
+
+            z-index: 2;
+        }
+
+
+        .sandbags.defense-level-2
+        .sandbag-5 {
+            left: 59px;
+            top: 8px;
+
+            z-index: 2;
+        }
+
+
+        /* ==========================================
+           L3
+           5 en bas + 4 au-dessus
+           ========================================== */
+
+        .sandbags.defense-level-3 {
+            overflow: visible;
+        }
+
+
+        .sandbags.defense-level-3
+        .sandbag-1 {
+            left: -7px;
+            top: 24px;
+        }
+
+
+        .sandbags.defense-level-3
+        .sandbag-2 {
+            left: 20px;
+            top: 24px;
+        }
+
+
+        .sandbags.defense-level-3
+        .sandbag-3 {
+            left: 47px;
+            top: 24px;
+        }
+
+
+        .sandbags.defense-level-3
+        .sandbag-4 {
+            left: 74px;
+            top: 24px;
+        }
+
+
+        .sandbags.defense-level-3
+        .sandbag-5 {
+            left: 101px;
+            top: 24px;
+        }
+
+
+        .sandbags.defense-level-3
+        .sandbag-6 {
+            left: 7px;
+            top: 8px;
+
+            z-index: 2;
+        }
+
+
+        .sandbags.defense-level-3
+        .sandbag-7 {
+            left: 34px;
+            top: 8px;
+
+            z-index: 2;
+        }
+
+
+        .sandbags.defense-level-3
+        .sandbag-8 {
+            left: 61px;
+            top: 8px;
+
+            z-index: 2;
+        }
+
+
+        .sandbags.defense-level-3
+        .sandbag-9 {
+            left: 88px;
+            top: 8px;
+
+            z-index: 2;
+        }
+
+
+
+        /* =========================================================
+           BARBELÉS
+           ========================================================= */
+
+
+        /* -------------------------
+           NIVEAU 1
+           Léger
+           ------------------------- */
+
+        .barbed-wire.defense-level-1 {
+            filter:
+                brightness(0.92);
+        }
+
+
+        /* -------------------------
+           NIVEAU 2
+           Renforcé
+           ------------------------- */
+
+        .barbed-wire.defense-level-2 {
+            border-top:
+                2px solid
+                rgba(130, 133, 124, 0.75);
+
+            border-bottom:
+                2px solid
+                rgba(130, 133, 124, 0.75);
+
+            filter:
+                brightness(1.06)
+                contrast(1.12);
+
+            box-shadow:
+                0 3px 5px
+                rgba(0, 0, 0, 0.3);
+        }
+
+
+        .barbed-wire.defense-level-2::before {
+            content:
+                "×   ×   ×   ×   ×   ×   ×";
+
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            width: 100%;
+
+            transform:
+                translate(-50%, -50%);
+
+            color:
+                #a7aaa2;
+
+            font-size:
+                13px;
+
+            font-weight:
+                900;
+
+            text-align:
+                center;
+
+            letter-spacing:
+                1px;
+
+            text-shadow:
+                1px 1px 1px
+                rgba(0, 0, 0, 0.9);
+
+            pointer-events: none;
+        }
+
+
+        /* -------------------------
+           NIVEAU 3
+           Réseau militaire lourd
+           ------------------------- */
+
+        .barbed-wire.defense-level-3 {
+            border:
+                2px solid
+                rgba(82, 85, 77, 0.75);
+
+            background:
+                repeating-linear-gradient(
+                    45deg,
+                    transparent 0px,
+                    transparent 12px,
+                    rgba(126, 130, 122, 0.45) 13px,
+                    rgba(126, 130, 122, 0.45) 15px,
+                    transparent 16px,
+                    transparent 26px
+                ),
+
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent 0px,
+                    transparent 12px,
+                    rgba(126, 130, 122, 0.45) 13px,
+                    rgba(126, 130, 122, 0.45) 15px,
+                    transparent 16px,
+                    transparent 26px
+                );
+
+            filter:
+                brightness(1.12)
+                contrast(1.18);
+
+            box-shadow:
+                inset 0 0 7px
+                rgba(0, 0, 0, 0.3),
+
+                0 4px 6px
+                rgba(0, 0, 0, 0.35);
+        }
+
+
+        .barbed-wire.defense-level-3::before {
+            content:
+                "×  ×  ×  ×  ×  ×  ×  ×";
+
+            position: absolute;
+
+            left: 50%;
+            top: 5px;
+
+            width: 100%;
+
+            transform:
+                translateX(-50%);
+
+            color:
+                #b4b7af;
+
+            font-size:
+                12px;
+
+            font-weight:
+                900;
+
+            text-align:
+                center;
+
+            text-shadow:
+                1px 1px 1px
+                rgba(0, 0, 0, 0.9);
+
+            pointer-events: none;
+        }
+
+
+        .barbed-wire.defense-level-3::after {
+            content:
+                "×  ×  ×  ×  ×  ×  ×  ×";
+
+            position: absolute;
+
+            left: 50%;
+            bottom: 5px;
+
+            width: 100%;
+
+            transform:
+                translateX(-50%);
+
+            color:
+                #92968e;
+
+            font-size:
+                12px;
+
+            font-weight:
+                900;
+
+            text-align:
+                center;
+
+            text-shadow:
+                1px 1px 1px
+                rgba(0, 0, 0, 0.9);
+
+            pointer-events: none;
+        }
+

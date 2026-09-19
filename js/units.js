@@ -122,6 +122,30 @@ battlefield.appendChild(
     element
 );
 
+    
+        // ======================================
+        // ZONE VISUELLE DE PORTÉE
+        // ======================================
+
+        const rangeIndicator =
+            document.createElement(
+                "div"
+            );
+
+        rangeIndicator.classList.add(
+            "soldier-range-indicator"
+        );
+
+        rangeIndicator.style.width =
+            stats.range * 2 + "px";
+
+        rangeIndicator.style.height =
+            stats.range * 2 + "px";
+
+        element.appendChild(
+            rangeIndicator
+        );
+
 
     // ======================================
     // OBJET SOLDAT
@@ -248,6 +272,11 @@ element.addEventListener(
             .classList
             .add("selected");
 
+        
+        rangeIndicator.classList.add(
+            "visible"
+        );
+
 
         // ======================================
         // FICHE DU SOLDAT
@@ -284,22 +313,23 @@ element.addEventListener(
 }
 
 
-// ==========================================
-// POSITION VISUELLE
-// ==========================================
 
-function updateSoldierPosition(
-    soldier
-) {
+        
+        // ==========================================
+        // POSITION VISUELLE
+        // ==========================================
 
-    soldier.element.style.left =
-        soldier.x + "px";
+        function updateSoldierPosition(
+            soldier
+        ) {
 
+            soldier.element.style.left =
+                soldier.x + "px";
 
-    soldier.element.style.top =
-        soldier.y + "px";
+            soldier.element.style.top =
+                soldier.y + "px";
 
-}
+        }
 
 
 // ==========================================

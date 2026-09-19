@@ -10,6 +10,8 @@
 // ==========================================
 
 const REINFORCEMENT_COST_PER_SOLDIER = 0.10;
+        let currentTacticalMenu =
+            null;
 
 
 // ==========================================
@@ -113,6 +115,8 @@ function openTacticalMenu(menuName) {
 
     const menu =
         tacticalMenus[menuName];
+            currentTacticalMenu =
+                menuName;
 
 
     if (!menu) {
@@ -347,8 +351,6 @@ function buyTacticalOption(option) {
             currentCost
         );
 
-        closeTacticalMenu();
-
         return;
     }
 
@@ -378,9 +380,6 @@ function buyTacticalOption(option) {
             option.type
         );
 
-
-        closeTacticalMenu();
-
         return;
     }
 
@@ -404,9 +403,6 @@ function buyTacticalOption(option) {
         activateSupport(
             "grenade"
         );
-
-
-        closeTacticalMenu();
 
         return;
     }
@@ -432,9 +428,6 @@ function buyTacticalOption(option) {
             "mortar"
         );
 
-
-        closeTacticalMenu();
-
         return;
     }
 
@@ -459,9 +452,6 @@ function buyTacticalOption(option) {
             "supply"
         );
 
-
-        closeTacticalMenu();
-
         return;
     }
 
@@ -476,8 +466,6 @@ function buyTacticalOption(option) {
     ) {
 
         orderHoldPosition();
-
-        closeTacticalMenu();
 
         return;
     }
@@ -494,8 +482,6 @@ function buyTacticalOption(option) {
 
         orderFireAtWill();
 
-        closeTacticalMenu();
-
         return;
     }
 
@@ -511,7 +497,6 @@ function buyTacticalOption(option) {
 
         orderRetreat();
 
-        closeTacticalMenu();
 
         return;
     }
@@ -525,10 +510,37 @@ function buyTacticalOption(option) {
         "Option tactique non gérée :",
         option.name
     );
-
-
-    closeTacticalMenu();
 }
+
+
+    
+    // ==========================================
+    // ACTUALISER LE MENU OUVERT
+    // ==========================================
+
+    function refreshTacticalMenu() {
+
+        if (
+            currentTacticalMenu ===
+                null
+        ) {
+
+            return;
+        }
+
+        if (
+            tacticalPanel.classList.contains(
+                "hidden"
+            )
+        ) {
+
+            return;
+        }
+
+        openTacticalMenu(
+            currentTacticalMenu
+        );
+    }
 
 
 // ==========================================
@@ -536,6 +548,9 @@ function buyTacticalOption(option) {
 // ==========================================
 
 function closeTacticalMenu() {
+    
+    currentTacticalMenu =
+        null;
 
     tacticalPanel.classList.add(
         "hidden"
@@ -583,3 +598,98 @@ closeTacticalButton.addEventListener(
     closeTacticalMenu
 );
 
+
+        // ==========================================
+        // RACCOURCIS CLAVIER - MENUS TACTIQUES
+        // ==========================================
+
+        document.addEventListener(
+            "keydown",
+
+            function (event) {
+
+                // ==================================
+                // IGNORE LES CHAMPS DE SAISIE
+                // ==================================
+
+                const activeElement =
+                    document.activeElement;
+
+                if (
+                    activeElement &&
+                    (
+                        activeElement.tagName ===
+                            "INPUT" ||
+                        activeElement.tagName ===
+                            "TEXTAREA" ||
+                        activeElement.tagName ===
+                            "SELECT"
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                // ==================================
+                // RENFORTS
+                // ==================================
+
+                if (event.code === "Digit1") {
+
+                    openTacticalMenu(
+                        "reinforcements"
+                    );
+
+                    return;
+
+                }
+
+
+                // ==================================
+                // SOUTIEN
+                // ==================================
+
+                if (event.code === "Digit2") {
+
+                    openTacticalMenu(
+                        "support"
+                    );
+
+                    return;
+
+                }
+
+
+                // ==================================
+                // DÉFENSES
+                // ==================================
+
+                if (event.code === "Digit3") {
+
+                    openTacticalMenu(
+                        "defenses"
+                    );
+
+                    return;
+
+                }
+
+
+                // ==================================
+                // ORDRES
+                // ==================================
+
+                if (event.code === "Digit4") {
+
+                    openTacticalMenu(
+                        "orders"
+                    );
+
+                    return;
+
+                }
+
+            }
+        );
