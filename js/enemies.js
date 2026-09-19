@@ -367,24 +367,77 @@ function getRandomEnemyType() {
 // SPAWN EN HAUT DU TERRAIN
 // ==========================================
 
+
 function spawnEnemy() {
 
-    const x =
-        10 +
-        Math.random() * 80;
+    const width =
+        battlefield.clientWidth;
 
-    const y =
-        5 +
-        Math.random() * 5;
+    const height =
+        battlefield.clientHeight;
+
+
+    let x;
+    let y;
+
+
+    if (
+        enemySpawnWorld.initialized &&
+        width > 0 &&
+        height > 0
+    ) {
+
+        const worldX =
+            enemySpawnWorld.minX +
+            Math.random() *
+            (
+                enemySpawnWorld.maxX -
+                enemySpawnWorld.minX
+            );
+
+
+        const worldY =
+            enemySpawnWorld.minY +
+            Math.random() *
+            (
+                enemySpawnWorld.maxY -
+                enemySpawnWorld.minY
+            );
+
+
+        x =
+            worldX /
+            width *
+            100;
+
+        y =
+            worldY /
+            height *
+            100;
+
+    } else {
+
+        x =
+            10 +
+            Math.random() * 80;
+
+        y =
+            5 +
+            Math.random() * 5;
+
+    }
+
 
     const type =
         getRandomEnemyType();
+
 
     return createEnemy(
         x,
         y,
         type
     );
+
 }
 
 

@@ -344,25 +344,61 @@ function updateSoldiersCount() {
 }
 
         
+        
         // ==========================================
         // POSITION ALÉATOIRE DANS LA ZONE ALLIÉE
         // ==========================================
 
         function getAlliedSpawnPosition() {
 
-            // Rectangle invisible centré en bas
-            //
-            // X : 38% → 62%
-            // Y : 82% → 94%
+            const width =
+                battlefield.clientWidth;
+
+            const height =
+                battlefield.clientHeight;
+
+
+            if (
+                !alliedSpawnWorld.initialized ||
+                width <= 0 ||
+                height <= 0
+            ) {
+
+                return {
+                    x: 50,
+                    y: 88
+                };
+
+            }
+
+
+            const worldX =
+                alliedSpawnWorld.minX +
+                Math.random() *
+                (
+                    alliedSpawnWorld.maxX -
+                    alliedSpawnWorld.minX
+                );
+
+
+            const worldY =
+                alliedSpawnWorld.minY +
+                Math.random() *
+                (
+                    alliedSpawnWorld.maxY -
+                    alliedSpawnWorld.minY
+                );
+
 
             const x =
-                38 +
-                Math.random() * 24;
-
+                worldX /
+                width *
+                100;
 
             const y =
-                82 +
-                Math.random() * 12;
+                worldY /
+                height *
+                100;
 
 
             return {

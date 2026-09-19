@@ -600,19 +600,8 @@ button {
 
     cursor: crosshair;
 
+    
     background:
-        radial-gradient(
-            ellipse at 18% 25%,
-            rgba(120, 104, 62, 0.45) 0,
-            rgba(120, 104, 62, 0.45) 7%,
-            transparent 8%
-        ),
-        radial-gradient(
-            ellipse at 78% 55%,
-            rgba(53, 65, 45, 0.6) 0,
-            rgba(53, 65, 45, 0.6) 9%,
-            transparent 10%
-        ),
         linear-gradient(
             180deg,
             #747761 0%,
@@ -629,65 +618,57 @@ button {
     cursor: crosshair;
 }
 
-/* =========================================
-   LIGNE DE DÉFENSE ALLIÉE
-========================================= */
 
-#battlefield::after {
-    content: "";
+    /* =========================================
+        LIGNE DE DÉFENSE ALLIÉE
+    ========================================= */
 
-    position: absolute;
+    .allied-zone-line {
+        position: absolute;
 
-    left: 4%;
-    right: 4%;
+        left: 4%;
+        width: 92%;
 
-    bottom: 22%;
+        height: 1px;
 
-    height: 1px;
+        background:
+            rgba(180, 195, 155, 0.38);
 
-    background:
-        rgba(180, 195, 155, 0.38);
+        box-shadow:
+            0 1px 0
+            rgba(20, 28, 18, 0.5);
 
-    box-shadow:
-        0 1px 0
-        rgba(20, 28, 18, 0.5);
+        pointer-events: none;
 
-    pointer-events: none;
-
-    z-index: 2;
-}
+        z-index: 2;
+    }
 
 
-/* Petits repères sur la ligne */
+    .allied-zone-label {
+        position: absolute;
 
-#battlefield::before {
-    content: "ZONE ALLIÉE";
+        left: 2%;
 
-    position: absolute;
+        top: -9px;
 
-    left: 6%;
+        padding:
+            2px 5px;
 
-    bottom:
-        calc(22% + 6px);
+        color:
+            rgba(205, 215, 190, 0.55);
 
-    padding:
-        2px 5px;
+        background:
+            rgba(40, 50, 35, 0.25);
 
-    color:
-        rgba(205, 215, 190, 0.55);
+        font-size: 7px;
+        font-weight: bold;
 
-    background:
-        rgba(40, 50, 35, 0.25);
+        letter-spacing: 1px;
 
-    font-size: 7px;
-    font-weight: bold;
+        white-space: nowrap;
 
-    letter-spacing: 1px;
-
-    pointer-events: none;
-
-    z-index: 2;
-}
+        pointer-events: none;
+    }
 
 
 /* =========================================

@@ -92,7 +92,7 @@
         <div id="version-info">
 
             <div class="version-number">
-                Platoon Zero — v0.3.2 ALPHA
+                Platoon Zero — v0.3.3 ALPHA
             </div>
 
             <button
@@ -2110,6 +2110,12 @@
 
     <script src="js/cheats.js"></script>
 
+    
+    <!-- PATCH NOTES -->
+
+    <script src="js/patch-notes.js"></script>
+    <script src="js/patch-notes-ui.js"></script>
+
 
 
     <!-- =====================================
@@ -2117,113 +2123,8 @@
     ====================================== -->
 
     <div id="game-version">
-        Platoon Zero • v0.3.2 Alpha
+        Platoon Zero • v0.3.3 Alpha
     </div>
-
-    <script>
-
-const patchToggle =
-    document.querySelector(
-        "#patch-toggle"
-    );
-
-const patchNotes =
-    document.querySelector(
-        "#patch-notes"
-    );
-
-
-// ======================================
-// OUVRIR / FERMER PATCH NOTES
-// ======================================
-
-patchToggle.addEventListener(
-    "click",
-    function () {
-
-        const isHidden =
-            patchNotes.classList.contains(
-                "hidden"
-            );
-
-        if (isHidden) {
-
-            patchNotes.classList.remove(
-                "hidden"
-            );
-
-            patchToggle.textContent =
-                "✕ FERMER PATCH NOTES";
-
-        } else {
-
-            patchNotes.classList.add(
-                "hidden"
-            );
-
-            patchToggle.textContent =
-                "📋 PATCH NOTES";
-
-        }
-
-    }
-);
-
-
-// ======================================
-// DÉROULER LES VERSIONS
-// ======================================
-
-document
-    .querySelectorAll(
-        ".patch-version-toggle"
-    )
-    .forEach(
-        function (button) {
-
-            button.addEventListener(
-                "click",
-                function () {
-
-                    const entry =
-                        button.closest(
-                            ".patch-entry"
-                        );
-
-                    const content =
-                        entry.querySelector(
-                            ".patch-version-content"
-                        );
-
-                    const arrow =
-                        button.querySelector(
-                            ".patch-arrow"
-                        );
-
-
-                    content.classList.toggle(
-                        "hidden"
-                    );
-
-
-                    const closed =
-                        content.classList.contains(
-                            "hidden"
-                        );
-
-
-                    arrow.textContent =
-                        closed
-                            ? "▶"
-                            : "▼";
-
-                }
-            );
-
-        }
-    );
-
-</script>
 
 </body>
 

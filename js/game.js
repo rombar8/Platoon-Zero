@@ -491,6 +491,7 @@ closeHelpButton.addEventListener(
                     `translate(-50%, -50%) rotate(${rotation}deg) scale(${scale})`;
 
 
+                
                 battlefield.appendChild(
                     tree
                 );
@@ -498,6 +499,43 @@ closeHelpButton.addEventListener(
             }
 
         }
+
+        
+        // ======================================
+        // LIGNE DE DÉFENSE ALLIÉE
+        // ======================================
+
+        const alliedZoneLine =
+            document.createElement(
+                "div"
+            );
+
+        alliedZoneLine.className =
+            "allied-zone-line";
+
+        alliedZoneLine.style.top =
+            "78%";
+
+
+        const alliedZoneLabel =
+            document.createElement(
+                "div"
+            );
+
+        alliedZoneLabel.className =
+            "allied-zone-label";
+
+        alliedZoneLabel.textContent =
+            "ZONE ALLIÉE";
+
+
+        alliedZoneLine.appendChild(
+            alliedZoneLabel
+        );
+
+        battlefield.appendChild(
+            alliedZoneLine
+        );
 
     // ======================================
     // SÉLECTION DU MODE DE JEU
@@ -850,12 +888,16 @@ difficultyButtons.forEach(button => {
             // SUPPRESSION DU DÉCOR MAP 1
             // ======================================
 
-            battlefield
-                .querySelectorAll(
-                    ".battlefield-grass, " +
-                    ".battlefield-rock, " +
-                    ".battlefield-log"
-                )
+            
+                battlefield
+                    .querySelectorAll(
+                        ".battlefield-grass, " +
+                        ".battlefield-rock, " +
+                        ".battlefield-log, " +
+                        ".battlefield-tree" +
+                        ".allied-zone-line"
+                    )
+
                 .forEach(
                     function (element) {
 
@@ -969,6 +1011,19 @@ function startGame() {
     game.classList.remove(
         "hidden"
     );
+
+    
+        requestAnimationFrame(
+            function () {
+
+                registerBattlefieldDecorations();
+
+                registerAlliedSpawnWorld();
+
+                registerEnemySpawnWorld();
+
+            }
+        );
 
 
     game.classList.remove(
@@ -2531,3 +2586,477 @@ updatePoints();
 console.log(
     "PLATOON ZERO prêt. — v0.3.2 ALPHA"
 );
+
+
+
+        // ==========================================
+        // DÉCORATIONS RESPONSIVES
+        // ==========================================
+
+        const responsiveDecorations =
+            [];
+
+
+        
+        function registerResponsiveDecoration(
+            element
+        ) {
+
+            if (!element) {
+
+                return;
+
+            }
+
+
+            const decoration = {
+
+                element: element,
+
+                x:
+                    element.offsetLeft,
+
+                y:
+                    element.offsetTop
+
+            };
+
+
+            responsiveDecorations.push(
+                decoration
+            );
+
+
+            element.style.left =
+                decoration.x + "px";
+
+            element.style.top =
+                decoration.y + "px";
+
+        }
+
+
+        function registerBattlefieldDecorations() {
+
+            responsiveDecorations.length =
+                0;
+
+
+            
+            battlefield
+                .querySelectorAll(
+                    ".battlefield-rock, " +
+                    ".battlefield-log, " +
+                    ".battlefield-tree, " +
+                    ".allied-zone-line"
+                )
+                .forEach(
+                    function (element) {
+
+                        registerResponsiveDecoration(
+                            element
+                        );
+
+                    }
+                );
+
+        }
+
+        
+        // ==========================================
+        // ZONE DE SPAWN ALLIÉE RESPONSIVE
+        // ==========================================
+
+        const alliedSpawnWorld = {
+
+            minX: 0,
+            maxX: 0,
+
+            minY: 0,
+            maxY: 0,
+
+            initialized: false
+
+        };
+
+
+        function registerAlliedSpawnWorld() {
+
+            const width =
+                battlefield.clientWidth;
+
+            const height =
+                battlefield.clientHeight;
+
+
+            if (
+                width <= 0 ||
+                height <= 0
+            ) {
+
+                return;
+
+            }
+
+
+            alliedSpawnWorld.minX =
+                width * 0.38;
+
+            alliedSpawnWorld.maxX =
+                width * 0.62;
+
+            alliedSpawnWorld.minY =
+                height * 0.82;
+
+            alliedSpawnWorld.maxY =
+                height * 0.94;
+
+            alliedSpawnWorld.initialized =
+                true;
+
+        }
+
+
+        // ==========================================
+        // ZONE DE SPAWN ENNEMIE RESPONSIVE
+        // ==========================================
+
+        const enemySpawnWorld = {
+
+            minX: 0,
+            maxX: 0,
+
+            minY: 0,
+            maxY: 0,
+
+            initialized: false
+
+        };
+
+
+        function registerEnemySpawnWorld() {
+
+            const width =
+                battlefield.clientWidth;
+
+            const height =
+                battlefield.clientHeight;
+
+
+            if (
+                width <= 0 ||
+                height <= 0
+            ) {
+
+                return;
+
+            }
+
+
+            enemySpawnWorld.minX =
+                width * 0.10;
+
+            enemySpawnWorld.maxX =
+                width * 0.90;
+
+            enemySpawnWorld.minY =
+                height * 0.05;
+
+            enemySpawnWorld.maxY =
+                height * 0.10;
+
+            enemySpawnWorld.initialized =
+                true;
+
+        }
+
+        // ==========================================
+        // RESPONSIVE BATTLEFIELD
+        // CONSERVE LES POSITIONS AU ZOOM / RESIZE
+        // ==========================================
+
+        let previousBattlefieldWidth =
+            battlefield.clientWidth;
+
+        let previousBattlefieldHeight =
+            battlefield.clientHeight;
+
+
+        function rescaleBattlefieldWorld(
+            newWidth,
+            newHeight
+        ) {
+
+            if (
+                previousBattlefieldWidth <= 0 ||
+                previousBattlefieldHeight <= 0 ||
+                newWidth <= 0 ||
+                newHeight <= 0
+            ) {
+
+                return;
+
+            }
+
+
+            const scaleX =
+                newWidth /
+                previousBattlefieldWidth;
+
+            const scaleY =
+                newHeight /
+                previousBattlefieldHeight;
+
+
+            // Aucun changement réel
+
+            if (
+                Math.abs(scaleX - 1) < 0.001 &&
+                Math.abs(scaleY - 1) < 0.001
+            ) {
+
+                return;
+
+            }
+
+
+            // ======================================
+            // SOLDATS ALLIÉS
+            // ======================================
+
+            soldiers.forEach(
+                function (soldier) {
+
+                    soldier.x *=
+                        scaleX;
+
+                    soldier.y *=
+                        scaleY;
+
+                    soldier.targetX *=
+                        scaleX;
+
+                    soldier.targetY *=
+                        scaleY;
+
+                    updateSoldierPosition(
+                        soldier
+                    );
+
+                }
+            );
+
+
+            // ======================================
+            // ENNEMIS
+            // ======================================
+
+            enemies.forEach(
+                function (enemy) {
+
+                    enemy.x *=
+                        scaleX;
+
+                    enemy.y *=
+                        scaleY;
+
+                    updateEnemyPosition(
+                        enemy
+                    );
+
+                }
+            );
+
+
+            // ======================================
+            // OBSTACLES
+            // ======================================
+
+            
+        responsiveDecorations.forEach(
+            function (decoration) {
+
+                decoration.x *=
+                    scaleX;
+
+                decoration.y *=
+                    scaleY;
+
+
+                decoration.element.style.left =
+                    decoration.x + "px";
+
+                decoration.element.style.top =
+                    decoration.y + "px";
+
+            }
+        );
+
+        
+        // ======================================
+        // ZONE DE SPAWN ALLIÉE
+        // ======================================
+
+        if (
+            alliedSpawnWorld.initialized
+        ) {
+
+            alliedSpawnWorld.minX *=
+                scaleX;
+
+            alliedSpawnWorld.maxX *=
+                scaleX;
+
+            alliedSpawnWorld.minY *=
+                scaleY;
+
+            alliedSpawnWorld.maxY *=
+                scaleY;
+
+        }
+
+        
+        // ======================================
+        // ZONE DE SPAWN ENNEMIE
+        // ======================================
+
+        if (
+            enemySpawnWorld.initialized
+        ) {
+
+            enemySpawnWorld.minX *=
+                scaleX;
+
+            enemySpawnWorld.maxX *=
+                scaleX;
+
+            enemySpawnWorld.minY *=
+                scaleY;
+
+            enemySpawnWorld.maxY *=
+                scaleY;
+
+        }
+
+            obstacles.forEach(
+                function (obstacle) {
+
+                    obstacle.x *=
+                        scaleX;
+
+                    obstacle.y *=
+                        scaleY;
+
+                    if (obstacle.element) {
+
+                        obstacle.element.style.left =
+                            obstacle.x + "px";
+
+                        obstacle.element.style.top =
+                            obstacle.y + "px";
+
+                    }
+
+                }
+            );
+
+
+            // ======================================
+            // DÉFENSES
+            // ======================================
+
+            defenses.forEach(
+                function (defense) {
+
+                    defense.x *=
+                        scaleX;
+
+                    defense.y *=
+                        scaleY;
+
+                    if (defense.element) {
+
+                        defense.element.style.left =
+                            defense.x + "px";
+
+                        defense.element.style.top =
+                            defense.y + "px";
+
+                    }
+
+
+                    // MG :
+                    // repositionne visuellement
+                    // son opérateur derrière l'arme.
+
+                    if (
+                        defense.type ===
+                            "machinegun" &&
+                        defense.operator
+                    ) {
+
+                        const slot =
+                            getMachineGunOperatorSlot(
+                                defense
+                            );
+
+                        if (slot) {
+
+                            defense.operator.x =
+                                slot.x;
+
+                            defense.operator.y =
+                                slot.y;
+
+                            defense.operator.targetX =
+                                slot.x;
+
+                            defense.operator.targetY =
+                                slot.y;
+
+                        }
+
+                        updateMachineGunOperatorPosition(
+                            defense
+                        );
+
+                    }
+
+                }
+            );
+
+
+            previousBattlefieldWidth =
+                newWidth;
+
+            previousBattlefieldHeight =
+                newHeight;
+
+        }
+
+
+        const battlefieldResizeObserver =
+            new ResizeObserver(
+                function (entries) {
+
+                    const entry =
+                        entries[0];
+
+                    if (!entry) {
+
+                        return;
+
+                    }
+
+                    rescaleBattlefieldWorld(
+                        entry.contentRect.width,
+                        entry.contentRect.height
+                    );
+
+                }
+            );
+
+
+        battlefieldResizeObserver.observe(
+            battlefield
+        );
