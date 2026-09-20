@@ -1,15 +1,30 @@
-[PVT]   Private                    /   Soldat                         XP =          0
-[PFC]   Private First Class        /   Soldat de 1re classe           XP =          5
-[SPC]   Specialist                 /   Spécialiste                    XP =         12
-[CPL]   Corporal                   /   Caporal                        XP =         22
-[SGT]   Sergeant                   /   Sergent                        XP =         35
-[SSG]   Staff Sergeant             /   Sergent-chef                   XP =         50
-[SFC]   Sergeant First Class       /   Sergent de 1re classe          XP =         70
-[WO1]   Warrant Officer 1          /   Adjudant                       XP =         95
-[CW2]   Chief Warrant Officer 2    /   Adjudant-chef                  XP =        125
-[2LT]   Second Lieutenant          /   Sous-lieutenant                XP =        160
-[1LT]   First Lieutenant           /   Lieutenant                     XP =        205
-[CPT]   Captain                    /   Capitaine                      XP =        260
-[MAJ]   Major                      /   Commandant                     XP =        330
-[LTC]   Lieutenant Colonel         /   Lieutenant-colonel             XP =        410
-[COL]   Colonel                    /   Colonel                        XP =        500
+        [PVT]   Private                    /   Soldat                         XP =          0
+        [PFC]   Private First Class        /   Soldat de 1re classe           XP =          5
+        [SPC]   Specialist                 /   Spécialiste                    XP =         12
+        [CPL]   Corporal                   /   Caporal                        XP =         22
+        [SGT]   Sergeant                   /   Sergent                        XP =         35
+        [SSG]   Staff Sergeant             /   Sergent-chef                   XP =         50
+        [SFC]   Sergeant First Class       /   Sergent de 1re classe          XP =         70
+        [WO1]   Warrant Officer 1          /   Adjudant                       XP =         95
+        [CW2]   Chief Warrant Officer 2    /   Adjudant-chef                  XP =        125
+        [2LT]   Second Lieutenant          /   Sous-lieutenant                XP =        160
+        [1LT]   First Lieutenant           /   Lieutenant                     XP =        205
+        [CPT]   Captain                    /   Capitaine                      XP =        260
+        [MAJ]   Major                      /   Commandant                     XP =        330
+        [LTC]   Lieutenant Colonel         /   Lieutenant-colonel             XP =        410
+        [COL]   Colonel                    /   Colonel                        XP =        500
+
+        [BG]    Brigadier General          /   Général de brigade             XP =        750
+        [MG]    Major General              /   Général de division            XP =      1 250
+        [LTG]   Lieutenant General         /   Général de corps d'armée       XP =      2 000
+        [GEN]   General                    /   Général d'armée                XP =      3 500
+
+        [VET]   Veteran                    /   Vétéran                        XP =      5 000
+        [ELT]   Elite                      /   Élite                          XP =      7 500
+        [CMD]   Commander                  /   Commandeur                     XP =     10 000
+
+        [HCM]   High Commander             /   Haut Commandeur                XP =     15 000
+        [WLD]   Warlord                    /   Seigneur de guerre             XP =     20 000
+        [LEG]   Legend                     /   Légende                        XP =     30 000
+
+        [GOAT]  Supreme General            /   Général Suprême                XP =     50 000

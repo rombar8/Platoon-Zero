@@ -156,24 +156,38 @@ function showUnitPanel(soldier) {
     // IDENTITÉ
     // ======================================
 
-    const rankImages = {
+ const rankImages = {
 
-        PVT: "private.png",
-        PFC: "private-first-class.png",
-        SPC: "specialist.png",
-        CPL: "corporal.png",
-        SGT: "sergeant.png",
-        SSG: "staff-sergeant.png",
-        SFC: "sergeant-first-class.png",
-        WO1: "warrant-officer-1.png",
-        CW2: "chief-warrant-officer-2.png",
-        "2LT": "second-lieutenant.png",
-        "1LT": "1lt.png",
-        CPT: "cpt.png",
-        MAJ: "maj.png",
-        LTC: "ltc.png",
-        COL: "col.png"
-    };
+            PVT: "private.png",
+            PFC: "private-first-class.png",
+            SPC: "specialist.png",
+            CPL: "corporal.png",
+            SGT: "sergeant.png",
+            SSG: "staff-sergeant.png",
+            SFC: "sergeant-first-class.png",
+            WO1: "warrant-officer-1.png",
+            CW2: "chief-warrant-officer-2.png",
+            "2LT": "second-lieutenant.png",
+            "1LT": "1lt.png",
+            CPT: "cpt.png",
+            MAJ: "maj.png",
+            LTC: "ltc.png",
+            COL: "col.png",
+
+            BG: "brigadier-general.png",
+            MG: "major-general.png",
+            LTG: "lieutenant-general.png",
+            GEN: "general.png",
+
+            VET: "veteran.png",
+            ELT: "elite.png",
+            CMD: "commander.png",
+            HCM: "high-commander.png",
+            WLD: "warlord.png",
+            LEG: "legend.png",
+            GOAT: "supreme-general.png"
+
+        };
 
 
     const rankImage =

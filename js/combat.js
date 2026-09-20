@@ -568,98 +568,166 @@ function damageUnit(
 // BONUS DE COMBAT DES GRADES
 // ==========================================
 
-const rankCombatBonuses = {
 
-    PVT: {
-        hp: 1.00,
-        damage: 1.00,
-        range: 1.00
-    },
+    const rankCombatBonuses = {
 
-    PFC: {
-        hp: 1.04,
-        damage: 1.03,
-        range: 1.01
-    },
+        PVT: {
+            hp: 1.00,
+            damage: 1.00,
+            range: 1.00
+        },
 
-    SPC: {
-        hp: 1.08,
-        damage: 1.06,
-        range: 1.02
-    },
+        PFC: {
+            hp: 1.04,
+            damage: 1.03,
+            range: 1.01
+        },
 
-    CPL: {
-        hp: 1.12,
-        damage: 1.09,
-        range: 1.03
-    },
+        SPC: {
+            hp: 1.08,
+            damage: 1.06,
+            range: 1.02
+        },
 
-    SGT: {
-        hp: 1.16,
-        damage: 1.12,
-        range: 1.04
-    },
+        CPL: {
+            hp: 1.12,
+            damage: 1.09,
+            range: 1.04
+        },
 
-    SSG: {
-        hp: 1.20,
-        damage: 1.15,
-        range: 1.05
-    },
+        SGT: {
+            hp: 1.17,
+            damage: 1.13,
+            range: 1.06
+        },
 
-    SFC: {
-        hp: 1.25,
-        damage: 1.18,
-        range: 1.06
-    },
+        SSG: {
+            hp: 1.22,
+            damage: 1.17,
+            range: 1.08
+        },
 
-    WO1: {
-        hp: 1.30,
-        damage: 1.22,
-        range: 1.08
-    },
+        SFC: {
+            hp: 1.27,
+            damage: 1.21,
+            range: 1.10
+        },
 
-    CW2: {
-        hp: 1.35,
-        damage: 1.26,
-        range: 1.10
-    },
+        WO1: {
+            hp: 1.32,
+            damage: 1.25,
+            range: 1.12
+        },
 
-    "2LT": {
-        hp: 1.40,
-        damage: 1.30,
-        range: 1.12
-    },
+        CW2: {
+            hp: 1.37,
+            damage: 1.29,
+            range: 1.14
+        },
 
-    "1LT": {
-        hp: 1.45,
-        damage: 1.34,
-        range: 1.14
-    },
+        "2LT": {
+            hp: 1.42,
+            damage: 1.33,
+            range: 1.16
+        },
 
-    CPT: {
-        hp: 1.50,
-        damage: 1.38,
-        range: 1.16
-    },
+        "1LT": {
+            hp: 1.47,
+            damage: 1.37,
+            range: 1.17
+        },
 
-    MAJ: {
-        hp: 1.55,
-        damage: 1.42,
-        range: 1.18
-    },
+        CPT: {
+            hp: 1.52,
+            damage: 1.41,
+            range: 1.18
+        },
 
-    LTC: {
-        hp: 1.60,
-        damage: 1.46,
-        range: 1.20
-    },
+        MAJ: {
+            hp: 1.57,
+            damage: 1.44,
+            range: 1.19
+        },
 
-    COL: {
-        hp: 1.65,
-        damage: 1.50,
-        range: 1.22
-    }
-};
+        LTC: {
+            hp: 1.61,
+            damage: 1.47,
+            range: 1.20
+        },
+
+        COL: {
+            hp: 1.65,
+            damage: 1.50,
+            range: 1.22
+        },
+
+        BG: {
+            hp: 1.72,
+            damage: 1.55,
+            range: 1.24
+        },
+
+        MG: {
+            hp: 1.80,
+            damage: 1.60,
+            range: 1.26
+        },
+
+        LTG: {
+            hp: 1.90,
+            damage: 1.66,
+            range: 1.28
+        },
+
+        GEN: {
+            hp: 2.00,
+            damage: 1.72,
+            range: 1.30
+        },
+
+        VET: {
+            hp: 2.10,
+            damage: 1.80,
+            range: 1.32
+        },
+
+        ELT: {
+            hp: 2.20,
+            damage: 1.90,
+            range: 1.34
+        },
+
+        CMD: {
+            hp: 2.30,
+            damage: 2.00,
+            range: 1.36
+        },
+
+        HCM: {
+            hp: 2.45,
+            damage: 2.12,
+            range: 1.38
+        },
+
+        WLD: {
+            hp: 2.60,
+            damage: 2.25,
+            range: 1.40
+        },
+
+        LEG: {
+            hp: 2.80,
+            damage: 2.40,
+            range: 1.43
+        },
+
+        GOAT: {
+            hp: 3.00,
+            damage: 2.60,
+            range: 1.50
+        }
+
+    };
 
 // ==========================================
 // APPLICATION BONUS DE GRADE
@@ -1727,3 +1795,98 @@ function resetCombat() {
         "Combat réinitialisé."
     );
 }
+
+
+        // ==========================================
+        // TEST TEMPORAIRE — NOUVEAUX GRADES
+        // ==========================================
+
+        function testNewRanks() {
+
+            if (!selectedSoldier) {
+
+                console.log(
+                    "TEST GRADES : sélectionne d'abord un soldat."
+                );
+
+                return;
+            }
+
+            const soldier =
+                selectedSoldier;
+
+            const ranksToTest = [
+
+                { rank: "BG", xp: 750 },
+                { rank: "MG", xp: 1250 },
+                { rank: "LTG", xp: 2000 },
+                { rank: "GEN", xp: 3500 },
+
+                { rank: "VET", xp: 5000 },
+                { rank: "ELT", xp: 7500 },
+                { rank: "CMD", xp: 10000 },
+
+                { rank: "HCM", xp: 15000 },
+                { rank: "WLD", xp: 20000 },
+                { rank: "LEG", xp: 30000 },
+
+                { rank: "GOAT", xp: 50000 }
+
+            ];
+
+            let index = 0;
+
+            function testNextRank() {
+
+                if (index >= ranksToTest.length) {
+
+                    console.log(
+                        "✅ TEST TERMINÉ — BG → GOAT"
+                    );
+
+                    return;
+                }
+
+                const test =
+                    ranksToTest[index];
+
+                soldier.xp =
+                    test.xp;
+
+                updateSoldierRank(
+                    soldier
+                );
+
+                if (
+                    typeof showUnitPanel ===
+                    "function"
+                ) {
+
+                    showUnitPanel(
+                        soldier
+                    );
+
+                }
+
+                console.log(
+                    "🪖",
+                    test.rank,
+                    "|",
+                    test.xp,
+                    "XP",
+                    "| obtenu :",
+                    soldier.rank
+                );
+
+                index++;
+
+                setTimeout(
+                    testNextRank,
+                    2000
+                );
+
+            }
+
+            testNextRank();
+
+        }

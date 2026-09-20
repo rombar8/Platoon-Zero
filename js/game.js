@@ -1012,19 +1012,6 @@ function startGame() {
         "hidden"
     );
 
-    
-        requestAnimationFrame(
-            function () {
-
-                registerBattlefieldDecorations();
-
-                registerAlliedSpawnWorld();
-
-                registerEnemySpawnWorld();
-
-            }
-        );
-
 
     game.classList.remove(
         "paused"
@@ -1056,11 +1043,25 @@ function startGame() {
     updatePoints();
 
 
-    // ======================================
-    // ESCOUADE DE DÉPART
-    // ======================================
 
-    createStartingSquad();
+        // ======================================
+        // INITIALISATION DU TERRAIN
+        // + ESCOUADE DE DÉPART
+        // ======================================
+
+        requestAnimationFrame(
+            function () {
+
+                registerBattlefieldDecorations();
+
+                registerAlliedSpawnWorld();
+
+                registerEnemySpawnWorld();
+
+                createStartingSquad();
+
+            }
+        );
 
 
     // ======================================

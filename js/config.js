@@ -268,14 +268,10 @@ const tacticalMenus = {
 
 };
 
-
 // ==========================================
 // GRADES DES SOLDATS
 // ==========================================
 
-// ==========================================
-// GRADES DES SOLDATS
-// ==========================================
 
 const soldierRanks = [
     { rank: "PVT", xp: 0 },
@@ -293,7 +289,22 @@ const soldierRanks = [
     { rank: "CPT", xp: 260 },
     { rank: "MAJ", xp: 330 },
     { rank: "LTC", xp: 410 },
-    { rank: "COL", xp: 500 }
+    { rank: "COL", xp: 500 },
+
+    { rank: "BG", xp: 750 },
+    { rank: "MG", xp: 1250 },
+    { rank: "LTG", xp: 2000 },
+    { rank: "GEN", xp: 3500 },
+
+    { rank: "VET", xp: 5000 },
+    { rank: "ELT", xp: 7500 },
+    { rank: "CMD", xp: 10000 },
+
+    { rank: "HCM", xp: 15000 },
+    { rank: "WLD", xp: 20000 },
+    { rank: "LEG", xp: 30000 },
+
+    { rank: "GOAT", xp: 50000 }
 ];
 
 // ... tout ton config.js actuel au-dessus
