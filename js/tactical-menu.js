@@ -599,97 +599,115 @@ closeTacticalButton.addEventListener(
 );
 
 
-        // ==========================================
-        // RACCOURCIS CLAVIER - MENUS TACTIQUES
-        // ==========================================
+// ==========================================
+// RACCOURCIS CLAVIER - MENUS TACTIQUES
+// ==========================================
 
-        document.addEventListener(
-            "keydown",
+document.addEventListener(
+    "keydown",
 
-            function (event) {
+    function (event) {
 
-                // ==================================
-                // IGNORE LES CHAMPS DE SAISIE
-                // ==================================
+        // ==================================
+        // IGNORE LES CHAMPS DE SAISIE
+        // ==================================
 
-                const activeElement =
-                    document.activeElement;
+        const activeElement =
+            document.activeElement;
 
-                if (
-                    activeElement &&
-                    (
-                        activeElement.tagName ===
-                            "INPUT" ||
-                        activeElement.tagName ===
-                            "TEXTAREA" ||
-                        activeElement.tagName ===
-                            "SELECT"
-                    )
-                ) {
-
-                    return;
-
-                }
+        if (
+            activeElement &&
+            (
+                activeElement.tagName === "INPUT" ||
+                activeElement.tagName === "TEXTAREA" ||
+                activeElement.tagName === "SELECT"
+            )
+        ) {
+            return;
+        }
 
 
-                // ==================================
-                // RENFORTS
-                // ==================================
+        // ==================================
+        // RENFORTS
+        // ==================================
 
-                if (event.code === "Digit1") {
+        if (event.code === "Digit1") {
 
-                    openTacticalMenu(
-                        "reinforcements"
-                    );
+            if (currentTacticalMenu === "reinforcements") {
 
-                    return;
+                closeTacticalMenu();
 
-                }
+            } else {
 
-
-                // ==================================
-                // SOUTIEN
-                // ==================================
-
-                if (event.code === "Digit2") {
-
-                    openTacticalMenu(
-                        "support"
-                    );
-
-                    return;
-
-                }
-
-
-                // ==================================
-                // DÉFENSES
-                // ==================================
-
-                if (event.code === "Digit3") {
-
-                    openTacticalMenu(
-                        "defenses"
-                    );
-
-                    return;
-
-                }
-
-
-                // ==================================
-                // ORDRES
-                // ==================================
-
-                if (event.code === "Digit4") {
-
-                    openTacticalMenu(
-                        "orders"
-                    );
-
-                    return;
-
-                }
-
+                openTacticalMenu(
+                    "reinforcements"
+                );
             }
-        );
+
+            return;
+        }
+
+
+        // ==================================
+        // SOUTIEN
+        // ==================================
+
+        if (event.code === "Digit2") {
+
+            if (currentTacticalMenu === "support") {
+
+                closeTacticalMenu();
+
+            } else {
+
+                openTacticalMenu(
+                    "support"
+                );
+            }
+
+            return;
+        }
+
+
+        // ==================================
+        // DÉFENSES
+        // ==================================
+
+        if (event.code === "Digit3") {
+
+            if (currentTacticalMenu === "defenses") {
+
+                closeTacticalMenu();
+
+            } else {
+
+                openTacticalMenu(
+                    "defenses"
+                );
+            }
+
+            return;
+        }
+
+
+        // ==================================
+        // ORDRES
+        // ==================================
+
+        if (event.code === "Digit4") {
+
+            if (currentTacticalMenu === "orders") {
+
+                closeTacticalMenu();
+
+            } else {
+
+                openTacticalMenu(
+                    "orders"
+                );
+            }
+
+            return;
+        }
+    }
+);
