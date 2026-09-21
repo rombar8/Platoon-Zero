@@ -1,5 +1,5 @@
 // ==========================================
-// M&B MOBILE
+// PLATOON ZERO
 // CHEATS.JS
 // DEV / CHEAT MENU
 // ==========================================
@@ -584,7 +584,7 @@ window.cheats = {
 // ==========================================
 
 console.log(
-    "🛠 M&B Cheat API chargée."
+    "🛠 Platoon Zero DEV API chargée."
 );
 
 

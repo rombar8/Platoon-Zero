@@ -33,6 +33,11 @@
         href="css/menu.css"
     >
 
+    <link
+        rel="stylesheet"
+        href="css/auth.css"
+    >
+
 
     <!-- =====================================
          CSS DU JEU
@@ -63,12 +68,108 @@
 
 <body>
 
+    <!-- =====================================
+     AUTHENTIFICATION
+====================================== -->
+
+<section id="auth-screen">
+
+    <div class="auth-window">
+
+        <img
+            class="auth-logo"
+            src="img/platoon-zero-logo.png"
+            alt="PLATOON ZERO"
+        >
+
+        <!-- CONNEXION -->
+
+        <div id="login-form">
+
+            <h2>CONNEXION</h2>
+
+            <input
+                id="login-email"
+                type="email"
+                placeholder="EMAIL"
+                autocomplete="email"
+            >
+
+            <input
+                id="login-password"
+                type="password"
+                placeholder="MOT DE PASSE"
+                autocomplete="current-password"
+            >
+
+            <button id="login-button" type="button">
+                SE CONNECTER
+            </button>
+
+            <button id="show-register-button" type="button">
+                CRÉER UN COMPTE
+            </button>
+
+        </div>
+
+
+        <!-- INSCRIPTION -->
+
+        <div id="register-form" class="hidden">
+
+            <h2>CRÉER UN COMPTE</h2>
+
+            <input
+                id="register-pseudo"
+                type="text"
+                maxlength="16"
+                placeholder="PSEUDO"
+                autocomplete="username"
+            >
+
+            <input
+                id="register-email"
+                type="email"
+                placeholder="EMAIL"
+                autocomplete="email"
+            >
+
+            <input
+                id="register-password"
+                type="password"
+                placeholder="MOT DE PASSE"
+                autocomplete="new-password"
+            >
+
+            <input
+                id="register-password-confirm"
+                type="password"
+                placeholder="CONFIRMER LE MOT DE PASSE"
+                autocomplete="new-password"
+            >
+
+            <button id="register-button" type="button">
+                CRÉER LE COMPTE
+            </button>
+
+            <button id="show-login-button" type="button">
+                ← RETOUR
+            </button>
+
+        </div>
+
+        <div id="auth-message"></div>
+
+    </div>
+
+</section>
+
 
     <!-- =====================================
          MENU PRINCIPAL
     ====================================== -->
 
-    <main id="main-menu">
+    <main id="main-menu" class="hidden">
 
 
         <!-- LOGO -->
@@ -914,21 +1015,42 @@
              IDENTITÉ JOUEUR
         ================================== -->
 
-        <div class="player-identity">
+<div class="player-identity">
+
+    <!-- Conservé pour compatibilité avec le jeu -->
+    <input
+        id="player-name"
+        type="hidden"
+    >
+
+    <div class="player-account">
+
+        <div class="player-account-info">
 
             <span class="player-label">
-                🎖️ OPÉRATEUR
+                👤 OPÉRATEUR
             </span>
 
-            <input
-                id="player-name"
-                type="text"
-                maxlength="16"
-                placeholder="ENTRE TON PSEUDO"
-                autocomplete="off"
-            >
+            <strong id="account-pseudo">
+                CHARGEMENT...
+            </strong>
+
+            <span id="account-role">
+                JOUEUR
+            </span>
 
         </div>
+
+        <button
+            id="logout-button"
+            type="button"
+        >
+            ⏻ DÉCONNEXION
+        </button>
+
+    </div>
+
+</div>
 
 
         <!-- =================================
@@ -2022,6 +2144,13 @@
 
 
     <!-- CONFIGURATION -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="js/supabase.js"></script>
+
+    <script src="js/auth.js"></script>
+
 
     <script src="js/config.js"></script>
 

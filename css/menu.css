@@ -1662,3 +1662,68 @@ button[data-difficulty="impossible"].selected {
                 none !important;
 
         }
+
+
+/* =====================================
+   COMPTE JOUEUR
+===================================== */
+
+.player-account {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.player-account-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+#account-pseudo {
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+}
+
+#account-role {
+    font-size: 0.72rem;
+    opacity: 0.7;
+    letter-spacing: 1px;
+}
+
+#account-role[data-role="dev"] {
+    font-weight: 700;
+}
+
+#logout-button {
+    padding: 9px 14px;
+
+    color: #c7cfb2;
+    background: rgba(15, 18, 14, 0.85);
+
+    border: 1px solid #56604b;
+    border-radius: 3px;
+
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease;
+}
+
+#logout-button:hover {
+    color: #ff9b91;
+    background: rgba(90, 25, 25, 0.35);
+    border-color: #a64a43;
+}
+
+#logout-button:active {
+    transform: translateY(1px);
+}
