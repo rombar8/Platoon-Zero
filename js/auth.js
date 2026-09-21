@@ -3,7 +3,7 @@
 // =====================================
 
 const authScreen = document.querySelector("#auth-screen");
-const mainMenu = document.querySelector("#main-menu");
+const authMainMenu = document.querySelector("#main-menu");
 
 const loginForm = document.querySelector("#login-form");
 const registerForm = document.querySelector("#register-form");
@@ -249,7 +249,7 @@ async function openPlayerSession(user) {
 
 
     authScreen.classList.add("hidden");
-    mainMenu.classList.remove("hidden");
+    authMainMenu.classList.remove("hidden");
 
 
     // Pour l'instant, on réutilise ton ancien champ
@@ -339,7 +339,7 @@ if (logoutButton) {
             currentProfile = null;
 
 
-            mainMenu.classList.add("hidden");
+            authMainMenu.classList.add("hidden");
             authScreen.classList.remove("hidden");
 
 
@@ -381,7 +381,7 @@ async function checkExistingSession() {
     } else {
 
         authScreen.classList.remove("hidden");
-        mainMenu.classList.add("hidden");
+        authMainMenu.classList.add("hidden");
 
     }
 }

@@ -110,6 +110,9 @@ let lastFrameTime = 0;
 let gameSpeed = 1;
 let gameTime = 0;
 
+let tabHiddenAt = null;
+let backgroundCatchupRunning = false;
+
 
 // ==========================================
 // ÉLÉMENTS GAME OVER
@@ -1094,7 +1097,7 @@ function startGame() {
 
 
     console.log(
-        "M&B Mobile lancé !",
+        "Platoon Zero lancé !",
         playerName
     );
 }
@@ -1189,6 +1192,249 @@ function startGame() {
 // ==========================================
 // GAME LOOP
 // ==========================================
+
+// ==========================================
+// RATTRAPAGE APRÈS ONGLET EN ARRIÈRE-PLAN
+// ==========================================
+
+function catchUpBackgroundTime(seconds) {
+
+    if (
+        !gameStarted ||
+        gameOver ||
+        gamePaused ||
+        seconds <= 0
+    ) {
+        return;
+    }
+
+    // Évite un deltaTime gigantesque.
+    // On simule le temps manquant par petits morceaux.
+    const step = 0.05;
+
+    let remainingTime =
+        seconds * gameSpeed;
+
+    // Sécurité : évite de bloquer le navigateur
+    // après une absence extrêmement longue.
+    const maxCatchUpSeconds = 60;
+
+    remainingTime =
+        Math.min(
+            remainingTime,
+            maxCatchUpSeconds
+        );
+
+    backgroundCatchupRunning = true;
+
+
+    while (
+        remainingTime > 0 &&
+        gameStarted &&
+        !gameOver
+    ) {
+
+        const deltaTime =
+            Math.min(
+                step,
+                remainingTime
+            );
+
+
+        gameTime +=
+            deltaTime * 1000;
+
+
+        // ALLIÉS
+
+        if (
+            typeof moveSoldiers ===
+            "function"
+        ) {
+
+            moveSoldiers(
+                deltaTime
+            );
+        }
+
+
+        // ENNEMIS
+
+        if (
+            typeof moveEnemies ===
+            "function"
+        ) {
+
+            moveEnemies(
+                deltaTime
+            );
+        }
+
+
+        // DÉFENSES
+
+        if (
+            typeof updateDefenses ===
+            "function"
+        ) {
+
+            updateDefenses(
+                gameTime
+            );
+        }
+
+
+        // COMBAT
+
+        if (
+            typeof updateCombat ===
+            "function"
+        ) {
+
+            updateCombat(
+                gameTime
+            );
+        }
+
+
+        // MÉDECINS
+
+        if (
+            typeof updateMedics ===
+            "function"
+        ) {
+
+            updateMedics(
+                gameTime
+            );
+        }
+
+
+        // SUPPORTS
+
+        if (
+            typeof updateSupports ===
+            "function"
+        ) {
+
+            updateSupports(
+                deltaTime
+            );
+        }
+
+
+        // VAGUES
+
+        if (
+            typeof updateWaves ===
+            "function"
+        ) {
+
+            updateWaves(
+                deltaTime
+            );
+        }
+
+
+        // DOMINATION
+
+        if (
+            selectedGameMode ===
+                "domination" &&
+            typeof updateDomination ===
+                "function"
+        ) {
+
+            updateDomination(
+                deltaTime
+            );
+        }
+
+
+        // GAME OVER
+
+        if (
+            soldiers.length === 0 &&
+            !gameOver
+        ) {
+
+            endGame();
+
+            break;
+        }
+
+
+        remainingTime -=
+            deltaTime;
+    }
+
+
+    backgroundCatchupRunning = false;
+
+
+    console.log(
+        "⏩ Temps rattrapé après retour onglet :",
+        seconds.toFixed(1),
+        "secondes"
+    );
+}
+
+// ==========================================
+// DÉTECTION CHANGEMENT D'ONGLET
+// ==========================================
+
+document.addEventListener(
+    "visibilitychange",
+    function () {
+
+        if (document.hidden) {
+
+            if (
+                gameStarted &&
+                !gamePaused &&
+                !gameOver
+            ) {
+
+                tabHiddenAt =
+                    performance.now();
+            }
+
+            return;
+        }
+
+
+        if (
+            tabHiddenAt !== null &&
+            gameStarted &&
+            !gamePaused &&
+            !gameOver
+        ) {
+
+            const elapsed =
+                (
+                    performance.now() -
+                    tabHiddenAt
+                ) / 1000;
+
+
+            tabHiddenAt = null;
+
+
+            catchUpBackgroundTime(
+                elapsed
+            );
+
+
+            // IMPORTANT :
+            // empêche gameLoop de compter
+            // une deuxième fois la période d'absence.
+
+            lastFrameTime =
+                performance.now();
+        }
+
+    }
+);
 
 function gameLoop(currentTime) {
 
@@ -1392,6 +1638,61 @@ function gameLoop(currentTime) {
 // FIN DE PARTIE
 // ==========================================
 
+// ==========================================
+// SAUVEGARDE DE LA PARTIE — SUPABASE
+// ==========================================
+
+async function saveGameToDatabase(
+    score,
+    wave,
+    kills,
+    duration
+) {
+
+    if (!currentUser) {
+
+        console.warn(
+            "Sauvegarde impossible : aucun joueur connecté."
+        );
+
+        return;
+    }
+
+
+    const { error } =
+        await supabaseClient
+            .from("games")
+            .insert({
+                player_id: currentUser.id,
+                score: score,
+                wave: wave,
+                duration: duration,
+                kills: kills
+            });
+
+
+    if (error) {
+
+        console.error(
+            "❌ Erreur sauvegarde partie :",
+            error
+        );
+
+        return;
+    }
+
+
+    console.log(
+        "💾 Partie sauvegardée dans Supabase !",
+        {
+            score,
+            wave,
+            kills,
+            duration
+        }
+    );
+}
+
 function endGame(reason = "eliminated") {
 
     if (gameOver) {
@@ -1476,6 +1777,9 @@ function endGame(reason = "eliminated") {
             wave
         );
 
+    const duration =
+    Math.floor(gameTime / 1000);
+
     // ======================================
     // AFFICHAGE
     // ======================================
@@ -1534,6 +1838,16 @@ function endGame(reason = "eliminated") {
         }
     }
 
+    // ======================================
+    // SAUVEGARDE SUPABASE
+    // ======================================
+
+    saveGameToDatabase(
+        score,
+        wave,
+        kills,
+        duration
+    );
 
     // ======================================
     // FERMETURE DES AUTRES FENÊTRES
