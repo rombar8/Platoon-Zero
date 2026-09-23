@@ -1,5 +1,5 @@
 // ==========================================
-// M&B MOBILE
+// Platoon Zero
 // SUPPORT.JS
 // Grenade / Mortier / Ravitaillement
 // Timers compatibles avec la pause

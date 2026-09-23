@@ -1,5 +1,5 @@
 // ==========================================
-// M&B MOBILE
+// Platoon Zero
 // DOMINATION.JS
 // Mode de jeu Domination
 // ==========================================

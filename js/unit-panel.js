@@ -1,5 +1,5 @@
 // ==========================================
-// M&B MOBILE
+// Platoon Zero
 // UNIT-PANEL.JS
 // Fiche soldats + mitrailleuses
 // ==========================================

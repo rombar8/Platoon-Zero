@@ -1,5 +1,5 @@
 // ==========================================
-// M&B MOBILE
+// Platoon Zero
 // MEDIC.JS
 // Soins automatiques de proximité
 // ==========================================

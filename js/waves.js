@@ -1,5 +1,5 @@
 // ==========================================
-// M&B MOBILE
+// Platoon Zero
 // WAVES.JS
 // Vagues + récompenses + timers pausables
 // ==========================================
