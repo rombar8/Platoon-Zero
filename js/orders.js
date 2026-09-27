@@ -116,9 +116,11 @@ function orderRetreat() {
         "retreat";
 
 
-    const rect =
-        battlefield
-            .getBoundingClientRect();
+    const worldWidth =
+        battlefieldWorld.offsetWidth;
+
+    const worldHeight =
+        battlefieldWorld.offsetHeight;
 
 
     // Garde approximativement
@@ -128,7 +130,7 @@ function orderRetreat() {
         Math.max(
             20,
             Math.min(
-                rect.width - 20,
+                worldWidth - 20,
                 soldier.x
             )
         );
@@ -137,7 +139,7 @@ function orderRetreat() {
     // Retour vers le bas du terrain.
 
     soldier.targetY =
-        rect.height - 35;
+        worldHeight - 35;
 
 
     console.log(

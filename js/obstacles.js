@@ -161,26 +161,26 @@ function isUnitBlockedByObstacle(
                 obstacle.height + "px";
 
 
-        const battlefieldElement =
-            document.querySelector(
-                "#battlefield"
+            const battlefieldWorldElement =
+                document.querySelector(
+                    "#battlefield-world"
+                );
+
+
+            if (!battlefieldWorldElement) {
+
+                console.error(
+                    "Battlefield World introuvable."
+                );
+
+                return;
+
+            }
+
+
+            battlefieldWorldElement.appendChild(
+                element
             );
-
-
-        if (!battlefieldElement) {
-
-            console.error(
-                "Battlefield introuvable."
-            );
-
-            return;
-
-        }
-
-
-        battlefieldElement.appendChild(
-            element
-        );
 
 
             obstacle.element =

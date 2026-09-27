@@ -167,27 +167,33 @@ battlefield.addEventListener(
         // POSITION DU CLIC
         // ==================================
 
-        const rect =
-            battlefield.getBoundingClientRect();
+            const rect =
+        battlefield.getBoundingClientRect();
 
-        const x =
+    const x =
+        cameraX +
+        (
             event.clientX -
-            rect.left;
+            rect.left
+        ) / cameraZoom;
 
-        const y =
+    const y =
+        cameraY +
+        (
             event.clientY -
-            rect.top;
+            rect.top
+        ) / cameraZoom;
 
 
         // ==================================
-        // POSITION LIMITÉE AU TERRAIN
+        // POSITION LIMITÉE AU MONDE
         // ==================================
 
         const targetX =
             Math.max(
                 17,
                 Math.min(
-                    rect.width - 17,
+                    battlefieldWorld.offsetWidth - 17,
                     x
                 )
             );
@@ -196,7 +202,7 @@ battlefield.addEventListener(
             Math.max(
                 17,
                 Math.min(
-                    rect.height - 17,
+                    battlefieldWorld.offsetHeight - 17,
                     y
                 )
             );

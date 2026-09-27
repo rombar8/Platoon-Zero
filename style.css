@@ -600,19 +600,34 @@ button {
 
     cursor: crosshair;
 
-    
+    z-index: 1;
+}
+
+
+/* Mode ciblage soutien */
+
+/* =========================================
+   MONDE DU CHAMP DE BATAILLE
+========================================= */
+
+#battlefield-world {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 3000px;
+    height: 3000px;
+
+    transform-origin: top left;
+
     background:
         linear-gradient(
             180deg,
             #747761 0%,
             #676d57 100%
         );
-
-    z-index: 1;
 }
-
-
-/* Mode ciblage soutien */
 
 #battlefield.targeting-mode {
     cursor: crosshair;

@@ -737,24 +737,11 @@
             // DIMENSIONS RÉELLES DU TERRAIN
             // ======================================
 
-            const rect =
-                battlefield
-                    .getBoundingClientRect();
-
-
             const width =
-                rect.width ||
-                battlefield.clientWidth ||
-                window.innerWidth;
-
+                battlefieldWorld.offsetWidth;
 
             const height =
-                rect.height ||
-                battlefield.clientHeight ||
-                (
-                    window.innerHeight -
-                    120
-                );
+                battlefieldWorld.offsetHeight;
 
 
             console.log(

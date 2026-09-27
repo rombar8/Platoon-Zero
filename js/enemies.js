@@ -71,14 +71,17 @@ function createEnemy(
     type = "rifleman"
 ) {
 
-    const rect =
-        battlefield.getBoundingClientRect();
+    const worldWidth =
+        battlefieldWorld.offsetWidth;
+
+    const worldHeight =
+        battlefieldWorld.offsetHeight;
 
     const x =
-        rect.width * (xPercent / 100);
+        worldWidth * (xPercent / 100);
 
     const y =
-        rect.height * (yPercent / 100);
+        worldHeight * (yPercent / 100);
 
 
     // ======================================
@@ -133,7 +136,7 @@ function createEnemy(
         </span>
     `;
 
-    battlefield.appendChild(
+    battlefieldWorld.appendChild(
         element
     );
 
@@ -1042,15 +1045,11 @@ function moveEnemyDomination(
     deltaTime
 ) {
 
-    const battlefieldRect =
-        battlefield.getBoundingClientRect();
-
-
     const flagX =
-        battlefieldRect.width / 2;
+        battlefieldWorld.offsetWidth / 2;
 
     const flagY =
-        battlefieldRect.height / 2;
+        battlefieldWorld.offsetHeight / 2;
 
 
     const dx =

@@ -30,6 +30,332 @@ const game =
 const battlefield =
     document.querySelector("#battlefield");
 
+const battlefieldWorld =
+    document.querySelector("#battlefield-world");
+
+
+        // ==========================================
+        // CAMÉRA
+        // ==========================================
+
+        let cameraX = 0;
+        let cameraY = 0;
+
+        let cameraDragging = false;
+
+        let cameraStartMouseX = 0;
+        let cameraStartMouseY = 0;
+
+        let cameraStartX = 0;
+        let cameraStartY = 0;
+
+        let cameraZoom = 1;
+
+        const cameraMinZoom = 0.7;
+        const cameraMaxZoom = 1.6;
+
+
+            function updateCamera() {
+
+        const viewportWidth =
+            battlefield.clientWidth;
+
+        const viewportHeight =
+            battlefield.clientHeight;
+
+        const worldWidth =
+            battlefieldWorld.offsetWidth;
+
+        const worldHeight =
+            battlefieldWorld.offsetHeight;
+
+    const horizontalCameraMargin =
+        80 / cameraZoom;
+
+    const minX =
+        horizontalCameraMargin;
+
+    const maxX =
+        Math.max(
+            minX,
+            worldWidth -
+            viewportWidth / cameraZoom -
+            horizontalCameraMargin
+        );
+
+            const verticalCameraMargin =
+        80 / cameraZoom;
+
+            const minY =
+                verticalCameraMargin;
+
+            const maxY =
+                Math.max(
+                    minY,
+                    worldHeight -
+                    viewportHeight / cameraZoom -
+                    verticalCameraMargin
+                );
+
+        cameraX =
+            Math.max(
+                minX,
+                Math.min(
+                    cameraX,
+                    maxX
+                )
+            );
+
+        cameraY =
+            Math.max(
+                minY,
+                Math.min(
+                    cameraY,
+                    maxY
+                )
+            );
+
+        battlefieldWorld.style.transform =
+            `translate(${-cameraX * cameraZoom}px, ${-cameraY * cameraZoom}px) scale(${cameraZoom})`;
+    }
+
+    function centerCameraOnSoldiers() {
+
+        if (soldiers.length === 0) {
+            return;
+        }
+
+        let centerX = 0;
+        let centerY = 0;
+
+        soldiers.forEach(
+            function (soldier) {
+
+                centerX += soldier.x;
+                centerY += soldier.y;
+
+            }
+        );
+
+        centerX /= soldiers.length;
+        centerY /= soldiers.length;
+
+        cameraX =
+            centerX -
+            battlefield.clientWidth / 2;
+
+        cameraY =
+            centerY -
+            battlefield.clientHeight / 2;
+
+        updateCamera();
+    }
+
+
+        // CLIC MOLETTE = DÉPLACER LA CAMÉRA
+
+        battlefield.addEventListener(
+            "mousedown",
+            function (event) {
+
+                if (event.button !== 1) {
+                    return;
+                }
+
+                event.preventDefault();
+
+                cameraDragging = true;
+
+                cameraStartMouseX =
+                    event.clientX;
+
+                cameraStartMouseY =
+                    event.clientY;
+
+                cameraStartX =
+                    cameraX;
+
+                cameraStartY =
+                    cameraY;
+            }
+        );
+
+
+        window.addEventListener(
+            "mousemove",
+            function (event) {
+
+                if (!cameraDragging) {
+                    return;
+                }
+
+                const deltaX =
+                    event.clientX -
+                    cameraStartMouseX;
+
+                const deltaY =
+                    event.clientY -
+                    cameraStartMouseY;
+
+
+                cameraX =
+                    cameraStartX -
+                    deltaX;
+
+                cameraY =
+                    cameraStartY -
+                    deltaY;
+
+                updateCamera();
+            }
+        );
+
+
+        window.addEventListener(
+            "mouseup",
+            function (event) {
+
+                if (event.button === 1) {
+                    cameraDragging = false;
+                }
+            }
+        );
+
+    window.addEventListener(
+        "wheel",
+
+        function (event) {
+
+                if (
+        !gameStarted ||
+        gameOver
+    ) {
+        return;
+    }
+
+    const battlefieldRect =
+        battlefield.getBoundingClientRect();
+
+    const mouseInsideBattlefield =
+        event.clientX >= battlefieldRect.left &&
+        event.clientX <= battlefieldRect.right &&
+        event.clientY >= battlefieldRect.top &&
+        event.clientY <= battlefieldRect.bottom;
+
+    if (!mouseInsideBattlefield) {
+        return;
+    }
+
+    event.preventDefault();
+
+            const rect =
+                battlefield.getBoundingClientRect();
+
+            const mouseX =
+                event.clientX -
+                rect.left;
+
+            const mouseY =
+                event.clientY -
+                rect.top;
+
+            const worldX =
+                cameraX +
+                mouseX / cameraZoom;
+
+            const worldY =
+                cameraY +
+                mouseY / cameraZoom;
+
+            const zoomFactor =
+                event.deltaY < 0
+                    ? 1.1
+                    : 0.9;
+
+            const newZoom =
+                Math.max(
+                    cameraMinZoom,
+                    Math.min(
+                        cameraMaxZoom,
+                        cameraZoom * zoomFactor
+                    )
+                );
+
+            cameraZoom =
+                newZoom;
+
+            cameraX =
+                worldX -
+                mouseX / cameraZoom;
+
+            cameraY =
+                worldY -
+                mouseY / cameraZoom;
+
+            updateCamera();
+        },
+
+        {
+            passive: false
+        }
+    );
+
+    const cameraKeyboardSpeed = 45;
+
+    window.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                !gameStarted ||
+                gameOver
+            ) {
+                return;
+            }
+
+            if (event.code === "ArrowUp") {
+
+                event.preventDefault();
+
+                cameraY -=
+                    cameraKeyboardSpeed / cameraZoom;
+
+            } else if (
+                event.code === "ArrowDown"
+            ) {
+
+                event.preventDefault();
+
+                cameraY +=
+                    cameraKeyboardSpeed / cameraZoom;
+
+            } else if (
+                event.code === "ArrowLeft"
+            ) {
+
+                event.preventDefault();
+
+                cameraX -=
+                    cameraKeyboardSpeed / cameraZoom;
+
+            } else if (
+                event.code === "ArrowRight"
+            ) {
+
+                event.preventDefault();
+
+                cameraX +=
+                    cameraKeyboardSpeed / cameraZoom;
+
+            } else {
+
+                return;
+            }
+
+            updateCamera();
+        }
+    );
+
 const pointsDisplay =
     document.querySelector("#points");
 
@@ -271,7 +597,7 @@ closeHelpButton.addEventListener(
             // NETTOYAGE
             // ======================================
 
-            battlefield
+            battlefieldWorld
                 .querySelectorAll(
                     ".battlefield-grass, " +
                     ".battlefield-rock, " +
@@ -322,7 +648,7 @@ closeHelpButton.addEventListener(
                 grass.style.transform =
                     `rotate(${Math.random() * 360}deg)`;
 
-                battlefield.appendChild(
+                battlefieldWorld.appendChild(
                     grass
                 );
 
@@ -368,7 +694,7 @@ closeHelpButton.addEventListener(
                 rock.style.transform =
                     `rotate(${Math.random() * 360}deg) scale(${scale})`;
 
-                battlefield.appendChild(
+                battlefieldWorld.appendChild(
                     rock
                 );
 
@@ -410,7 +736,7 @@ closeHelpButton.addEventListener(
                 log.style.transform =
                     `rotate(${-35 + Math.random() * 70}deg)`;
 
-                battlefield.appendChild(
+                battlefieldWorld.appendChild(
                     log
                 );
 
@@ -495,7 +821,7 @@ closeHelpButton.addEventListener(
 
 
                 
-                battlefield.appendChild(
+                battlefieldWorld.appendChild(
                     tree
                 );
 
@@ -536,7 +862,7 @@ closeHelpButton.addEventListener(
             alliedZoneLabel
         );
 
-        battlefield.appendChild(
+        battlefieldWorld.appendChild(
             alliedZoneLine
         );
 
@@ -773,15 +1099,10 @@ difficultyButtons.forEach(button => {
         ) {
 
             const mapWidth =
-                battlefield.clientWidth ||
-                window.innerWidth;
+                battlefieldWorld.offsetWidth;
 
             const mapHeight =
-                battlefield.clientHeight ||
-                (
-                    window.innerHeight -
-                    120
-                );
+                battlefieldWorld.offsetHeight;
 
             for (
                 let i = 0;
@@ -1062,6 +1383,8 @@ function startGame() {
                 registerEnemySpawnWorld();
 
                 createStartingSquad();
+
+                centerCameraOnSoldiers();
 
             }
         );
@@ -2899,7 +3222,7 @@ loadSettings();
 updatePoints();
 
 console.log(
-    "PLATOON ZERO prêt. — v0.3.2 ALPHA"
+    "PLATOON ZERO prêt. — v0.3.3 ALPHA"
 );
 
 
@@ -3348,30 +3671,3 @@ console.log(
                 newHeight;
 
         }
-
-
-        const battlefieldResizeObserver =
-            new ResizeObserver(
-                function (entries) {
-
-                    const entry =
-                        entries[0];
-
-                    if (!entry) {
-
-                        return;
-
-                    }
-
-                    rescaleBattlefieldWorld(
-                        entry.contentRect.width,
-                        entry.contentRect.height
-                    );
-
-                }
-            );
-
-
-        battlefieldResizeObserver.observe(
-            battlefield
-        );

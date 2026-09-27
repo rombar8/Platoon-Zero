@@ -108,13 +108,18 @@ battlefield.addEventListener(
 
 
         const x =
-            event.clientX -
-            rect.left;
-
+            cameraX +
+            (
+                event.clientX -
+                rect.left
+            ) / cameraZoom;
 
         const y =
-            event.clientY -
-            rect.top;
+            cameraY +
+            (
+                event.clientY -
+                rect.top
+            ) / cameraZoom;
 
 
         const support =
@@ -576,7 +581,7 @@ function createExplosion(
         radius * 2 + "px";
 
 
-    battlefield.appendChild(
+    battlefieldWorld.appendChild(
         explosion
     );
 
@@ -631,7 +636,7 @@ function createTargetMarker(
         y + "px";
 
 
-    battlefield.appendChild(
+    battlefieldWorld.appendChild(
         marker
     );
 
@@ -668,7 +673,7 @@ function createSupplyMarker(
         y + "px";
 
 
-    battlefield.appendChild(
+    battlefieldWorld.appendChild(
         marker
     );
 
@@ -709,7 +714,7 @@ function createSupplyCrate(
         "✚";
 
 
-    battlefield.appendChild(
+    battlefieldWorld.appendChild(
         crate
     );
 

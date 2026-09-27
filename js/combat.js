@@ -371,7 +371,7 @@ function createTracer(
         angle +
         "deg)";
 
-    battlefield.appendChild(
+    battlefieldWorldorld.appendChild(
         tracer
     );
 

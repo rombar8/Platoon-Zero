@@ -349,7 +349,7 @@ function activateDefensePlacement(
             defenseTypes[type].height +
             "px";
 
-        battlefield.appendChild(
+        battlefieldWorld.appendChild(
             defensePreview
         );
 
@@ -429,22 +429,28 @@ function payDefense(cost) {
 
             }
 
-            const rect =
-                battlefield
-                    .getBoundingClientRect();
+                const rect =
+        battlefield.getBoundingClientRect();
 
-            defensePreview.style.left =
-                (
-                    event.clientX -
-                    rect.left
-                ) + "px";
+                const previewX =
+                    cameraX +
+                    (
+                        event.clientX -
+                        rect.left
+                    ) / cameraZoom;
 
-            defensePreview.style.top =
-                (
-                    event.clientY -
-                    rect.top
-                ) + "px";
+                const previewY =
+                    cameraY +
+                    (
+                        event.clientY -
+                        rect.top
+                    ) / cameraZoom;
 
+                defensePreview.style.left =
+                    previewX + "px";
+
+                defensePreview.style.top =
+                    previewY + "px";
         }
     );
 
@@ -486,12 +492,18 @@ battlefield.addEventListener(
             battlefield.getBoundingClientRect();
 
         const x =
-            event.clientX -
-            rect.left;
+            cameraX +
+            (
+                event.clientX -
+                rect.left
+            ) / cameraZoom;
 
         const y =
-            event.clientY -
-            rect.top;
+            cameraY +
+            (
+                event.clientY -
+                rect.top
+            ) / cameraZoom;
 
         const type =
             activeDefense.type;
@@ -610,7 +622,7 @@ battlefield.addEventListener(
                 <div class="trench-front"></div>
             `;
 
-            battlefield.appendChild(
+            battlefieldWorld.appendChild(
                 element
             );
 
@@ -724,7 +736,7 @@ battlefield.addEventListener(
             <div class="sandbag sandbag-9"></div>
         `;
 
-            battlefield.appendChild(
+            battlefieldWorld.appendChild(
                 element
             );
 
@@ -833,7 +845,7 @@ battlefield.addEventListener(
                 <div class="wire-post wire-post-3"></div>
             `;
 
-            battlefield.appendChild(
+            battlefieldWorld.appendChild(
                 element
             );
 
@@ -940,7 +952,7 @@ battlefield.addEventListener(
                 <div class="landmine-center"></div>
             `;
 
-            battlefield.appendChild(
+            battlefieldWorld.appendChild(
                 element
             );
 
@@ -1105,7 +1117,7 @@ function createMachineGun(
         `;
 
 
-    battlefield.appendChild(
+    battlefieldWorld.appendChild(
         element
     );
 
@@ -2687,7 +2699,7 @@ function createMineExplosion(
     explosion.textContent =
         "💥";
 
-    battlefield.appendChild(
+    battlefieldWorld.appendChild(
         explosion
     );
 

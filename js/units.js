@@ -53,8 +53,11 @@ function createSoldier(
     type = "rifleman"
 ) {
 
-    const rect =
-        battlefield.getBoundingClientRect();
+    const worldWidth =
+        battlefieldWorld.offsetWidth;
+
+    const worldHeight =
+        battlefieldWorld.offsetHeight;
 
     // Récupération des statistiques
     // définies dans config.js
@@ -68,10 +71,10 @@ function createSoldier(
     // ======================================
 
     const x =
-        rect.width * (xPercent / 100);
+        worldWidth * (xPercent / 100);
 
     const y =
-        rect.height * (yPercent / 100);
+        worldHeight * (yPercent / 100);
 
 
     // ======================================
@@ -118,7 +121,7 @@ element.classList.add(
             `;
         }
 
-battlefield.appendChild(
+battlefieldWorld.appendChild(
     element
 );
 

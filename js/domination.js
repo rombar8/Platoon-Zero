@@ -90,7 +90,7 @@ flag.innerHTML = `
 
 `;
 
-    battlefield.appendChild(flag);
+    battlefieldWorld.appendChild(flag);
 }
 
 // ==========================================
@@ -109,14 +109,11 @@ function getDominationControl() {
     }
 
 
-    const battlefieldRect =
-        battlefield.getBoundingClientRect();
+      const centerX =
+          battlefieldWorld.offsetWidth / 2;
 
-    const centerX =
-        battlefieldRect.width / 2;
-
-    const centerY =
-        battlefieldRect.height / 2;
+      const centerY =
+          battlefieldWorld.offsetHeight / 2;
 
     const captureRadius = 75;
 
