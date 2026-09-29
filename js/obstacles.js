@@ -1,5 +1,5 @@
 // ==========================================
-// M&B MOBILE
+// Platoon Zero
 // OBSTACLES.JS
 // Obstacles solides du champ de bataille
 // ==========================================

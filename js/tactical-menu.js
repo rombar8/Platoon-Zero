@@ -1,5 +1,5 @@
 // ==========================================
-// M&B MOBILE
+// Platoon Zero
 // TACTICAL-MENU.JS
 // Gestion du menu tactique
 // ==========================================

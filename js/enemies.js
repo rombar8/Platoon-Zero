@@ -1,5 +1,5 @@
 // ==========================================
-// M&B MOBILE
+// Platoon Zero
 // ENEMIES.JS
 // Gestion des unités ennemies
 // ==========================================
@@ -117,11 +117,11 @@ function createEnemy(
     );
 
     const classIcons = {
-        rifleman: "",
-        scout: "⚡",
-        gunner: "◆",
-        marksman: "⌖",
-        boss: "☠ BOSS"
+        rifleman: "⁛",
+        scout: "∞",
+        gunner: "∻",
+        marksman: "⊕",
+        boss: "⋰BOSS⋱"
     };
 
     element.innerHTML = `
