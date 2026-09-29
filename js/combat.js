@@ -1,5 +1,5 @@
 // ==========================================
-// Platoon Zero
+// M&B MOBILE
 // COMBAT.JS
 // Système de combat
 // ==========================================
@@ -371,7 +371,7 @@ function createTracer(
         angle +
         "deg)";
 
-    battlefieldWorldorld.appendChild(
+    battlefieldWorld.appendChild(
         tracer
     );
 
