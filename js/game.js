@@ -418,6 +418,8 @@ const soldiers = [];
 
 let selectedSoldier = null;
 
+let selectedSoldiers = [];
+
 let gameStarted = false;
 
 let gameOver = false;
@@ -843,7 +845,7 @@ closeHelpButton.addEventListener(
             "allied-zone-line";
 
         alliedZoneLine.style.top =
-            "78%";
+            "88%";
 
 
         const alliedZoneLabel =
@@ -1376,6 +1378,8 @@ function startGame() {
         requestAnimationFrame(
             function () {
 
+                initializeSectors();
+
                 registerBattlefieldDecorations();
 
                 registerAlliedSpawnWorld();
@@ -1656,7 +1660,17 @@ function catchUpBackgroundTime(seconds) {
             updateWaves(
                 deltaTime
             );
-        }
+          }
+
+        if (
+            typeof updateSectors ===
+            "function"
+        ) {
+
+        updateSectors(
+            deltaTime
+        );
+    }
 
 
         // DOMINATION
@@ -2659,19 +2673,21 @@ if (speedButton) {
         "click",
         function () {
 
-            if (!gameStarted || gameOver) {
-                return;
-            }
-
-            // ×1 → ×2 → ×4 → ×1
+            // ×1 → ×2 → ×4 → ×8 → ×16 → ×1
             if (gameSpeed === 1) {
-                gameSpeed = 2;
+            gameSpeed = 2;
 
             } else if (gameSpeed === 2) {
-                gameSpeed = 4;
+            gameSpeed = 4;
+
+            } else if (gameSpeed === 4) {
+            gameSpeed = 8;
+
+            } else if (gameSpeed === 8) {
+            gameSpeed = 16;
 
             } else {
-                gameSpeed = 1;
+            gameSpeed = 1;
             }
 
             // Mise à jour graphique
@@ -3222,7 +3238,7 @@ loadSettings();
 updatePoints();
 
 console.log(
-    "PLATOON ZERO prêt. — v0.3.3 ALPHA"
+    "PLATOON ZERO prêt. — v0.3.4 ALPHA"
 );
 
 
@@ -3344,10 +3360,10 @@ console.log(
                 width * 0.62;
 
             alliedSpawnWorld.minY =
-                height * 0.82;
+                height * 0.90;
 
             alliedSpawnWorld.maxY =
-                height * 0.94;
+                height * 0.92;
 
             alliedSpawnWorld.initialized =
                 true;

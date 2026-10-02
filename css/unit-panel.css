@@ -785,3 +785,431 @@
 
             transform: none;
         }
+
+            /* ==========================================
+       FICHE UNITÉ - NOUVELLE UI
+    ========================================== */
+
+    #unit-panel {
+    width: 260px;
+
+    background:
+    linear-gradient(
+    145deg,
+    rgba(24, 31, 22, 0.98),
+    rgba(12, 17, 12, 0.98)
+    );
+
+    border:
+    1px solid
+    rgba(160, 185, 135, 0.32);
+
+    border-radius: 0;
+
+    box-shadow:
+    0 12px 32px
+    rgba(0, 0, 0, 0.48);
+
+    color: #dce4d4;
+
+    overflow: hidden;
+
+    transform: none;
+    }
+
+
+    /* ==========================================
+       HEADER
+    ========================================== */
+
+    #unit-panel
+    .unit-panel-header {
+    position: relative;
+
+    min-height: 44px;
+
+    padding:
+    7px 9px 7px 13px;
+
+    background:
+    linear-gradient(
+    90deg,
+    rgba(125, 150, 100, 0.14),
+    rgba(255, 255, 255, 0.015)
+    );
+
+    border-bottom:
+    1px solid
+    rgba(160, 185, 135, 0.24);
+
+    cursor: grab;
+    }
+
+
+    #unit-panel
+    .unit-panel-header::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 3px;
+
+    background: #a9bb8d;
+
+    box-shadow:
+    0 0 8px
+    rgba(175, 200, 145, 0.30);
+    }
+
+
+    #unit-panel.dragging
+    .unit-panel-header {
+    cursor: grabbing;
+    }
+
+
+    /* ==========================================
+       NOM / GRADE
+    ========================================== */
+
+    #unit-name {
+    display: flex;
+    align-items: center;
+
+    color: #eef2e8;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    letter-spacing: 0.8px;
+    }
+
+
+    #unit-rank-icon {
+    width: 25px;
+    height: 25px;
+
+    margin-right: 8px;
+
+    object-fit: contain;
+
+    filter:
+    drop-shadow(
+    0 2px 2px
+    rgba(0, 0, 0, 0.7)
+    );
+    }
+
+
+    /* ==========================================
+       FERMER
+    ========================================== */
+
+    #close-unit-panel {
+    width: 28px;
+    height: 28px;
+
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+
+    border:
+    1px solid
+    transparent;
+
+    border-radius: 0;
+
+    color: #aeb8a4;
+
+    font-size: 15px;
+
+    cursor: pointer;
+    }
+
+
+    #close-unit-panel:hover {
+    color: #ffffff;
+
+    background:
+    rgba(190, 205, 170, 0.08);
+
+    border-color:
+    rgba(190, 205, 170, 0.18);
+    }
+
+
+    /* ==========================================
+       CONTENU
+    ========================================== */
+
+    #unit-panel
+    .unit-panel-content {
+    padding: 11px 12px 12px;
+    }
+
+
+    /* ==========================================
+       CLASSE
+    ========================================== */
+
+    #unit-class {
+    margin:
+    0 0 11px 0;
+
+    color:
+    rgba(190, 205, 175, 0.58);
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+    }
+
+
+    /* ==========================================
+       VIE
+    ========================================== */
+
+    #unit-panel
+    .unit-hp-container {
+    margin:
+    0 0 12px 0;
+
+    padding:
+    8px;
+
+    background:
+    rgba(0, 0, 0, 0.16);
+
+    border:
+    1px solid
+    rgba(155, 175, 135, 0.12);
+    }
+
+
+    #unit-hp-text {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #dfe7d8;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 0.6px;
+    }
+
+
+    #unit-panel
+    .unit-hp-background {
+    width: 100%;
+    height: 7px;
+
+    background: #20271e;
+
+    border:
+    1px solid
+    rgba(180, 195, 165, 0.10);
+
+    border-radius: 0;
+
+    overflow: hidden;
+    }
+
+
+    #unit-hp-bar {
+    height: 100%;
+
+    background:
+    linear-gradient(
+    90deg,
+    #607d49,
+    #9aad72
+    );
+
+    box-shadow:
+    0 0 5px
+    rgba(145, 175, 105, 0.22);
+
+    transition:
+    width 0.15s linear;
+    }
+
+
+    /* ==========================================
+       STATISTIQUES
+    ========================================== */
+
+    #unit-panel
+    .unit-stat {
+    min-height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding:
+    0 5px;
+
+    border-bottom:
+    1px solid
+    rgba(150, 170, 130, 0.12);
+    }
+
+
+    #unit-panel
+    .unit-stat-label {
+    color:
+    rgba(180, 195, 165, 0.60);
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+    }
+
+
+    #unit-panel
+    .unit-stat-value {
+    color: #eef1e8;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    text-align: right;
+    }
+
+
+    #unit-kills,
+    #unit-damage,
+    #unit-range {
+    color: #eef1e8;
+    }
+
+
+    /* ==========================================
+       XP
+    ========================================== */
+
+    #unit-xp-container {
+    margin:
+    11px 0 8px 0;
+
+    padding:
+    8px;
+
+    background:
+    rgba(0, 0, 0, 0.13);
+
+    border:
+    1px solid
+    rgba(175, 155, 90, 0.15);
+    }
+
+
+    #unit-panel
+    .unit-xp-header {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 6px;
+
+    color: #cfc59e;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: 0.6px;
+    }
+
+
+    #unit-panel
+    .unit-xp-track {
+    width: 100%;
+    height: 6px;
+
+    background: #25271e;
+
+    border:
+    1px solid
+    rgba(185, 165, 95, 0.20);
+
+    overflow: hidden;
+    }
+
+
+    #unit-panel
+    .unit-xp-bar {
+    height: 100%;
+
+    background:
+    linear-gradient(
+    90deg,
+    #8d7d45,
+    #c0aa5f
+    );
+
+    box-shadow:
+    0 0 5px
+    rgba(190, 165, 80, 0.20);
+    }
+
+
+    /* ==========================================
+       COUVERTURE
+    ========================================== */
+
+    #unit-cover {
+    margin-top: 10px;
+
+    padding:
+    7px 8px;
+
+    color:
+    rgba(180, 190, 170, 0.58);
+
+    background:
+    rgba(0, 0, 0, 0.16);
+
+    border:
+    1px solid
+    rgba(150, 165, 140, 0.15);
+
+    border-radius: 0;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    text-align: center;
+    }
+
+
+    #unit-cover.active {
+    color: #d9e6c9;
+
+    background:
+    rgba(110, 145, 85, 0.15);
+
+    border-color:
+    rgba(160, 190, 130, 0.35);
+
+    box-shadow:
+    inset 0 0 8px
+    rgba(150, 180, 120, 0.08);
+    }

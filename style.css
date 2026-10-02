@@ -634,55 +634,65 @@ button {
 }
 
 
-    /* =========================================
-        LIGNE DE DÉFENSE ALLIÉE
+        /* =========================================
+       LIGNE DE DÉFENSE ALLIÉE
     ========================================= */
 
     .allied-zone-line {
-        position: absolute;
+    position: absolute;
 
-        left: 4%;
-        width: 92%;
+    left: 18%;
+    width: 64%;
 
-        height: 1px;
+    height: 1px;
 
-        background:
-            rgba(180, 195, 155, 0.38);
+    background:
+    linear-gradient(
+    90deg,
+    transparent,
+    rgba(180, 195, 155, 0.55) 12%,
+    rgba(180, 195, 155, 0.55) 88%,
+    transparent
+    );
 
-        box-shadow:
-            0 1px 0
-            rgba(20, 28, 18, 0.5);
+    box-shadow:
+    0 1px 0
+    rgba(20, 28, 18, 0.45);
 
-        pointer-events: none;
+    pointer-events: none;
 
-        z-index: 2;
+    z-index: 2;
     }
 
 
     .allied-zone-label {
-        position: absolute;
+    position: absolute;
 
-        left: 2%;
+    left: 50%;
+    top: 0;
 
-        top: -9px;
+    transform:
+    translate(-50%, -50%);
 
-        padding:
-            2px 5px;
+    padding:
+    3px 10px;
 
-        color:
-            rgba(205, 215, 190, 0.55);
+    color:
+    rgba(210, 220, 195, 0.72);
 
-        background:
-            rgba(40, 50, 35, 0.25);
+    background:
+    #626957;
 
-        font-size: 7px;
-        font-weight: bold;
+    font-size: 7px;
+    font-weight: 800;
 
-        letter-spacing: 1px;
+    letter-spacing: 1.8px;
 
-        white-space: nowrap;
+    text-transform: uppercase;
 
-        pointer-events: none;
+    white-space: nowrap;
+
+    pointer-events: none;
     }
 
 
@@ -2276,3 +2286,1311 @@ and (max-height: 500px) {
 
     z-index: 9999;
 }
+
+    /* ==========================================
+       NOUVEAU HUD - DESKTOP
+    ========================================== */
+
+    #hud {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 62px;
+
+    display: flex;
+    align-items: stretch;
+
+    padding: 0;
+    gap: 0;
+
+    background:
+    linear-gradient(
+    180deg,
+    #171c15 0%,
+    #0e120d 100%
+    );
+
+    border-bottom:
+    1px solid #4b5841;
+
+    box-sizing: border-box;
+    z-index: 40;
+    }
+
+
+    /* ==========================================
+       BLOCS DU HUD
+    ========================================== */
+
+    #hud .hud-item {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 62px;
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 0 14px;
+
+    background:
+    rgba(255, 255, 255, 0.015);
+
+    border: 0;
+    border-right:
+    1px solid
+    rgba(170, 190, 145, 0.16);
+
+    border-radius: 0;
+
+    box-sizing: border-box;
+    }
+
+
+    #hud .hud-item:hover {
+    background:
+    rgba(180, 200, 150, 0.035);
+    }
+
+
+    /* ==========================================
+       RESET DE L'ANCIENNE GRILLE
+    ========================================== */
+
+    #hud .hud-icon,
+    #hud .hud-label,
+    #hud #points,
+    #hud #soldiers-count,
+    #hud #kills,
+    #hud #wave-number,
+    #hud #sector-hud-value {
+    grid-column: auto;
+    grid-row: auto;
+    align-self: auto;
+
+    width: auto;
+    min-width: 0;
+
+    margin: 0;
+    padding: 0;
+
+    background: none;
+    border: none;
+    }
+
+
+    /* ==========================================
+       ICÔNES
+    ========================================== */
+
+    #hud .hud-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 17px;
+    line-height: 1;
+
+    opacity: 0.9;
+    }
+
+
+    /* ==========================================
+       LABELS
+    ========================================== */
+
+    #hud .hud-label {
+    color: #aeb99d;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    line-height: 1;
+
+    letter-spacing: 1px;
+
+    white-space: nowrap;
+    }
+
+
+    /* ==========================================
+       VALEURS
+    ========================================== */
+
+    #hud #points,
+    #hud #soldiers-count,
+    #hud #kills,
+    #hud #wave-number,
+    #hud #sector-hud-value {
+    color: #ffffff;
+
+    font-size: 17px;
+    font-weight: 800;
+
+    line-height: 1;
+
+    letter-spacing: 0.5px;
+
+    white-space: nowrap;
+    }
+
+
+    /* ==========================================
+       SECTEUR
+    ========================================== */
+
+    #hud .sector-hud {
+    flex: 1.15 1 0;
+    }
+
+
+    #hud .sector-hud::after {
+    display: none;
+    }
+
+
+    /* ==========================================
+       VITESSE
+    ========================================== */
+
+    #speed-button {
+    position: static;
+
+    flex: 0 0 105px;
+
+    width: 105px;
+    min-width: 105px;
+    height: 62px;
+
+    margin: 0;
+    padding: 0 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    background:
+    rgba(255, 255, 255, 0.025);
+
+    border: 0;
+    border-right:
+    1px solid
+    rgba(170, 190, 145, 0.18);
+
+    border-radius: 0;
+
+    box-sizing: border-box;
+    }
+
+
+    #speed-button:hover {
+    background:
+    rgba(180, 200, 150, 0.08);
+    }
+
+
+    #speed-button .speed-icon {
+    font-size: 17px;
+    }
+
+
+    #speed-button .speed-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    line-height: 1;
+    }
+
+
+    #speed-button .speed-info small {
+    color: #aeb99d;
+
+    font-size: 8px;
+    font-weight: 800;
+
+    letter-spacing: 0.7px;
+    }
+
+
+    #speed-button .speed-info strong {
+    margin-top: 3px;
+
+    color: #ffffff;
+
+    font-size: 17px;
+    }
+
+
+    /* ==========================================
+       PAUSE
+    ========================================== */
+
+    #pause-button {
+    position: static;
+
+    flex: 0 0 62px;
+
+    width: 62px;
+    height: 62px;
+
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+    rgba(255, 255, 255, 0.025);
+
+    border: 0;
+
+    color: #e8ecdf;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+    }
+
+
+    #pause-button:hover {
+    background:
+    rgba(180, 200, 150, 0.10);
+    }
+
+        /* ==========================================
+       FIX PAUSE
+    ========================================== */
+
+    #pause-button {
+    position: static;
+    top: auto;
+    right: auto;
+
+    transform: none;
+
+    flex: 0 0 62px;
+
+    width: 62px;
+    height: 62px;
+
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    line-height: 1;
+
+    background:
+    rgba(255, 255, 255, 0.025);
+
+    border: 0;
+    border-left:
+    1px solid
+    rgba(170, 190, 145, 0.18);
+
+    color: #e8ecdf;
+
+    font-size: 18px;
+    }
+
+
+    /* ==========================================
+       DRAPEAU SECTEUR
+    ========================================== */
+
+    #hud .sector-hud .hud-icon {
+    color: #dce6ce;
+    opacity: 1;
+
+    font-family:
+    Arial,
+    sans-serif;
+
+    font-size: 19px;
+
+    text-shadow:
+    0 0 5px
+    rgba(210, 225, 185, 0.35);
+    }
+
+        /* ==========================================
+       HUD SECTEUR - ÉTATS
+    ========================================== */
+
+    #sector-hud {
+    transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+    }
+
+
+    #sector-hud.sector-capturing {
+    background:
+    rgba(175, 145, 65, 0.10);
+    }
+
+
+    #sector-hud.sector-capturing
+    #sector-hud-value {
+    color: #e8d79a;
+    }
+
+
+    #sector-hud.sector-unlocked {
+    background:
+    rgba(110, 155, 85, 0.10);
+    }
+
+
+    #sector-hud.sector-unlocked
+    #sector-hud-value {
+    color: #c9e8ad;
+    }
+
+        /* ==========================================
+       BARRE TACTIQUE - NOUVELLE UI
+    ========================================== */
+
+    #command-bar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 76px;
+
+    display: grid;
+    grid-template-columns:
+    repeat(4, 1fr);
+
+    background:
+    linear-gradient(
+    180deg,
+    #171d15 0%,
+    #0c110c 100%
+    );
+
+    border-top:
+    1px solid
+    rgba(175, 195, 145, 0.45);
+
+    box-shadow:
+    0 -6px 18px
+    rgba(0, 0, 0, 0.28);
+
+    z-index: 60;
+    }
+
+
+    /* ==========================================
+       BOUTONS
+    ========================================== */
+
+    #command-bar button {
+    position: relative;
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    padding: 0 20px;
+
+    background:
+    linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.025),
+    rgba(0, 0, 0, 0.08)
+    );
+
+    border: 0;
+
+    border-right:
+    1px solid
+    rgba(150, 170, 125, 0.20);
+
+    color: #dce4d2;
+
+    cursor: pointer;
+
+    transition:
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+    }
+
+
+    #command-bar button:last-child {
+    border-right: 0;
+    }
+
+
+    /* ==========================================
+       LIGNE TACTIQUE SUPÉRIEURE
+    ========================================== */
+
+    #command-bar button::before {
+    content: "";
+
+    position: absolute;
+
+    left: 18%;
+    right: 18%;
+    top: 0;
+
+    height: 2px;
+
+    background:
+    rgba(180, 200, 150, 0.12);
+
+    transition:
+    left 0.15s ease,
+    right 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+    }
+
+
+    /* ==========================================
+       NUMÉROS RACCOURCIS
+    ========================================== */
+
+    #command-bar button::after {
+    position: absolute;
+
+    top: 7px;
+    right: 10px;
+
+    color:
+    rgba(190, 205, 170, 0.35);
+
+    font-size: 8px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+    }
+
+
+    #command-bar button:nth-child(1)::after {
+    content: "01";
+    }
+
+
+    #command-bar button:nth-child(2)::after {
+    content: "02";
+    }
+
+
+    #command-bar button:nth-child(3)::after {
+    content: "03";
+    }
+
+
+    #command-bar button:nth-child(4)::after {
+    content: "04";
+    }
+
+
+    /* ==========================================
+       ICÔNES
+    ========================================== */
+
+    #command-bar .command-icon {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    font-size: 21px;
+    line-height: 1;
+
+    background:
+    rgba(180, 200, 150, 0.055);
+
+    border:
+    1px solid
+    rgba(180, 200, 150, 0.12);
+
+    border-radius: 3px;
+
+    transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+    }
+
+
+    /* ==========================================
+       TEXTE
+    ========================================== */
+
+    #command-bar .command-label {
+    color: #cdd7c1;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+
+    text-shadow:
+    0 1px 2px
+    rgba(0, 0, 0, 0.7);
+    }
+
+
+    /* ==========================================
+       HOVER
+    ========================================== */
+
+    #command-bar button:hover {
+    background:
+    linear-gradient(
+    180deg,
+    rgba(145, 170, 110, 0.11),
+    rgba(80, 100, 65, 0.05)
+    );
+    }
+
+
+    #command-bar button:hover::before {
+    left: 8%;
+    right: 8%;
+
+    background: #aebf8e;
+
+    box-shadow:
+    0 0 7px
+    rgba(180, 205, 145, 0.35);
+    }
+
+
+    #command-bar button:hover
+    .command-icon {
+    background:
+    rgba(175, 200, 140, 0.11);
+
+    border-color:
+    rgba(190, 215, 155, 0.35);
+
+    transform:
+    translateY(-1px);
+    }
+
+
+    /* ==========================================
+       CLIC
+    ========================================== */
+
+    #command-bar button:active {
+    background:
+    rgba(120, 145, 95, 0.15);
+    }
+
+
+    #command-bar button:active
+    .command-icon {
+    transform:
+    scale(0.94);
+    }
+
+        /* ==========================================
+       MENU TACTIQUE - NOUVELLE UI
+    ========================================== */
+
+    #tactical-panel {
+    position: absolute;
+
+    left: 20px;
+    right: auto;
+    bottom: 76px;
+
+    width: 520px;
+    max-width:
+    calc(100% - 40px);
+
+    max-height:
+    calc(100% - 160px);
+
+    display: flex;
+    flex-direction: column;
+
+    background:
+    linear-gradient(
+    145deg,
+    rgba(25, 32, 23, 0.99),
+    rgba(13, 18, 13, 0.99)
+    );
+
+    border:
+    1px solid
+    rgba(155, 180, 130, 0.32);
+
+    border-bottom:
+    2px solid
+    rgba(175, 200, 145, 0.38);
+
+    box-shadow:
+    0 12px 35px
+    rgba(0, 0, 0, 0.45);
+
+    z-index: 65;
+    }
+
+
+    /* ==========================================
+       HEADER
+    ========================================== */
+
+    #tactical-panel .tactical-header {
+    position: relative;
+
+    min-height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding:
+    0 14px 0 18px;
+
+    background:
+    linear-gradient(
+    90deg,
+    rgba(120, 145, 95, 0.12),
+    rgba(255, 255, 255, 0.015)
+    );
+
+    border-bottom:
+    1px solid
+    rgba(150, 175, 125, 0.24);
+    }
+
+
+    #tactical-panel .tactical-header::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 3px;
+
+    background:
+    #a9bb8d;
+
+    box-shadow:
+    0 0 8px
+    rgba(170, 195, 140, 0.30);
+    }
+
+
+    #tactical-panel
+    .tactical-header h2 {
+    margin: 0;
+
+    color: #e7ecdf;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    letter-spacing: 1.8px;
+    }
+
+
+    /* ==========================================
+       FERMER
+    ========================================== */
+
+    #close-tactical {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    background:
+    transparent;
+
+    border:
+    1px solid
+    transparent;
+
+    color: #aeb8a4;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+    }
+
+
+    #close-tactical:hover {
+    color: #ffffff;
+
+    background:
+    rgba(190, 205, 170, 0.08);
+
+    border-color:
+    rgba(190, 205, 170, 0.18);
+    }
+
+
+    /* ==========================================
+       CONTENU
+    ========================================== */
+
+    #tactical-content {
+    overflow-y: auto;
+
+    padding:
+    8px;
+    }
+
+
+    /* ==========================================
+       OPTION TACTIQUE
+    ========================================== */
+
+    #tactical-content
+    .tactical-option {
+    position: relative;
+
+    width: 100%;
+    min-height: 62px;
+
+    display: grid;
+
+    grid-template-columns:
+    46px minmax(0, 1fr) auto;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding:
+    7px 10px;
+
+    background:
+    rgba(255, 255, 255, 0.012);
+
+    border: 0;
+
+    border-bottom:
+    1px solid
+    rgba(145, 165, 125, 0.16);
+
+    color: #e5eadf;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+    }
+
+
+    /* ==========================================
+       BARRE GAUCHE
+    ========================================== */
+
+    #tactical-content
+    .tactical-option::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 12px;
+    bottom: 12px;
+
+    width: 2px;
+
+    background:
+    transparent;
+
+    transition:
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+    }
+
+
+    /* ==========================================
+       ICÔNE
+    ========================================== */
+
+    .tactical-icon {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+    rgba(165, 185, 140, 0.055);
+
+    border:
+    1px solid
+    rgba(165, 185, 140, 0.11);
+
+    border-radius: 3px;
+
+    font-size: 18px;
+    line-height: 1;
+
+    transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+    }
+
+
+    /* ==========================================
+       NOM + DESCRIPTION
+    ========================================== */
+
+    .tactical-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+    }
+
+
+    .tactical-info strong {
+    color: #e8ede2;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    letter-spacing: 0.45px;
+
+    line-height: 1;
+    }
+
+
+    .tactical-info small {
+    overflow: hidden;
+
+    color:
+    rgba(190, 200, 180, 0.53);
+
+    font-size: 9px;
+    font-weight: 500;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    }
+
+
+    /* ==========================================
+       COÛT
+    ========================================== */
+
+    .tactical-cost {
+    min-width: 48px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding:
+    0 8px;
+
+    color: #e8eedf;
+
+    background:
+    rgba(145, 170, 115, 0.08);
+
+    border:
+    1px solid
+    rgba(165, 190, 135, 0.16);
+
+    font-size: 12px;
+    font-weight: 800;
+
+    box-sizing: border-box;
+    }
+
+
+    .tactical-cost::after {
+    content: " PC";
+
+    margin-left: 3px;
+
+    color:
+    rgba(190, 205, 170, 0.48);
+
+    font-size: 7px;
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+    }
+
+
+    /* ==========================================
+       HOVER
+    ========================================== */
+
+    #tactical-content
+    .tactical-option:not(:disabled):hover {
+    background:
+    linear-gradient(
+    90deg,
+    rgba(130, 155, 105, 0.11),
+    rgba(130, 155, 105, 0.025)
+    );
+
+    border-bottom-color:
+    rgba(175, 195, 150, 0.28);
+    }
+
+
+    #tactical-content
+    .tactical-option:not(:disabled):hover::before {
+    background:
+    #a9bb8d;
+
+    box-shadow:
+    0 0 7px
+    rgba(175, 200, 145, 0.35);
+    }
+
+
+    #tactical-content
+    .tactical-option:not(:disabled):hover
+    .tactical-icon {
+    background:
+    rgba(165, 190, 135, 0.10);
+
+    border-color:
+    rgba(180, 205, 150, 0.25);
+    }
+
+
+    /* ==========================================
+       OPTION INDISPONIBLE
+    ========================================== */
+
+    #tactical-content
+    .tactical-option:disabled {
+    opacity: 0.34;
+
+    cursor: not-allowed;
+
+    filter:
+    grayscale(0.7);
+    }
+
+
+    #tactical-content
+    .tactical-option:disabled
+    .tactical-cost {
+    background:
+    rgba(80, 80, 80, 0.08);
+
+    border-color:
+    rgba(150, 150, 150, 0.10);
+    }
+
+            /* ==========================================
+       ANNONCE DE VAGUE - TACTIQUE
+    ========================================== */
+
+    #wave-announcement {
+    position: absolute;
+
+    left: 50%;
+    top: 100px;
+
+    transform:
+    translateX(-50%);
+
+    width: 600px;
+    max-width:
+    calc(100% - 60px);
+
+    padding:
+    8px 0 9px;
+
+    background: transparent;
+
+    border: 0;
+    border-radius: 0;
+
+    box-shadow: none;
+
+    text-align: center;
+
+    pointer-events: none;
+
+    z-index: 70;
+
+    animation:
+    waveTacticalIn
+    0.35s ease-out;
+    }
+
+
+    /* ==========================================
+       TITRE
+    ========================================== */
+
+    #wave-title {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 14px;
+
+    color: #f0f3ea;
+
+    font-size: 21px;
+    font-weight: 900;
+
+    line-height: 1;
+
+    letter-spacing: 4px;
+
+    text-transform: uppercase;
+
+    text-shadow:
+    0 2px 5px
+    rgba(0, 0, 0, 0.9);
+    }
+
+
+    /* ==========================================
+       LIGNES LATÉRALES
+    ========================================== */
+
+    #wave-title::before,
+    #wave-title::after {
+    content: "";
+
+    width: 115px;
+    height: 1px;
+
+    background:
+    linear-gradient(
+    90deg,
+    transparent,
+    rgba(200, 215, 175, 0.75)
+    );
+    }
+
+
+    #wave-title::after {
+    background:
+    linear-gradient(
+    90deg,
+    rgba(200, 215, 175, 0.75),
+    transparent
+    );
+    }
+
+
+    /* ==========================================
+       SOUS-TITRE
+    ========================================== */
+
+    #wave-subtitle {
+    margin-top: 7px;
+
+    color: #b9c7a8;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    line-height: 1;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    text-shadow:
+    0 1px 4px
+    rgba(0, 0, 0, 1);
+    }
+
+
+    /* ==========================================
+       APPARITION
+    ========================================== */
+
+    @keyframes waveTacticalIn {
+
+    from {
+    opacity: 0;
+
+    transform:
+    translateX(-50%)
+    translateY(-10px);
+    }
+
+    to {
+    opacity: 1;
+
+    transform:
+    translateX(-50%)
+    translateY(0);
+    }
+
+    }
+
+
+    /* ==========================================
+       MOBILE
+    ========================================== */
+
+    @media (
+    max-width: 700px
+    ) {
+
+    #wave-announcement {
+    width:
+    calc(100% - 30px);
+    }
+
+
+    #wave-title {
+    font-size: 16px;
+
+    letter-spacing: 2px;
+
+    gap: 9px;
+    }
+
+
+    #wave-title::before,
+    #wave-title::after {
+    width: 55px;
+    }
+
+    }
+
+        /* ==========================================
+       VAGUES - ÉTATS
+    ========================================== */
+
+    #wave-announcement.wave-normal
+    #wave-title {
+    color: #f0f3ea;
+    }
+
+    #wave-announcement.wave-normal
+    #wave-subtitle {
+    color: #b9c7a8;
+    }
+
+
+    /* BONUS */
+
+    #wave-announcement.wave-bonus
+    #wave-title {
+    color: #ead99a;
+
+    text-shadow:
+    0 0 8px
+    rgba(220, 190, 100, 0.25);
+    }
+
+    #wave-announcement.wave-bonus
+    #wave-subtitle {
+    color: #cdbf88;
+    }
+
+    #wave-announcement.wave-bonus
+    #wave-title::before,
+    #wave-announcement.wave-bonus
+    #wave-title::after {
+    background:
+    linear-gradient(
+    90deg,
+    transparent,
+    rgba(225, 195, 105, 0.85)
+    );
+    }
+
+    #wave-announcement.wave-bonus
+    #wave-title::after {
+    background:
+    linear-gradient(
+    90deg,
+    rgba(225, 195, 105, 0.85),
+    transparent
+    );
+    }
+
+
+    /* BOSS */
+
+    #wave-announcement.wave-boss
+    #wave-title {
+    color: #e4a09a;
+
+    text-shadow:
+    0 0 9px
+    rgba(175, 55, 45, 0.35);
+    }
+
+    #wave-announcement.wave-boss
+    #wave-subtitle {
+    color: #c98782;
+    }
+
+    #wave-announcement.wave-boss
+    #wave-title::before,
+    #wave-announcement.wave-boss
+    #wave-title::after {
+    background:
+    linear-gradient(
+    90deg,
+    transparent,
+    rgba(190, 70, 60, 0.90)
+    );
+    }
+
+    #wave-announcement.wave-boss
+    #wave-title::after {
+    background:
+    linear-gradient(
+    90deg,
+    rgba(190, 70, 60, 0.90),
+    transparent
+    );
+    }

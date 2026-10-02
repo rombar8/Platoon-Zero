@@ -228,7 +228,6 @@ battlefieldWorld.appendChild(
 
         }
 
-
 // ======================================
 // SÉLECTION DU SOLDAT
 // ======================================
@@ -238,63 +237,220 @@ element.addEventListener(
 
     function (event) {
 
-        // Empêche le clic sur le soldat
-        // d'être interprété comme un clic terrain.
         event.stopPropagation();
 
-
-        // Soldat mort = impossible à sélectionner
         if (soldier.alive === false) {
             return;
         }
 
 
-        // ======================================
-        // RETIRE L'ANCIENNE SÉLECTION
-        // ======================================
+        const multiSelection =
+            event.ctrlKey ||
+            event.shiftKey;
 
-        if (
-            selectedSoldier &&
-            selectedSoldier !== soldier
-        ) {
 
-            selectedSoldier.element
-                .classList
-                .remove("selected");
+        // ==================================
+        // CLIC NORMAL
+        // ==================================
+
+        if (!multiSelection) {
+
+            selectedSoldiers.forEach(
+                function (selected) {
+
+                    selected.element
+                        .classList
+                        .remove(
+                            "selected"
+                        );
+
+                    const oldRange =
+                        selected.element
+                            .querySelector(
+                                ".soldier-range-indicator"
+                            );
+
+                    if (oldRange) {
+
+                        oldRange.classList.remove(
+                            "visible"
+                        );
+                    }
+                }
+            );
+
+
+            selectedSoldiers.length =
+                0;
+
+
+            selectedSoldiers.push(
+                soldier
+            );
+
         }
 
 
-        // ======================================
-        // NOUVELLE SÉLECTION
-        // ======================================
+        // ==================================
+        // CTRL / SHIFT + CLIC
+        // ==================================
 
+        else {
+
+            const index =
+                selectedSoldiers.indexOf(
+                    soldier
+                );
+
+
+            // Déjà sélectionné :
+            // on le retire.
+            if (index !== -1) {
+
+                selectedSoldiers.splice(
+                    index,
+                    1
+                );
+
+            }
+
+            // Sinon :
+            // on l'ajoute.
+            else {
+
+                selectedSoldiers.push(
+                    soldier
+                );
+            }
+        }
+
+
+        // ==================================
+        // ACTUALISE LES CERCLES
+        // ==================================
+
+        soldiers.forEach(
+            function (unit) {
+
+                const isSelected =
+                    selectedSoldiers.includes(
+                        unit
+                    );
+
+
+                unit.element.classList.toggle(
+                    "selected",
+                    isSelected
+                );
+
+
+                const unitRange =
+                    unit.element.querySelector(
+                        ".soldier-range-indicator"
+                    );
+
+
+                if (unitRange) {
+
+                    unitRange.classList.remove(
+                        "visible"
+                    );
+                }
+            }
+        );
+
+
+        // ==================================
+        // AUCUNE SÉLECTION
+        // ==================================
+
+        if (
+            selectedSoldiers.length === 0
+        ) {
+
+            selectedSoldier =
+                null;
+
+
+            if (
+                typeof hideUnitPanel ===
+                "function"
+            ) {
+
+                hideUnitPanel();
+            }
+
+
+            return;
+        }
+
+
+        // Soldat principal utilisé
+        // pour la compatibilité avec
+        // le reste du jeu.
         selectedSoldier =
-            soldier;
-
-        soldier.element
-            .classList
-            .add("selected");
-
-        
-        rangeIndicator.classList.add(
-            "visible"
-        );
+            selectedSoldiers[0];
 
 
-        // ======================================
-        // FICHE DU SOLDAT
-        // ======================================
+        // ==================================
+        // UN SEUL SOLDAT
+        // ==================================
 
-        showUnitPanel(
-            soldier
-        );
+        if (
+            selectedSoldiers.length === 1
+        ) {
+
+            const singleSoldier =
+                selectedSoldiers[0];
+
+
+            const singleRange =
+                singleSoldier.element
+                    .querySelector(
+                        ".soldier-range-indicator"
+                    );
+
+
+            if (singleRange) {
+
+                singleRange.classList.add(
+                    "visible"
+                );
+            }
+
+
+            if (
+                typeof showUnitPanel ===
+                "function"
+            ) {
+
+                showUnitPanel(
+                    singleSoldier
+                );
+            }
+
+        }
+
+
+        // ==================================
+        // PLUSIEURS SOLDATS
+        // ==================================
+
+        else {
+
+            if (
+                typeof hideUnitPanel ===
+                "function"
+            ) {
+
+                hideUnitPanel();
+            }
+        }
 
 
         console.log(
-            soldier.rank,
-            soldier.name,
-            "-",
-            soldier.className
+            "Soldats sélectionnés :",
+            selectedSoldiers.length
         );
     }
 );

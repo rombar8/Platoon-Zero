@@ -870,3 +870,28 @@
         .unit-gun {
             display: none;
         }
+
+    /* =========================================
+       RECTANGLE DE SÉLECTION
+    ========================================= */
+
+    .selection-box {
+        position: absolute;
+
+        display: none;
+
+        border:
+            1px solid
+            rgba(220, 230, 190, 0.95);
+
+        background:
+            rgba(190, 210, 150, 0.12);
+
+        pointer-events: none;
+
+        z-index: 1000;
+    }
+
+    .selection-box.visible {
+        display: block;
+    }

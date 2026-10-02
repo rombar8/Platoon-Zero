@@ -67,22 +67,33 @@ const waveSubtitle =
 // ANNONCES
 // ==========================================
 
-function showWaveAnnouncement(
+    function showWaveAnnouncement(
     title,
-    subtitle = ""
-) {
+    subtitle = "",
+    type = "normal"
+    ) {
 
     waveTitle.textContent =
-        title;
+    title;
 
     waveSubtitle.textContent =
-        subtitle;
+    subtitle;
 
     waveAnnouncement.classList.remove(
-        "hidden"
+    "wave-normal",
+    "wave-bonus",
+    "wave-boss"
     );
 
-}
+    waveAnnouncement.classList.add(
+    "wave-" + type
+    );
+
+    waveAnnouncement.classList.remove(
+    "hidden"
+    );
+
+    }
 
 
 function hideWaveAnnouncement() {
@@ -293,7 +304,9 @@ if (bossesToSpawn > 0) {
         ) +
         " • " +
         enemiesToSpawn +
-        " ENNEMIS"
+        " ENNEMIS",
+
+        "boss"
     );
 
 } else if (isBonusWave()) {
@@ -304,7 +317,9 @@ if (bossesToSpawn > 0) {
         " ★",
 
         enemiesToSpawn +
-        " ENNEMIS"
+        " ENNEMIS",
+
+        "bonus"
     );
 
 } else {
@@ -314,7 +329,9 @@ if (bossesToSpawn > 0) {
         currentWave,
 
         enemiesToSpawn +
-        " ENNEMIS"
+        " ENNEMIS",
+
+        "normal"
     );
 }
 
@@ -356,8 +373,7 @@ if (bossesToSpawn > 0) {
         Math.random() * 60;
 
     const bossY =
-        5 +
-        Math.random() * 5;
+        getEnemySectorSpawnY();
 
     createEnemy(
         bossX,

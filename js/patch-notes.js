@@ -6,6 +6,82 @@
 
         const patchNotesData = [
 
+                // ======================================
+                // v0.3.4 ALPHA
+                // ======================================
+
+                {
+                version: "v0.3.4 ALPHA",
+
+                sections: [
+
+                {
+                title: "🗺️ SECTEURS",
+
+                changes: [
+                "Le champ de bataille est désormais divisé en deux secteurs.",
+                "Le secteur supérieur reste verrouillé pendant les premières vagues.",
+                "Le second secteur devient accessible à partir de la vague 250.",
+                "Ajout d'un objectif de capture de 60 secondes pour sécuriser le nouveau secteur.",
+                "Les unités alliées ne peuvent pas pénétrer dans le secteur verrouillé avant la vague 250.",
+                "À partir de la vague 250, les ennemis commencent à arriver depuis le second secteur."
+                ]
+                },
+
+                {
+                title: "🎯 SÉLECTION DES UNITÉS",
+
+                changes: [
+                "Ajout de la sélection multiple des soldats.",
+                "Ajout de la sélection par rectangle directement sur le champ de bataille.",
+                "Ctrl et Shift permettent de sélectionner plusieurs soldats.",
+                "Ajout du déplacement groupé des unités sélectionnées.",
+                "Les soldats sélectionnés se déplacent désormais en formation.",
+                "Les indicateurs de portée sont automatiquement masqués lors d'une sélection multiple.",
+                "La fiche d'unité est automatiquement masquée lorsqu'un groupe est sélectionné."
+                ]
+                },
+
+                {
+                title: "🖥️ INTERFACE",
+
+                changes: [
+                "Refonte visuelle de plusieurs éléments de l'interface.",
+                "Nouvelle présentation des menus tactiques.",
+                "Refonte de la fiche d'information des soldats.",
+                "Nouvelle présentation des annonces de vagues.",
+                "Les vagues normales, bonus et boss possèdent désormais leur propre identité visuelle.",
+                "Refonte visuelle de la ligne de la zone alliée.",
+                "Amélioration générale de la lisibilité et de la cohérence de l'interface militaire."
+                ]
+                },
+
+                {
+                title: "🪖 ZONE ALLIÉE",
+
+                changes: [
+                "Réduction de la taille de la zone alliée.",
+                "La ligne de défense alliée est désormais plus courte et centrée.",
+                "Repositionnement de la zone d'apparition des soldats.",
+                "Les soldats apparaissent désormais dans une zone plus compacte."
+                ]
+                },
+
+                {
+                title: "🛠️ CORRECTIONS",
+
+                changes: [
+                "Correction de plusieurs conversions entre les coordonnées écran et les coordonnées du monde.",
+                "Amélioration du déplacement des unités avec le zoom de la caméra.",
+                "Correction du déplacement groupé des soldats.",
+                "Correction de plusieurs problèmes liés aux limites des secteurs.",
+                "Divers ajustements visuels et améliorations de stabilité."
+                ]
+                }
+
+                ]
+                },
+
             // ======================================
             // v0.3.3 ALPHA
             // ======================================

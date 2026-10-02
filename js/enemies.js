@@ -365,83 +365,24 @@ function getRandomEnemyType() {
     return "rifleman";
 }
 
+    function spawnEnemy() {
 
-// ==========================================
-// SPAWN EN HAUT DU TERRAIN
-// ==========================================
+    const x =
+    10 +
+    Math.random() * 80;
 
-
-function spawnEnemy() {
-
-    const width =
-        battlefield.clientWidth;
-
-    const height =
-        battlefield.clientHeight;
-
-
-    let x;
-    let y;
-
-
-    if (
-        enemySpawnWorld.initialized &&
-        width > 0 &&
-        height > 0
-    ) {
-
-        const worldX =
-            enemySpawnWorld.minX +
-            Math.random() *
-            (
-                enemySpawnWorld.maxX -
-                enemySpawnWorld.minX
-            );
-
-
-        const worldY =
-            enemySpawnWorld.minY +
-            Math.random() *
-            (
-                enemySpawnWorld.maxY -
-                enemySpawnWorld.minY
-            );
-
-
-        x =
-            worldX /
-            width *
-            100;
-
-        y =
-            worldY /
-            height *
-            100;
-
-    } else {
-
-        x =
-            10 +
-            Math.random() * 80;
-
-        y =
-            5 +
-            Math.random() * 5;
-
-    }
-
+    const y =
+    getEnemySectorSpawnY();
 
     const type =
-        getRandomEnemyType();
-
+    getRandomEnemyType();
 
     return createEnemy(
-        x,
-        y,
-        type
+    x,
+    y,
+    type
     );
-
-}
+    }
 
 
 // ==========================================
@@ -743,137 +684,6 @@ function getEnemyMovementMultiplier(
             if (
                 enemy.avoidingObstacle
             ) {
-
-                enemy.avoidanceTimer -=
-                    deltaTime;
-
-
-                const sideDirection =
-                    enemy.avoidanceDirection;
-
-
-                const avoidX =
-                    -directionY *
-                    sideDirection;
-
-                const avoidY =
-                    directionX *
-                    sideDirection;
-
-
-                // Mélange déplacement latéral +
-                // légère progression vers la cible.
-
-                let moveX =
-                    avoidX * 0.85 +
-                    directionX * 0.35;
-
-                let moveY =
-                    avoidY * 0.85 +
-                    directionY * 0.35;
-
-
-                const moveLength =
-                    Math.hypot(
-                        moveX,
-                        moveY
-                    );
-
-
-                if (
-                    moveLength > 0
-                ) {
-
-                    moveX /=
-                        moveLength;
-
-                    moveY /=
-                        moveLength;
-
-                }
-
-
-                const avoidNextX =
-                    enemy.x +
-                    moveX *
-                    step;
-
-                const avoidNextY =
-                    enemy.y +
-                    moveY *
-                    step;
-
-
-                const avoidBlocked =
-                    isUnitBlockedByObstacle(
-                        avoidNextX,
-                        avoidNextY
-                    );
-
-
-                // ==================================
-                // DÉPLACEMENT DE CONTOURNEMENT
-                // ==================================
-
-                if (
-                    !avoidBlocked
-                ) {
-
-                    enemy.x =
-                        avoidNextX;
-
-                    enemy.y =
-                        avoidNextY;
-
-                } else {
-
-                    // Le côté choisi est lui-même
-                    // bloqué : essaie l'autre côté.
-
-                    enemy.avoidanceDirection *=
-                        -1;
-
-
-                    const reverseX =
-                        directionY *
-                        sideDirection;
-
-                    const reverseY =
-                        -directionX *
-                        sideDirection;
-
-
-                    const reverseNextX =
-                        enemy.x +
-                        reverseX *
-                        step;
-
-                    const reverseNextY =
-                        enemy.y +
-                        reverseY *
-                        step;
-
-
-                    const reverseBlocked =
-                        isUnitBlockedByObstacle(
-                            reverseNextX,
-                            reverseNextY
-                        );
-
-
-                    if (
-                        !reverseBlocked
-                    ) {
-
-                        enemy.x =
-                            reverseNextX;
-
-                        enemy.y =
-                            reverseNextY;
-
-                    }
-
-                }
 
 
                 // ==================================

@@ -1,0 +1,277 @@
+    /* =========================================
+       SECTEUR 2 VERROUILLÉ
+    ========================================= */
+
+    .sector-locked-overlay {
+        position: absolute;
+
+        left: 0;
+        top: 0;
+
+        width: 100%;
+        height: 50%;
+
+        background:
+            repeating-linear-gradient(
+                135deg,
+                rgba(10, 12, 9, 0.62) 0px,
+                rgba(10, 12, 9, 0.62) 30px,
+                rgba(20, 24, 17, 0.68) 30px,
+                rgba(20, 24, 17, 0.68) 60px
+            );
+
+        pointer-events: none;
+
+        z-index: 80;
+
+        transition:
+            opacity 1.2s ease;
+    }
+
+    .sector-locked-overlay.unlocked {
+        opacity: 0;
+    }
+
+    .sector-locked-content {
+        position: absolute;
+
+        left: 50%;
+        top: 50%;
+
+        transform:
+            translate(-50%, -50%);
+
+        text-align: center;
+
+        color:
+            #d9dfc6;
+
+        font-family:
+            monospace;
+    }
+
+    .sector-lock-icon {
+        font-size: 42px;
+
+        margin-bottom: 12px;
+    }
+
+    .sector-lock-title {
+        font-size: 30px;
+
+        font-weight: bold;
+
+        letter-spacing: 6px;
+    }
+
+    .sector-lock-subtitle {
+        margin-top: 8px;
+
+        font-size: 15px;
+
+        color:
+            #c6a76a;
+    }
+
+    .sector-lock-requirement {
+        margin-top: 18px;
+
+        font-size: 12px;
+
+        line-height: 1.6;
+
+        opacity: 0.75;
+    }
+
+
+    /* =========================================
+       FRONTIÈRE
+    ========================================= */
+
+    .sector-border {
+        position: absolute;
+
+        left: 0;
+        top: 50%;
+
+        width: 100%;
+        height: 2px;
+
+        background:
+            rgba(210, 220, 180, 0.55);
+
+        border-top:
+            1px dashed
+            rgba(255, 255, 255, 0.35);
+
+        pointer-events: none;
+
+        z-index: 90;
+
+        display: flex;
+
+        justify-content:
+            space-between;
+
+        transition:
+            opacity 1s ease;
+    }
+
+    .sector-border span {
+        transform:
+            translateY(-24px);
+
+        padding:
+            4px 10px;
+
+        background:
+            rgba(12, 17, 11, 0.85);
+
+        color:
+            #cdd5b8;
+
+        font-size: 11px;
+
+        font-family:
+            monospace;
+
+        letter-spacing: 2px;
+    }
+
+    .sector-border.unlocked {
+        opacity: 0.25;
+    }
+
+
+    /* =========================================
+       POINT DE CAPTURE
+    ========================================= */
+
+    .sector-capture-point {
+        position: absolute;
+
+        left: 50%;
+        top: 55%;
+
+        transform:
+            translate(-50%, -50%);
+
+        width: 240px;
+        height: 240px;
+
+        pointer-events: none;
+
+        z-index: 70;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+    }
+
+    .sector-capture-ring {
+        position: relative;
+
+        width: 240px;
+        height: 240px;
+
+        border:
+            3px dashed
+            rgba(205, 220, 175, 0.65);
+
+        border-radius: 50%;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+    }
+
+    .sector-capture-progress {
+        position: absolute;
+
+        inset: -7px;
+
+        border-radius: 50%;
+
+        background:
+            conic-gradient(
+                rgba(210, 225, 170, 0.95)
+                var(
+                    --capture-progress,
+                    0deg
+                ),
+                transparent
+                0deg
+            );
+
+        -webkit-mask:
+            radial-gradient(
+                circle,
+                transparent 67%,
+                #000 69%
+            );
+
+        mask:
+            radial-gradient(
+                circle,
+                transparent 67%,
+                #000 69%
+            );
+    }
+
+    .sector-capture-center {
+        font-size: 30px;
+    }
+
+    .sector-capture-label {
+        margin-top: 15px;
+
+        padding:
+            5px 10px;
+
+        background:
+            rgba(10, 15, 9, 0.9);
+
+        color:
+            #d9dfc6;
+
+        font-family:
+            monospace;
+
+        font-size: 11px;
+
+        letter-spacing: 2px;
+    }
+
+    .sector-capture-timer {
+        margin-top: 5px;
+
+        color:
+            #d9dfc6;
+
+        font-family:
+            monospace;
+
+        font-size: 12px;
+    }
+
+    .sector-capture-point.locked {
+        opacity: 0.28;
+    }
+
+    .sector-capture-point.capturing
+    .sector-capture-ring {
+        border-style: solid;
+    }
+
+    .sector-capture-point.captured {
+        opacity: 0;
+
+        transition:
+            opacity 1s ease;
+    }

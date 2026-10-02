@@ -70,57 +70,53 @@ function rotateUnitTowards(
 // DÉSÉLECTION DU SOLDAT
 // ==========================================
 
-function clearSoldierSelection() {
+    function clearSoldierSelection() {
 
-    if (!selectedSoldier) {
-        return;
-    }
+        selectedSoldiers.forEach(
+            function (soldier) {
+
+                if (!soldier.element) {
+                    return;
+                }
 
 
-    // Retire l'effet visuel de sélection
-
-    if (selectedSoldier.element) {
-
-        selectedSoldier.element.classList.remove(
-            "selected"
-        );
-    }
-
-        const rangeIndicator =
-            selectedSoldier.element
-                .querySelector(
-                    ".soldier-range-indicator"
+                soldier.element.classList.remove(
+                    "selected"
                 );
 
-        if (rangeIndicator) {
 
-            rangeIndicator.classList.remove(
-                "visible"
-            );
+                const rangeIndicator =
+                    soldier.element.querySelector(
+                        ".soldier-range-indicator"
+                    );
 
+
+                if (rangeIndicator) {
+
+                    rangeIndicator.classList.remove(
+                        "visible"
+                    );
+                }
+            }
+        );
+
+
+        selectedSoldiers.length =
+            0;
+
+
+        selectedSoldier =
+            null;
+
+
+        if (
+            typeof hideUnitPanel ===
+            "function"
+        ) {
+
+            hideUnitPanel();
         }
-
-
-    // Ferme la fiche du soldat
-
-    const unitPanel =
-        document.querySelector(
-            "#unit-panel"
-        );
-
-    if (unitPanel) {
-
-        unitPanel.classList.add(
-            "hidden"
-        );
     }
-
-
-    // Plus aucun soldat sélectionné
-
-    selectedSoldier =
-        null;
-}
 
 
 // ==========================================
@@ -206,6 +202,112 @@ battlefield.addEventListener(
                     y
                 )
             );
+
+        const unlockedTargetY =
+            typeof clampSoldierToUnlockedSector ===
+            "function"
+            ? clampSoldierToUnlockedSector(
+            targetY
+            )
+            : targetY;
+
+
+    // ==================================
+    // DÉPLACEMENT DE GROUPE
+    // ==================================
+
+    if (
+        selectedSoldiers.length > 1
+    ) {
+
+        const group =
+            [...selectedSoldiers];
+
+
+        const spacing =
+            36;
+
+
+        const totalWidth =
+            (
+                group.length - 1
+            ) *
+            spacing;
+
+
+        group.forEach(
+            function (
+                unit,
+                index
+            ) {
+
+                if (
+                    !unit ||
+                    unit.alive === false
+                ) {
+                    return;
+                }
+
+
+                if (
+                    unit.order === "hold" ||
+                    unit.order === "retreat"
+                ) {
+                    return;
+                }
+
+
+                // Quitte une MG
+                // si nécessaire.
+                if (
+                    unit.machineGun &&
+                    typeof releaseSoldierFromMachineGun ===
+                        "function"
+                ) {
+
+                    releaseSoldierFromMachineGun(
+                        unit
+                    );
+                }
+
+
+                const offsetX =
+                    index *
+                    spacing -
+                    totalWidth / 2;
+
+
+                const formationX =
+                    Math.max(
+                        17,
+                        Math.min(
+                            battlefieldWorld.offsetWidth - 17,
+                            targetX +
+                                offsetX
+                        )
+                    );
+
+
+                unit.targetX =
+                    formationX;
+
+                unit.targetY =
+                    unlockedTargetY;
+
+
+                unit.target =
+                    null;
+
+                unit.isFiring =
+                    false;
+            }
+        );
+
+
+        clearSoldierSelection();
+
+        return;
+    }
 
 
         // ==================================
@@ -353,7 +455,7 @@ battlefield.addEventListener(
             targetX;
 
         soldier.targetY =
-            targetY;
+            unlockedTargetY;
 
         soldier.target =
             null;
@@ -634,6 +736,21 @@ soldiers.forEach(
 
             nextY =
                 soldier.targetY;
+        }
+
+        // ==================================
+        // VERROUILLAGE DES SECTEURS
+        // ==================================
+
+        if (
+        typeof clampSoldierToUnlockedSector ===
+        "function"
+        ) {
+
+        nextY =
+        clampSoldierToUnlockedSector(
+        nextY
+        );
         }
 
 
