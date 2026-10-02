@@ -3594,3 +3594,25 @@ and (max-height: 500px) {
     transparent
     );
     }
+
+    #hud .hud-icon-image {
+    display: block;
+
+    width: 18px;
+    height: 18px;
+
+    object-fit: contain;
+
+    pointer-events: none;
+    }
+
+    .tactical-icon-image {
+    display: block;
+
+    width: 18px;
+    height: 18px;
+
+    object-fit: contain;
+
+    pointer-events: none;
+    }

@@ -96,7 +96,7 @@ const tacticalMenus = {
     options: [
 
         {
-            icon: "🪖",
+            icon: '<img src="img/icons/soldier.svg" class="tactical-icon-image" alt="">',
             name: "SOLDAT",
             description: "Polyvalent • moyenne portée",
             cost: 5,
